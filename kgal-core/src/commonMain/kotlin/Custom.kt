@@ -1,4 +1,4 @@
-package test.library
+package kgal
 
 fun getCustomString() = "HELLO! It Works!"
 

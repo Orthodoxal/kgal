@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "test-kmp-library"
-include(":test-library")
+rootProject.name = "kgal"
+include(":kgal-core")

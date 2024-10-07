@@ -23,7 +23,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "test-library"
+            baseName = "kgal-core"
             isStatic = true
         }
     }
@@ -56,15 +56,15 @@ mavenPublishing {
 
     coordinates(
         groupId = "io.github.orthodoxal",
-        artifactId = "test-library",
+        artifactId = "kgal-core",
         version = version,
     )
 
     pom {
-        name.set("Test library for KMP")
-        description.set("New test library for different platforms")
+        name.set("Kotlin Genetic Algorithm Library")
+        description.set("Multiplatform library for Genetic Algorithms on Koltin")
         inceptionYear.set("2024")
-        url.set("https://github.com/Orthodoxal/test-kmp-library")
+        url.set("https://github.com/Orthodoxal/kgal")
 
         licenses {
             license {
@@ -82,7 +82,7 @@ mavenPublishing {
         }
 
         scm {
-            url.set("https://github.com/Orthodoxal/test-kmp-library")
+            url.set("https://github.com/Orthodoxal/kgal")
         }
     }
 
