@@ -1,0 +1,20 @@
+name: Create Dokka
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  steps:
+    - name: Generate docs with dokka
+      run: ./gradlew dokkaHtml
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: ${{ github.workspace }}/kstore/build/dokka/html
+
+    - name: Deploy to Github Pages
+      id: deployment
+      uses: actions/deploy-pages@v1

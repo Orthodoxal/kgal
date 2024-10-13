@@ -6,9 +6,12 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.maven.publish)
+    alias(libs.plugins.dokka)
 }
 
 kotlin {
+    explicitApi()
+
     jvm()
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -32,7 +35,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                //put your multiplatform dependencies here
+                api(libs.kotlinx.coroutines.core)
             }
         }
         val commonTest by getting {
