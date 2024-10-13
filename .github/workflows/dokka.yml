@@ -6,15 +6,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  steps:
-    - name: Generate docs with dokka
-      run: ./gradlew dokkaHtml
+  build:
+    name: Build
+    runs-on: ubuntu-latest
 
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v1
-      with:
-        path: ${{ github.workspace }}/kstore/build/dokka/html
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Deploy to Github Pages
-      id: deployment
-      uses: actions/deploy-pages@v1
+      - name: Generate docs with dokka
+        run: ./gradlew dokkaHtml
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ${{ github.workspace }}/kstore/build/dokka/html
+
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
