@@ -3,7 +3,7 @@ package kgal.statistics.stats
 import kgal.GA
 import kgal.Lifecycle
 import kgal.Population
-import kgal.chromosome.Chromosome
+import kgal.copyOfRange
 import kgal.statistics.note.Statistic
 import kotlin.jvm.JvmName
 
@@ -74,10 +74,10 @@ public fun Lifecycle<*, Long>.median(): Statistic<Double> = Statistic(NAME, medi
  * Get median value from population
  * @param transformer converter [F] to [Double]
  */
-private inline fun <F> Population<*, F>.getMedian(
+private inline fun <V, F> Population<V, F>.getMedian(
     transformer: F.() -> Double,
 ): Double {
-    val source = this.toTypedArray()
+    val source = this.copyOfRange(fromIndex = 0, toIndex = size).apply { sort() }
     val indexMedian = source.size / 2
     return if (source.size % 2 == 1) {
         source[indexMedian].fitness!!.transformer()
@@ -86,13 +86,5 @@ private inline fun <F> Population<*, F>.getMedian(
         val second = source[indexMedian - 1]
         (first.fitness!!.transformer() + second.fitness!!.transformer()) / 2
     }
-}
-
-/**
- * Creates an array - copy for [Population]
- */
-private inline fun <F> Population<*, F>.toTypedArray(): Array<Chromosome<out Any?, F>> {
-    val iterator = this.iterator()
-    return Array(size) { iterator.next() }
 }
 

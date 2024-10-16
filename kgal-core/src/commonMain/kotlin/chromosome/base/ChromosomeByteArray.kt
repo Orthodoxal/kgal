@@ -1,5 +1,6 @@
 package kgal.chromosome.base
 
+import kgal.PopulationFactory
 import kgal.chromosome.Chromosome
 import kotlin.random.Random
 
@@ -34,7 +35,13 @@ public data class ChromosomeByteArray<F : Comparable<F>>(
 }
 
 /**
- * Create [ChromosomeByteArray] instance
+ * Creates [PopulationFactory] for [ChromosomeByteArray] with [size].
+ */
+public fun <F : Comparable<F>> bytes(size: Int): PopulationFactory<ByteArray, F> =
+    { bytes(size) }
+
+/**
+ * Create [ChromosomeByteArray] instance.
  * @param size gene count
  */
 public fun <F : Comparable<F>> Random.bytes(size: Int): ChromosomeByteArray<F> =

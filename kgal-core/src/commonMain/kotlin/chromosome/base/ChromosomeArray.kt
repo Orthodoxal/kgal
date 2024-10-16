@@ -1,5 +1,6 @@
 package kgal.chromosome.base
 
+import kgal.PopulationFactory
 import kgal.chromosome.Chromosome
 import kotlin.random.Random
 
@@ -35,9 +36,21 @@ public data class ChromosomeArray<T, F : Comparable<F>>(
 }
 
 /**
- * Create [ChromosomeArray] instance
+ * Creates [PopulationFactory] for [ChromosomeArray] with [size].
+ * @param factory factory for creating [T] by index
+ * @param clone function to correct cloning [ChromosomeArray]
+ */
+public inline fun <reified T, F : Comparable<F>> booleans(
+    size: Int,
+    crossinline factory: (index: Int, random: Random) -> T,
+    noinline clone: (ChromosomeArray<T, F>.() -> ChromosomeArray<T, F>)?,
+): PopulationFactory<Array<T>, F> =
+    { array(size, factory, clone) }
+
+/**
+ * Create [ChromosomeArray] instance.
  * @param size gene count
- * @param factory factory for randomly generate array [ChromosomeArray.value]
+ * @param factory factory for randomly generate array of [T]
  */
 public inline fun <reified T, F : Comparable<F>> Random.array(
     size: Int,

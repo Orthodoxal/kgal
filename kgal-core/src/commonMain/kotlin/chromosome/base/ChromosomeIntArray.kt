@@ -1,5 +1,6 @@
 package kgal.chromosome.base
 
+import kgal.PopulationFactory
 import kgal.chromosome.Chromosome
 import kotlin.random.Random
 
@@ -34,7 +35,19 @@ public data class ChromosomeIntArray<F : Comparable<F>>(
 }
 
 /**
- * Create [ChromosomeIntArray] instance
+ * Creates [PopulationFactory] for [ChromosomeIntArray] with [size].
+ * @param from lower bound for the generator (inclusive)
+ * @param until upper limit for generator (exclusive)
+ */
+public fun <F : Comparable<F>> ints(
+    size: Int,
+    from: Int? = null,
+    until: Int? = null,
+): PopulationFactory<IntArray, F> =
+    { ints(size, from, until) }
+
+/**
+ * Create [ChromosomeIntArray] instance.
  * @param size gene count
  */
 public fun <F : Comparable<F>> Random.ints(

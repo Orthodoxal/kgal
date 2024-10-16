@@ -15,9 +15,6 @@ public abstract class AbstractLifecycle<V, F>(
     override val iteration: Int
         get() = ga.iteration
 
-    override val population: Population<V, F>
-        get() = ga.population
-
     override var fitnessFunction: (V) -> F
         get() = ga.fitnessFunction
         set(value) {
