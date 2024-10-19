@@ -3,7 +3,7 @@ package kgal.panmictic
 import kgal.AbstractGA
 import kgal.GA
 import kgal.chromosome.Chromosome
-import kgal.panmictic.operators.selection.recalculateEliteChromosomes
+import kgal.panmictic.operators.evaluation
 
 /**
  * [PanmicticGA] - best known as the classical genetic algorithm.
@@ -31,12 +31,12 @@ public interface PanmicticGA<V, F> : GA<V, F> {
 
     /**
      * Number of elite chromosomes - the best chromosomes of the population, which have privileged rights:
-     * - Before each selection stage, the values are recalculated and moved to start of [PanmicticPopulation]
-     * - Guaranteed to pass the selection stage
-     * - At the crossing stage they cannot be changed or replaced,
+     * - recalculates on each evaluation stage and moved to start of [PanmicticPopulation]
+     * - guaranteed to pass the selection stage
+     * - at the crossing stage they cannot be changed or replaced,
      * but they actively participate in the creation of a new generation by changing other chromosomes
-     * - Do not change during the mutation stage
-     * @see [recalculateEliteChromosomes]
+     * - do not change during the mutation stage
+     * @see [PanmicticLifecycle.evaluation]
      */
     public var elitism: Int
 
@@ -113,7 +113,7 @@ internal class PanmicticGAInstance<V, F>(
     override val population: PanmicticPopulation<V, F> = configuration.population
 
     override val lifecycle: PanmicticLifecycle<V, F> by lazy {
-        PanmicticLifecycleInstance(this, configuration.parallelismConfig)
+        PanmicticLifecycle(this, configuration.parallelismConfig, configuration.statisticsConfig)
     }
 
     override var elitism: Int = configuration.elitism

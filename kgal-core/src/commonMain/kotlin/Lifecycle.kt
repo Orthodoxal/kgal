@@ -2,6 +2,7 @@ package kgal
 
 import kgal.chromosome.Chromosome
 import kgal.processor.parallelism.ParallelismConfig
+import kgal.statistics.StatisticsConfig
 import kgal.statistics.StatisticsProvider
 import kgal.statistics.note.StatisticNote
 import kotlin.random.Random
@@ -54,6 +55,12 @@ public interface Lifecycle<V, F> {
      * @see ParallelismConfig
      */
     public val parallelismConfig: ParallelismConfig
+
+    /**
+     * Statistics configuration associated with [GA].
+     * @see [StatisticsConfig]
+     */
+    public val statisticsConfig: StatisticsConfig
 
     /**
      * Flag to stop evolution process cause stop condition has been worked.

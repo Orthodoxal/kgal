@@ -34,14 +34,9 @@ public interface Population<V, F> : Iterable<Chromosome<V, F>> {
     public val size: Int
 
     /**
-     * True if population initialized and ready to evolve.
+     * True if population is initialized and ready to evolve.
      */
     public val initialized: Boolean
-
-    /**
-     * Set new population with the same size
-     */
-    public fun set(population: Array<Chromosome<V, F>>)
 
     /**
      * Get [Chromosome] by [index]

@@ -20,12 +20,6 @@ public suspend inline fun <V, F> PanmicticLifecycle<V, F>.selection(
     parallelismLimit: Int,
     crossinline selection: (source: Array<Chromosome<V, F>>, random: Random) -> Chromosome<V, F>,
 ) {
-    if (elitism > 0) {
-        recalculateEliteChromosomes()
-    } else if (elitism < 0) {
-        throw IllegalStateException("Elitism must be more or equal to zero")
-    }
-
     val tempPopulation = population.copyOf()
     process(
         parallelismLimit = parallelismLimit,
@@ -52,12 +46,6 @@ public suspend inline fun <V, F> PanmicticLifecycle<V, F>.selectionWithIndex(
     parallelismLimit: Int,
     crossinline selection: (index: Int, source: Array<Chromosome<V, F>>, random: Random) -> Chromosome<V, F>,
 ) {
-    if (elitism > 0) {
-        recalculateEliteChromosomes()
-    } else if (elitism < 0) {
-        throw IllegalStateException("Elitism must be more or equal to zero")
-    }
-
     val tempPopulation = population.copyOf()
     process(
         parallelismLimit = parallelismLimit,

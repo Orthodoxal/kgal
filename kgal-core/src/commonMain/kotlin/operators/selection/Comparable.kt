@@ -1,46 +1,43 @@
 package kgal.operators.selection
 
 import kgal.chromosome.Chromosome
-import kgal.utils.PriorityQueue
+import kgal.utils.findOrderStatistic
 
 /**
- * Select best chromosomes from [source]
- * @param count number of selected best values
- * @return array of the best chromosomes with size [count]
+ * Find and moves the best chromosomes to the beginning of source. (Not sort source)
+ * @param count number of the best values to be moved to the beginning
+ * @return the same source with moved to the beginning chromosomes
  */
-public fun <V, F> selectionBest(
-    source: Array<Chromosome<V, F>>,
+public fun <V, F> Array<Chromosome<V, F>>.selectionBest(
     count: Int,
-): Array<Chromosome<V, F>> = selectionComparable(source, count, compareBy())
+    from: Int,
+    to: Int,
+): Array<Chromosome<V, F>> = selectionComparable(count, from, to, ascending = false)
 
 /**
- * Select worst chromosomes from [source]
- * @param count number of selected worst values
- * @return array of the worst chromosomes with size [count]
+ * Find and moves the worst chromosomes to the beginning of source. (Not sort source)
+ * @param count number of the worst values to be moved to the beginning
+ * @return the same source with moved to the beginning chromosomes
  */
-public fun <V, F> selectionWorst(
-    source: Array<Chromosome<V, F>>,
+public fun <V, F> Array<Chromosome<V, F>>.selectionWorst(
     count: Int,
-): Array<Chromosome<V, F>> = selectionComparable(source, count, compareByDescending { it })
+    from: Int,
+    to: Int,
+): Array<Chromosome<V, F>> = selectionComparable(count, from, to, ascending = true)
 
 /**
- * Select chromosome from [source] with [comparator]
- * @return array selected chromosomes with size [count]
+ * Find and moves chromosomes in ascending or descending order with [findOrderStatistic]. (Not sorted)
+ * @see findOrderStatistic
+ * @return the same source with moved to the beginning chromosomes
  */
-public fun <V, F> selectionComparable(
-    source: Array<Chromosome<V, F>>,
+private inline fun <V, F> Array<Chromosome<V, F>>.selectionComparable(
     count: Int,
-    comparator: Comparator<Chromosome<V, F>>,
+    from: Int,
+    to: Int,
+    ascending: Boolean,
 ): Array<Chromosome<V, F>> {
     if (count <= 0) error("Count must be more than zero")
-    if (source.size < count) error("Count must be less or equal to source size")
-
-    val priority = PriorityQueue(count + 1, comparator)
-    for (chromosome in source) {
-        priority.offer(chromosome)
-        if (priority.size > count) {
-            priority.poll()
-        }
-    }
-    return Array(count) { priority.poll()!!.clone() }
+    if (size < count) error("Count must be less or equal to source size")
+    findOrderStatistic(k = count, from = from, to = to, ascending = ascending)
+    return this
 }

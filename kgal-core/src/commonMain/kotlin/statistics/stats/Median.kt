@@ -36,21 +36,21 @@ public val GA<*, Long>.median: Double
  */
 @get:JvmName("getMedianInt")
 public val Lifecycle<*, Int>.median: Double
-    get() = population.getMedian { toDouble() }
+    get() = population.getMedian(guaranteedSorted = statisticsConfig.guaranteedSorted) { toDouble() }
 
 /**
  * Median fitness value of chromosomes in [Population]
  */
 @get:JvmName("getMedianDouble")
 public val Lifecycle<*, Double>.median: Double
-    get() = population.getMedian { this }
+    get() = population.getMedian(guaranteedSorted = statisticsConfig.guaranteedSorted) { this }
 
 /**
  * Median fitness value of chromosomes in [Population]
  */
 @get:JvmName("getMedianLong")
 public val Lifecycle<*, Long>.median: Double
-    get() = population.getMedian { toDouble() }
+    get() = population.getMedian(guaranteedSorted = statisticsConfig.guaranteedSorted) { toDouble() }
 
 /**
  * Creates [Statistic] for median fitness value of chromosomes in [Population]
@@ -75,16 +75,28 @@ public fun Lifecycle<*, Long>.median(): Statistic<Double> = Statistic(NAME, medi
  * @param transformer converter [F] to [Double]
  */
 private inline fun <V, F> Population<V, F>.getMedian(
+    guaranteedSorted: Boolean = false,
     transformer: F.() -> Double,
 ): Double {
-    val source = this.copyOfRange(fromIndex = 0, toIndex = size).apply { sort() }
-    val indexMedian = source.size / 2
-    return if (source.size % 2 == 1) {
-        source[indexMedian].fitness!!.transformer()
+    return if (guaranteedSorted) {
+        val indexMedian = size / 2
+        if (size % 2 == 1) {
+            get(indexMedian).fitness!!.transformer()
+        } else {
+            val first = get(indexMedian)
+            val second = get(indexMedian - 1)
+            (first.fitness!!.transformer() + second.fitness!!.transformer()) / 2
+        }
     } else {
-        val first = source[indexMedian]
-        val second = source[indexMedian - 1]
-        (first.fitness!!.transformer() + second.fitness!!.transformer()) / 2
+        val source = this.copyOfRange(fromIndex = 0, toIndex = size).apply { sort() }
+        val indexMedian = source.size / 2
+        return if (source.size % 2 == 1) {
+            source[indexMedian].fitness!!.transformer()
+        } else {
+            val first = source[indexMedian]
+            val second = source[indexMedian - 1]
+            (first.fitness!!.transformer() + second.fitness!!.transformer()) / 2
+        }
     }
 }
 

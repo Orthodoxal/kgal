@@ -191,13 +191,13 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
      * Prepare [lifecycle] to stop or finish. Executes [afterEvolution] if necessary.
      */
     protected open suspend fun L.afterEvolve() {
-        if (state is State.FINISHED) {
-            afterEvolution()
-        }
-
         // wait for all children coroutines of lifecycle completed
         coroutineContext.job.children.forEach { it.join() }
         // stop all statistics collectors and wait for all data has been handled (force = false)
         statisticsProvider.stopCollectors(force = false)
+
+        if (state is State.FINISHED) {
+            afterEvolution()
+        }
     }
 }
