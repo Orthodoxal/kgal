@@ -297,5 +297,19 @@ internal class PanmicticPopulationInstance<V, F>(
         )
 
     override fun iterator(): Iterator<Chromosome<V, F>> =
-        population.iterator()
+        PanmicticPopulationIterator(population, size)
+
+    private class PanmicticPopulationIterator<V, F>(
+        private val population: Array<Chromosome<V, F>>,
+        private val currentSize: Int,
+    ) : Iterator<Chromosome<V, F>> {
+        private var index = 0
+        override fun hasNext(): Boolean = index < currentSize
+        override fun next(): Chromosome<V, F> =
+            try {
+                population[index++]
+            } catch (e: NoSuchElementException) {
+                index -= 1; throw NoSuchElementException(e.message)
+            }
+    }
 }

@@ -22,13 +22,13 @@ public inline val <V, F> GA<V, F>.worstFitness: F? get() = population.worst?.fit
  * The worst [Chromosome] in [Population] by fitness
  */
 public inline val <V, F> Lifecycle<V, F>.worst: Chromosome<V, F>?
-    get() = if (statisticsConfig.guaranteedSorted) population[size] else population.worst
+    get() = if (statisticsConfig.guaranteedSorted) population[size - 1] else population.worst
 
 /**
  * The worst fitness of [Chromosome] in [Population]
  */
 public inline val <V, F> Lifecycle<V, F>.worstFitness: F?
-    get() = if (statisticsConfig.guaranteedSorted) population[size].fitness else population.worst?.fitness
+    get() = if (statisticsConfig.guaranteedSorted) population[size - 1].fitness else population.worst?.fitness
 
 /**
  * Creates [Statistic] for worst [Chromosome] in [Population] by fitness

@@ -2,6 +2,7 @@ package kgal.panmictic
 
 import kgal.AbstractGA
 import kgal.GA
+import kgal.StopPolicy
 import kgal.chromosome.Chromosome
 import kgal.panmictic.operators.evaluation
 
@@ -49,6 +50,22 @@ public interface PanmicticGA<V, F> : GA<V, F> {
             configuration: PanmicticConfig<V, F>,
         ): PanmicticGA<V, F> = PanmicticGAInstance(configuration)
     }
+}
+
+/**
+ * Immediately restart genetic algorithm.
+ * @param resetPopulation if true all progress will be lost.
+ * @param populationSize new size of restarted population
+ * @param populationBuffer new buffer of restarted population
+ */
+public suspend fun <V, F> PanmicticGA<V, F>.restart(
+    populationSize: Int,
+    populationBuffer: Int,
+    resetPopulation: Boolean = true,
+) {
+    stop(stopPolicy = StopPolicy.Immediately)
+    population.resize(populationSize, populationBuffer)
+    restart(resetPopulation)
 }
 
 /**

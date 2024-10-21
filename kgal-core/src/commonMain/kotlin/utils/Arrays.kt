@@ -1,8 +1,6 @@
 package kgal.utils
 
 import kgal.chromosome.Chromosome
-import kotlin.random.Random
-import kotlin.time.measureTime
 
 /**
  * Fill an array in range [from]..<[to] with chromosomes from range 0..<[from].
