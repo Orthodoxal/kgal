@@ -16,12 +16,10 @@ import kgal.panmictic.pGA
 import kgal.panmictic.population
 import kgal.panmictic.restart
 import kgal.processor.parallelism.ParallelismConfig
+import kgal.statistics.allSessions
 import kgal.statistics.note.Statistic
 import kgal.statistics.note.stat
-import kgal.statistics.stats.bestFitness
-import kgal.statistics.stats.mean
-import kgal.statistics.stats.median
-import kgal.statistics.stats.worstFitness
+import kgal.statistics.stats.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
@@ -128,8 +126,6 @@ private fun main() { // Run it!
 
         // Set up evolution strategy as function
         evolve {
-            println("GA Iteration: $iteration on coroutine: $coroutineContext")
-
             // Imitate hardworking
             delay(timeMillis = 200)
 
@@ -204,8 +200,10 @@ private fun main() { // Run it!
                 sortAfter = true, // Cause guaranteedSorted is true and next step is statistics
             )
 
+            println("GA Iteration: $iteration on coroutine: $coroutineContext")
             // Send statistics stage
             stat(
+                timeIteration(),
                 bestFitness(),
                 mean(),
                 median(),
@@ -260,7 +258,7 @@ private fun main() { // Run it!
                 }
                 .collect { value ->
                     println("Advanced collector:")
-                    println("${value.statistic.name} collected for ${value.iteration}!\n")
+                    println("${value.statistic.name} collected for ${value.iteration} iteration!\n")
                 }
         }
 
@@ -307,4 +305,12 @@ private fun main() { // Run it!
         pga.restart(populationSize = POPULATION_SIZE_INIT, populationBuffer = POPULATION_BUFFER)
         println("Best fitness result for population ${pga.population.name}: ${pga.bestFitness}")
     }
+
+    // STEP 7: Explore GA sessions
+    pga.allSessions.print()
+    // Total duration: STARTED -> LAST TIME VALUE
+    println("Time total: ${pga.timeTotal} // includes collectors waiting")
+    // Total activity duration:
+    // STARTED -> FINISHED + STARTED (by restart) -> STOPPED + STARTED -> FINISHED
+    println("Activity time total: ${pga.activeTimeTotal} // without stops, includes collectors waiting")
 }

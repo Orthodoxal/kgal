@@ -54,18 +54,22 @@ public interface PanmicticGA<V, F> : GA<V, F> {
 
 /**
  * Immediately restart genetic algorithm.
- * @param resetPopulation if true all progress will be lost.
  * @param populationSize new size of restarted population
  * @param populationBuffer new buffer of restarted population
+ * @param forceStop - if `true` and [GA.isActive] stop [GA] with [StopPolicy.Immediately] else [StopPolicy.Default]
+ * @param resetPopulation if true all progress will be lost.
  */
 public suspend fun <V, F> PanmicticGA<V, F>.restart(
     populationSize: Int,
     populationBuffer: Int,
+    forceStop: Boolean = false,
     resetPopulation: Boolean = true,
 ) {
-    stop(stopPolicy = StopPolicy.Immediately)
+    if (isActive) {
+        stop(stopPolicy = if (forceStop) StopPolicy.Immediately else StopPolicy.Default)
+    }
     population.resize(populationSize, populationBuffer)
-    restart(resetPopulation)
+    restart(forceStop, resetPopulation)
 }
 
 /**
@@ -129,9 +133,7 @@ internal class PanmicticGAInstance<V, F>(
 
     override val population: PanmicticPopulation<V, F> = configuration.population
 
-    override val lifecycle: PanmicticLifecycle<V, F> by lazy {
-        PanmicticLifecycle(this, configuration.parallelismConfig, configuration.statisticsConfig)
-    }
+    override val lifecycle: PanmicticLifecycle<V, F> by lazy { PanmicticLifecycle(this, configuration) }
 
     override var elitism: Int = configuration.elitism
 }

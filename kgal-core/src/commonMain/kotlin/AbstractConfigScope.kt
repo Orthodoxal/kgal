@@ -4,6 +4,7 @@ import kgal.processor.parallelism.ParallelismConfig
 import kgal.processor.parallelism.ParallelismConfigScope
 import kgal.statistics.StatisticsConfig
 import kgal.statistics.StatisticsConfigScope
+import kgal.statistics.TimeStore
 import kotlin.random.Random
 
 /**
@@ -16,6 +17,8 @@ public abstract class AbstractConfigScope<V, F, L : Lifecycle<V, F>> : Config<V,
     override var statisticsConfig: StatisticsConfig = StatisticsConfig()
 
     override var parallelismConfig: ParallelismConfig = ParallelismConfig()
+
+    override var timeStore: TimeStore = TimeStore()
 
     override var beforeEvolution: suspend L.() -> Unit = { }
     override var evolution: suspend L.() -> Unit = { }

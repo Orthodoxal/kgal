@@ -4,8 +4,6 @@ import kgal.AbstractLifecycle
 import kgal.Lifecycle
 import kgal.chromosome.Chromosome
 import kgal.panmictic.operators.evaluation
-import kgal.processor.parallelism.ParallelismConfig
-import kgal.statistics.StatisticsConfig
 
 /**
  * [PanmicticLifecycle] - specific [Lifecycle] for [PanmicticGA].
@@ -37,14 +35,13 @@ public interface PanmicticLifecycle<V, F> : Lifecycle<V, F> {
 }
 
 /**
- * Creates an instance of [PanmicticLifecycle] by [panmicticGA] and [parallelismConfig].
+ * Creates an instance of [PanmicticLifecycle] by [panmicticGA] and [panmicticConfig].
  */
 public fun <V, F> PanmicticLifecycle(
     panmicticGA: PanmicticGA<V, F>,
-    parallelismConfig: ParallelismConfig,
-    statisticsConfig: StatisticsConfig,
+    panmicticConfig: PanmicticConfig<V, F>,
 ): PanmicticLifecycle<V, F> =
-    PanmicticLifecycleInstance(panmicticGA, parallelismConfig, statisticsConfig)
+    PanmicticLifecycleInstance(panmicticGA, panmicticConfig)
 
 /**
  * Base realization of [PanmicticLifecycle].
@@ -52,9 +49,8 @@ public fun <V, F> PanmicticLifecycle(
  */
 internal class PanmicticLifecycleInstance<V, F>(
     private val panmicticGA: PanmicticGA<V, F>,
-    override val parallelismConfig: ParallelismConfig,
-    override val statisticsConfig: StatisticsConfig,
-) : PanmicticLifecycle<V, F>, AbstractLifecycle<V, F>(panmicticGA) {
+    panmicticConfig: PanmicticConfig<V, F>,
+) : PanmicticLifecycle<V, F>, AbstractLifecycle<V, F>(panmicticGA, panmicticConfig) {
 
     override val population: PanmicticPopulation<V, F>
         get() = panmicticGA.population

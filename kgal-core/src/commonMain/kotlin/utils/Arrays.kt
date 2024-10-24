@@ -44,33 +44,6 @@ public inline fun <T> Array<out T>.forEachIndexed(start: Int, end: Int = this.si
 }
 
 /**
- * Implementation standard loop: for(int i = [start]; i < [end]; i++)
- * @param start starting index
- * @param end ending index
- */
-public inline fun loop(start: Int, end: Int, action: (index: Int) -> Unit) {
-    var index = start
-    while (index < end) {
-        action(index)
-        ++index
-    }
-}
-
-/**
- * Implementation standard loop: for(int i = [start]; i < [end]; i += [step])
- * @param start starting index
- * @param end ending index
- * @param step step iteration
- */
-public inline fun loop(start: Int, end: Int, step: Int, action: (index: Int) -> Unit) {
-    var index = start
-    while (index < end) {
-        action(index)
-        index += step
-    }
-}
-
-/**
  * For each reversed implementation with from and to.
  * @param from starting index
  * @param to ending index

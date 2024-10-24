@@ -4,6 +4,8 @@ import kgal.chromosome.Chromosome
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.statistics.StatisticsConfig
 import kgal.statistics.StatisticsProvider
+import kgal.statistics.TimeMarker
+import kgal.statistics.TimeStore
 import kgal.statistics.note.StatisticNote
 import kotlin.random.Random
 
@@ -76,6 +78,11 @@ public interface Lifecycle<V, F> {
      * Store serves to synchronize between iterations of [GA].
      */
     public val store: MutableMap<String, Any?>
+
+    /**
+     * Store for all [TimeMarker]s of [GA].
+     */
+    public val timeStore: TimeStore
 
     /**
      * Emit [StatisticNote] to [StatisticsProvider].

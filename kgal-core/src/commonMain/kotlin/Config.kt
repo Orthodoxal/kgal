@@ -3,6 +3,8 @@ package kgal
 import kgal.panmictic.PanmicticConfig
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.statistics.StatisticsConfig
+import kgal.statistics.TimeStore
+import kgal.statistics.TimeMarker
 import kotlin.random.Random
 
 /**
@@ -39,6 +41,11 @@ public interface Config<V, F, L : Lifecycle<V, F>> {
      * Parallelism configuration associated with [GA].
      */
     public val parallelismConfig: ParallelismConfig
+
+    /**
+     *  Store for all [TimeMarker]s of [GA].
+     */
+    public val timeStore: TimeStore
 
     /**
      * Callback before evolution process. Executed only once at launch if [GA.iteration] is 0.
