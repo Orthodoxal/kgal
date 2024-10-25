@@ -1,5 +1,6 @@
 package kgal.chromosome.base
 
+import kgal.PopulationFactory
 import kgal.chromosome.Chromosome
 import kotlin.random.Random
 
@@ -19,9 +20,21 @@ public data class ChromosomeMutableList<T, F : Comparable<F>>(
 }
 
 /**
+ * Creates [PopulationFactory] for [ChromosomeMutableList] with [size].
+ * @param factory factory for creating [T] by index
+ * @param clone function to correct cloning [ChromosomeMutableList]
+ */
+public inline fun <reified T, F : Comparable<F>> mutableList(
+    size: Int,
+    crossinline factory: (index: Int, random: Random) -> T,
+    noinline clone: (ChromosomeMutableList<T, F>.() -> ChromosomeMutableList<T, F>)?,
+): PopulationFactory<MutableList<T>, F> =
+    { mutableList(size, factory, clone) }
+
+/**
  * Create [ChromosomeMutableList] instance
  * @param size gene count
- * @param factory factory for randomly generate array [ChromosomeMutableList.value]
+ * @param factory factory for randomly generate array of [T]
  */
 public inline fun <reified T, F : Comparable<F>> Random.mutableList(
     size: Int,

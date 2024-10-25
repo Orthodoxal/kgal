@@ -1,5 +1,6 @@
 package kgal.chromosome.base
 
+import kgal.PopulationFactory
 import kgal.chromosome.Chromosome
 import kotlin.random.Random
 
@@ -34,7 +35,19 @@ public data class ChromosomeDoubleArray<F : Comparable<F>>(
 }
 
 /**
- * Create [ChromosomeDoubleArray] instance
+ * Creates [PopulationFactory] for [ChromosomeDoubleArray] with [size].
+ * @param from lower bound for the generator (inclusive)
+ * @param until upper limit for generator (exclusive)
+ */
+public fun <F : Comparable<F>> doubles(
+    size: Int,
+    from: Double? = null,
+    until: Double? = null,
+): PopulationFactory<DoubleArray, F> =
+    { doubles(size, from, until) }
+
+/**
+ * Create [ChromosomeDoubleArray] instance.
  * @param size gene count
  * @param from lower bound for the generator (inclusive)
  * @param until upper limit for generator (exclusive)

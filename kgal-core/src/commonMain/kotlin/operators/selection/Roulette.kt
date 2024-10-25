@@ -1,6 +1,7 @@
 package kgal.operators.selection
 
 import kgal.chromosome.Chromosome
+import kotlin.jvm.JvmName
 import kotlin.random.Random
 
 /**
@@ -14,7 +15,8 @@ import kotlin.random.Random
  * @param source the population of Chromosomes
  * @param totalFitness the sum of all fitness values in a population
  */
-public fun <V> selectionRouletteFitDouble(
+@JvmName("selectionRouletteFitDouble")
+public fun <V> selectionRoulette(
     source: Array<Chromosome<V, Double>>,
     totalFitness: Double,
     random: Random,
@@ -41,7 +43,8 @@ public fun <V> selectionRouletteFitDouble(
  * @param source the population of Chromosomes
  * @param totalFitness the sum of all fitness values in a population
  */
-public fun <V> selectionRouletteFitFloat(
+@JvmName("selectionRouletteFitFloat")
+public fun <V> selectionRoulette(
     source: Array<Chromosome<V, Float>>,
     totalFitness: Float,
     random: Random,
@@ -68,7 +71,8 @@ public fun <V> selectionRouletteFitFloat(
  * @param source the population of Chromosomes
  * @param totalFitness the sum of all fitness values in a population
  */
-public fun <V> selectionRouletteFitInt(
+@JvmName("selectionRouletteFitInt")
+public fun <V> selectionRoulette(
     source: Array<Chromosome<V, Int>>,
     totalFitness: Long,
     random: Random,
@@ -85,7 +89,8 @@ public fun <V> selectionRouletteFitInt(
  * @param source the population of Chromosomes
  * @param totalFitness the sum of all fitness values in a population
  */
-public fun <V> selectionRouletteFitLong(
+@JvmName("selectionRouletteFitLong")
+public fun <V> selectionRoulette(
     source: Array<Chromosome<V, Long>>,
     totalFitness: Long,
     random: Random,
@@ -102,7 +107,8 @@ public fun <V> selectionRouletteFitLong(
  * @param source the population of Chromosomes
  * @param totalFitness the sum of all fitness values in a population
  */
-public fun <V> selectionRouletteFitShort(
+@JvmName("selectionRouletteFitShort")
+public fun <V> selectionRoulette(
     source: Array<Chromosome<V, Short>>,
     totalFitness: Long,
     random: Random,
@@ -119,7 +125,8 @@ public fun <V> selectionRouletteFitShort(
  * @param source the population of Chromosomes
  * @param totalFitness the sum of all fitness values in a population
  */
-public fun <V> selectionRouletteFitByte(
+@JvmName("selectionRouletteFitByte")
+public fun <V> selectionRoulette(
     source: Array<Chromosome<V, Byte>>,
     totalFitness: Long,
     random: Random,

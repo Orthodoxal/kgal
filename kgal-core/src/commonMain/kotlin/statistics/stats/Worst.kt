@@ -1,11 +1,8 @@
 package kgal.statistics.stats
 
-import kgal.GA
-import kgal.Lifecycle
-import kgal.Population
+import kgal.*
 import kgal.chromosome.Chromosome
 import kgal.statistics.note.Statistic
-import kgal.worst
 
 
 private const val NAME = "WORST"
@@ -24,12 +21,14 @@ public inline val <V, F> GA<V, F>.worstFitness: F? get() = population.worst?.fit
 /**
  * The worst [Chromosome] in [Population] by fitness
  */
-public inline val <V, F> Lifecycle<V, F>.worst: Chromosome<V, F>? get() = population.worst
+public inline val <V, F> Lifecycle<V, F>.worst: Chromosome<V, F>?
+    get() = if (statisticsConfig.guaranteedSorted) population[size - 1] else population.worst
 
 /**
  * The worst fitness of [Chromosome] in [Population]
  */
-public inline val <V, F> Lifecycle<V, F>.worstFitness: F? get() = population.worst?.fitness
+public inline val <V, F> Lifecycle<V, F>.worstFitness: F?
+    get() = if (statisticsConfig.guaranteedSorted) population[size - 1].fitness else population.worst?.fitness
 
 /**
  * Creates [Statistic] for worst [Chromosome] in [Population] by fitness

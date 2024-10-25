@@ -14,4 +14,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "kgal"
+include(":examples")
 include(":kgal-core")

@@ -16,6 +16,7 @@ internal val DEFAULT_ON_BUFFER_OVERFLOW: BufferOverflow = BufferOverflow.SUSPEND
 internal val DEFAULT_COROUTINE_CONTEXT: CoroutineContext = Dispatchers.IO
 internal const val DEFAULT_ENABLE_DEFAULT_COLLECTOR: Boolean = true
 internal val DEFAULT_COLLECTOR: FlowCollector<StatisticNote<Any?>> = FlowCollector(::println)
+internal const val DEFAULT_GUARANTEED_SORTED: Boolean = false
 
 /**
  * Configuration of basic parameters for statistics operation
@@ -71,6 +72,51 @@ public interface StatisticsConfig {
      * Default value is [DEFAULT_COLLECTOR]
      */
     public val defaultCollector: FlowCollector<StatisticNote<Any?>>
+
+    /**
+     * Optimization flag for statistics. Default is false.
+     *
+     * NOTE:
+     * - it is not recommended to use this optimization for cGA
+     * - use it if you expect performance gains for statistical operators when getting a sorted population, see example below
+     *
+     * If true:
+     * - executes Best, Worst, Mean with O(1)
+     * - statistics operators change their implementation - waiting to receive a sorted population in descending order only
+     * - executes it only in safe zones of evolve strategy (see Example below)
+     *
+     * If false:
+     * - executes Best, Worst with O(N), Mean with O(N*log(N)).
+     * - order in population is irrelevant
+     *
+     * Example:
+     * ```
+     * statisticsConfig {
+     *     guaranteedSorted = true // Set flag to true
+     * }
+     *
+     * // create evolution strategy
+     * evolve {
+     *     // other genetic operators
+     *     // Danger zone: the order of chromosomes is unknown
+     *     evaluation(sortAfter = true) // evaluate population and sort in descending order
+     *     // Safe zone: population sorted by descending
+     *     stat(best(), worst()) // OK but inefficient:
+     *     // without sorting: O(N) + O(N)
+     *     // with sorting: O(N*log(N)) + O(1) + O(1)
+     *
+     *     // other genetic operators
+     *     // Danger zone: the order of chromosomes is unknown
+     *     population.sort()
+     *     // Safe zone: population sorted by descending
+     *     stat(best(), mean(), worst()) // OK and efficient
+     *     // without sorting: O(N) + O(N*log(N)) + O(N)
+     *     // with sorting: O(N*log(N)) + O(1) + O(1)
+     * }
+     * ```
+     * @see DEFAULT_GUARANTEED_SORTED
+     */
+    public val guaranteedSorted: Boolean
 }
 
 /**
@@ -84,6 +130,7 @@ public fun StatisticsConfig(
     coroutineContext: CoroutineContext = DEFAULT_COROUTINE_CONTEXT,
     enableDefaultCollector: Boolean = DEFAULT_ENABLE_DEFAULT_COLLECTOR,
     defaultCollector: FlowCollector<StatisticNote<Any?>> = DEFAULT_COLLECTOR,
+    guaranteedSorted: Boolean = DEFAULT_GUARANTEED_SORTED,
 ): StatisticsConfig =
     StatisticsConfigScope(
         replay = replay,
@@ -92,6 +139,7 @@ public fun StatisticsConfig(
         coroutineContext = coroutineContext,
         enableDefaultCollector = enableDefaultCollector,
         defaultCollector = defaultCollector,
+        guaranteedSorted = guaranteedSorted,
     )
 
 /**
@@ -125,4 +173,5 @@ public class StatisticsConfigScope(
     override var coroutineContext: CoroutineContext = DEFAULT_COROUTINE_CONTEXT,
     override var enableDefaultCollector: Boolean = DEFAULT_ENABLE_DEFAULT_COLLECTOR,
     override var defaultCollector: FlowCollector<StatisticNote<Any?>> = DEFAULT_COLLECTOR,
+    override var guaranteedSorted: Boolean = DEFAULT_GUARANTEED_SORTED,
 ) : StatisticsConfig

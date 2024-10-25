@@ -5,6 +5,8 @@ import kgal.processor.parallelism.ParallelismConfig
 import kgal.statistics.STAT_COLLECTOR
 import kgal.statistics.StatisticsProvider
 import kgal.statistics.StatisticsProvider.Companion.BASE_COLLECTOR_ID
+import kgal.statistics.TimeMarker
+import kgal.statistics.TimeStore
 import kgal.statistics.note.StatisticNote
 import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.CoroutineContext
@@ -45,9 +47,14 @@ import kotlin.random.Random
 public interface GA<V, F> {
 
     /**
-     * State describes the current state of the genetic algorithm. Serves as the main marker for control methods.
+     * State describes the current state of the genetic algorithm.
      */
     public val state: State
+
+    /**
+     * Return `true` if [GA] is active.
+     */
+    public val isActive: Boolean
 
     /**
      * Population configuration for genetic algorithm.
@@ -77,20 +84,34 @@ public interface GA<V, F> {
     public val statisticsProvider: StatisticsProvider
 
     /**
+     * Store for all [TimeMarker]s of [GA].
+     */
+    public val timeStore: TimeStore
+
+    /**
      * Start genetic algorithm.
+     * @throws [IllegalStateException] if [isActive] true ([GA] can only work in one coroutineScope at a time)
      */
     public suspend fun start()
 
     /**
-     * Resume genetic algorithm if it has been stopped.
+     * Resume stopped genetic algorithm.
+     *
+     * Returns (Resume will not be executed) if [GA.isActive] OR [state] is [State.FINISHED].
      */
     public suspend fun resume()
 
     /**
      * Immediately restart genetic algorithm.
-     * @param resetPopulation if true all progress will be lost.
+     *
+     * Equals to [start] if [state] is [State.INITIALIZED].
+     * @param forceStop - if `true` and [GA] is active stop [GA] with [StopPolicy.Immediately] else [StopPolicy.Default]
+     * @param resetPopulation if `true` all progress will be lost.
      */
-    public suspend fun restart(resetPopulation: Boolean = true)
+    public suspend fun restart(
+        forceStop: Boolean = false,
+        resetPopulation: Boolean = true,
+    )
 
     /**
      * Stop genetic algorithm.

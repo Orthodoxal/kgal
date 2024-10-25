@@ -1,5 +1,6 @@
 package kgal.chromosome.base
 
+import kgal.PopulationFactory
 import kgal.chromosome.Chromosome
 import kotlin.random.Random
 
@@ -34,8 +35,20 @@ public data class ChromosomeCharArray<F : Comparable<F>>(
 }
 
 internal val defaultAllowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+
 internal fun chars(size: Int, random: Random, allowedChars: List<Char> = defaultAllowedChars) =
     CharArray(size) { allowedChars.random(random) }
+
+/**
+ * Creates [PopulationFactory] for [ChromosomeCharArray] with [size].
+ * @param allowedChars symbols for generation
+ * @see defaultAllowedChars
+ */
+public fun <F : Comparable<F>> chars(
+    size: Int,
+    allowedChars: List<Char> = defaultAllowedChars,
+): PopulationFactory<CharArray, F> =
+    { chars(size, allowedChars) }
 
 /**
  * Create [ChromosomeCharArray] instance

@@ -1,9 +1,14 @@
 package kgal
 
 import kgal.statistics.StatisticsProvider
+import kgal.statistics.TimeStore
+import kgal.statistics.timeMarker
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
 import kotlin.coroutines.coroutineContext
 import kotlin.random.Random
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 /**
  * [AbstractGA] - Abstract class implementing the basic functionality of the [GA] interface.
@@ -22,6 +27,9 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
     override var state: State = State.INITIALIZED
         protected set
 
+    override val isActive: Boolean
+        get() = processingMutex.isLocked
+
     override val random: Random = configuration.random
     override var iteration: Int = 0
 
@@ -30,6 +38,8 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
     override val statisticsProvider: StatisticsProvider by lazy {
         StatisticsProvider(name, configuration.statisticsConfig)
     }
+
+    override val timeStore: TimeStore = configuration.timeStore
 
     /**
      * Abstract lifecycle property.
@@ -52,29 +62,43 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
     protected val afterEvolution: suspend L.() -> Unit = configuration.afterEvolution
 
     /**
-     * Pause flag for [StopPolicy.Default]. If true lifecycle will stop after current iteration.
+     * Pause flag for [StopPolicy.Default]. If true lifecycle will be stopped after current iteration.
      */
-    private var pause: Boolean = false
+    protected var pause: Boolean = false
 
     /**
      * Main [CoroutineScope] of [GA] associated with the evolutionary process being launched.
      * Rewrites with [start], [resume], [restart].
      */
-    private var coroutineScope: CoroutineScope? = null
+    protected var coroutineScope: CoroutineScope? = null
+
+    /**
+     * Processing mutex of evolution (only one [coroutineScope] can be executed in any moment).
+     */
+    protected val processingMutex: Mutex = Mutex()
 
     override suspend fun start() {
-        if (state == State.STARTED) return
         startByOption(iterationFrom = 0)
     }
 
     override suspend fun resume() {
-        if (state != State.STOPPED) return
+        if (isActive || state is State.FINISHED) return
         startByOption(iterationFrom = iteration)
     }
 
-    override suspend fun restart(resetPopulation: Boolean) {
+    override suspend fun restart(
+        forceStop: Boolean,
+        resetPopulation: Boolean,
+    ) {
         if (state != State.INITIALIZED) { // equal to start() if State.INITIALIZED
-            stop(stopPolicy = StopPolicy.Immediately)
+            if (forceStop) {
+                stop(stopPolicy = StopPolicy.Immediately)
+            } else if (state !is State.FINISHED) {
+                stop(stopPolicy = StopPolicy.Default)
+            }
+
+            lifecycle.store.clear()
+
             if (resetPopulation) {
                 population.reset(random)
             }
@@ -83,13 +107,12 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
     }
 
     override suspend fun stop(stopPolicy: StopPolicy) {
-        if (state != State.STARTED && coroutineScope?.isActive == true) return
+        if (!isActive) return
 
         when (stopPolicy) {
             is StopPolicy.Default -> {
                 pause = true
-                // wait for GA successfully stopped
-                coroutineScope?.coroutineContext?.job?.join()
+                coroutineScope?.coroutineContext?.job?.join() // wait for GA successfully stopped
             }
 
             is StopPolicy.Immediately -> {
@@ -99,19 +122,14 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
                         cause = null,
                     )
                 )
+                pause = true
                 statisticsProvider.stopCollectors(force = true)
-                state = State.STOPPED
             }
 
             is StopPolicy.Timeout -> {
-                val coroutineScope = coroutineScope ?: return
-                pause = true
                 try {
                     withTimeout(stopPolicy.millis) {
-                        coroutineScope.coroutineContext.job.join()
-                        val isCanceled = coroutineScope.coroutineContext.job.isCancelled
-                        if (isCanceled || state != State.STARTED || !pause) return@withTimeout
-                        stop(stopPolicy = StopPolicy.Immediately)
+                        stop(stopPolicy = StopPolicy.Default)
                     }
                 } catch (_: TimeoutCancellationException) {
                     stop(stopPolicy = StopPolicy.Immediately)
@@ -124,16 +142,30 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
      * Prepares GA for launch. Creates [coroutineScope] for evolve process [GA].
      * @param iterationFrom set current iteration
      */
+    @OptIn(ExperimentalUuidApi::class)
     protected open suspend fun startByOption(iterationFrom: Int) {
-        statisticsProvider.prepareStatistics()
-        this.iteration = iterationFrom
+        val sessionToken: Uuid = Uuid.random()
+        if (!processingMutex.tryLock(owner = sessionToken)) {
+            throw IllegalStateException("Attempting to launch an active GA. GA can only work in one coroutineScope at a time.")
+        }
 
-        coroutineScope {
-            coroutineScope = this
-            launch {
-                launch()
-                coroutineScope = null
+        try {
+            statisticsProvider.prepareStatistics()
+            this.iteration = iterationFrom
+
+            coroutineScope {
+                coroutineScope = this
+                launch {
+                    launch()
+                    coroutineScope = null
+                }
             }
+        } finally {
+            if (state !is State.FINISHED) { // GA IS STOPPED
+                state = State.STOPPED
+                timeStore.onStopped.add(timeMarker)
+            }
+            processingMutex.unlock(sessionToken)
         }
     }
 
@@ -152,9 +184,14 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
      * Prepare [lifecycle] to start. Executes [beforeEvolution] if necessary.
      */
     protected open suspend fun L.beforeEvolve() {
+        // prepare GA and Lifecycle
         pause = false
         finishByStopConditions = false
         finishedByMaxIteration = false
+
+        state = State.STARTED
+        timeStore.onStarted.add(timeMarker)
+        timeStore.onIteration.add(timeMarker)
 
         if (iteration == 0) {
             beforeEvolution()
@@ -165,23 +202,12 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
      * Start infinite evolutionary loop with stop checks on each iteration.
      */
     protected open suspend fun L.evolve() {
-        state = State.STARTED
         while (true) {
             this@AbstractGA.iteration++
             evolution()
 
-            if (finishByStopConditions) {
-                state = State.FINISHED.ByStopConditions
-                break
-            }
-
-            if (finishedByMaxIteration) {
-                state = State.FINISHED.ByMaxIteration
-                break
-            }
-
-            if (pause) {
-                state = State.STOPPED
+            // Loop break conditions
+            if (finishByStopConditions || finishedByMaxIteration || pause) {
                 break
             }
         }
@@ -191,13 +217,22 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
      * Prepare [lifecycle] to stop or finish. Executes [afterEvolution] if necessary.
      */
     protected open suspend fun L.afterEvolve() {
-        if (state is State.FINISHED) {
-            afterEvolution()
-        }
-
         // wait for all children coroutines of lifecycle completed
         coroutineContext.job.children.forEach { it.join() }
         // stop all statistics collectors and wait for all data has been handled (force = false)
         statisticsProvider.stopCollectors(force = false)
+
+        val newState = when {
+            finishByStopConditions -> State.FINISHED.ByStopConditions
+            finishedByMaxIteration -> State.FINISHED.ByMaxIteration
+            else -> state
+        }
+
+        if (newState is State.FINISHED) {
+            timeStore.onFinished.add(timeMarker)
+            afterEvolution()
+            store.clear()
+            state = newState
+        }
     }
 }

@@ -24,12 +24,14 @@ public inline val <V, F> GA<V, F>.bestFitness: F? get() = population.best?.fitne
 /**
  * The best [Chromosome] in [Population] by fitness
  */
-public inline val <V, F> Lifecycle<V, F>.best: Chromosome<V, F>? get() = population.best
+public inline val <V, F> Lifecycle<V, F>.best: Chromosome<V, F>?
+    get() = if (statisticsConfig.guaranteedSorted) population[0] else population.best
 
 /**
  * The best fitness of [Chromosome] in [Population]
  */
-public inline val <V, F> Lifecycle<V, F>.bestFitness: F? get() = population.best?.fitness
+public inline val <V, F> Lifecycle<V, F>.bestFitness: F?
+    get() = if (statisticsConfig.guaranteedSorted) population[0].fitness else population.best?.fitness
 
 /**
  * Creates [Statistic] for best [Chromosome] in [Population] by fitness

@@ -1,5 +1,6 @@
 package kgal.chromosome.base
 
+import kgal.PopulationFactory
 import kgal.chromosome.Chromosome
 import kotlin.random.Random
 
@@ -32,6 +33,12 @@ public data class ChromosomeFloatArray<F : Comparable<F>>(
 
     override fun clone(): Chromosome<FloatArray, F> = copy(value = value.copyOf())
 }
+
+/**
+ * Creates [PopulationFactory] for [ChromosomeFloatArray] with [size].
+ */
+public fun <F : Comparable<F>> floats(size: Int): PopulationFactory<FloatArray, F> =
+    { floats(size) }
 
 /**
  * Create [ChromosomeFloatArray] instance
