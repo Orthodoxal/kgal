@@ -80,7 +80,7 @@ public abstract class AbstractConfigScope<V, F, L : Lifecycle<V, F>> : Config<V,
 
     /**
      * Creates [afterEvolution] with specific of realization.
-     * Callback after evolution process. Executed at launch when [GA.state] is [State.FINISHED].
+     * Callback after evolution process. Executed at launch when [GA.state] is going to be [State.FINISHED].
      * @param useDefault if true used [baseAfter] (see for specific realization)
      */
     public open fun AbstractConfigScope<V, F, L>.after(

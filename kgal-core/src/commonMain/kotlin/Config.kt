@@ -58,7 +58,7 @@ public interface Config<V, F, L : Lifecycle<V, F>> {
     public val evolution: suspend L.() -> Unit
 
     /**
-     * Callback after evolution process. Executed at launch when [GA.state] is [State.FINISHED].
+     * Callback after evolution process. Executed at launch when [GA.state] is going to be [State.FINISHED].
      */
     public val afterEvolution: suspend L.() -> Unit
 }
