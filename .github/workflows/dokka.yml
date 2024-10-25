@@ -5,6 +5,11 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     name: Build
@@ -14,13 +19,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
       - name: Generate docs with dokka
         run: ./gradlew dokkaHtml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ${{ github.workspace }}/kstore/build/dokka/html
+          path: ${{ github.workspace }}/kgal-core/build/dokka/html
 
       - name: Deploy to Github Pages
         id: deployment
