@@ -1,5 +1,6 @@
 package kgal.panmictic
 
+import kgal.AbstractArrayPopulation
 import kgal.Population
 import kgal.Population.Companion.DEFAULT_POPULATION_NAME
 import kgal.PopulationFactory
@@ -171,9 +172,7 @@ internal class PanmicticPopulationInstance<V, F>(
     buffer: Int,
     override var factory: PopulationFactory<V, F>,
     population: Array<Chromosome<V, F>>? = null,
-) : PanmicticPopulation<V, F> {
-
-    private lateinit var population: Array<Chromosome<V, F>>
+) : PanmicticPopulation<V, F>, AbstractArrayPopulation<V, F>() {
 
     init {
         require(size > 0) { "Size must be positive" }
@@ -186,9 +185,6 @@ internal class PanmicticPopulationInstance<V, F>(
             this.population = population
         }
     }
-
-    override val initialized: Boolean
-        get() = this::population.isInitialized
 
     override var size: Int = size
         private set
@@ -220,15 +216,6 @@ internal class PanmicticPopulationInstance<V, F>(
         }
     }
 
-    override fun get(index: Int): Chromosome<V, F> =
-        population[index]
-
-    override fun set(index: Int, chromosome: Chromosome<V, F>) =
-        population.set(index, chromosome)
-
-    override fun copyOf(): Array<Chromosome<V, F>> =
-        population.copyOf()
-
     override fun resize(newSize: Int?, newBuffer: Int?) {
         if (newSize == null && newBuffer == null) return // no changes
 
@@ -241,7 +228,7 @@ internal class PanmicticPopulationInstance<V, F>(
         require(updatedSize > 0) { "Size must be positive" }
         require(updatedBuffer >= 0) { "Buffer must be positive or zero" }
 
-        if (!this::population.isInitialized) {
+        if (!initialized) {
             // population is not initialized -> set sizes safely and return
             size = updatedSize
             buffer = updatedBuffer
