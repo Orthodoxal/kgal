@@ -1,5 +1,6 @@
 package kgal.processor.parallelism
 
+import kgal.dsl.ConfigDslMarker
 import kgal.processor.parallelism.ParallelismConfig.Companion.NO_PARALLELISM
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -8,7 +9,7 @@ internal const val DEFAULT_PARALLEL_WORKER_COUNT = 0
 internal val DEFAULT_PARALLEL_DISPATCHER = Dispatchers.Default
 
 /**
- * Configuration of basic parameters for parallel processing
+ * Configuration of basic parameters for parallel processing.
  * Please note that parallel computing is only justified for really complex operations.
  * Computationally simple genetic operators such as selection or mutation may be more efficient to execute serially than in parallel.
  *
@@ -20,42 +21,43 @@ internal val DEFAULT_PARALLEL_DISPATCHER = Dispatchers.Default
  * }
  *
  * ```
- * Creates with [ParallelismConfig] or [parallelismConfig]
+ * Creates with [ParallelismConfig].
  * @see ParallelismConfigScope
  */
+@ConfigDslMarker
 public interface ParallelismConfig {
 
     /**
-     * workersCount - the number of launched coroutines which can be executed in parallel processing
+     * workersCount - the number of launched coroutines which can be executed in parallel processing.
      *
-     * Default value is [DEFAULT_PARALLEL_WORKER_COUNT]
+     * Default value is [DEFAULT_PARALLEL_WORKER_COUNT].
      */
     public val workersCount: Int
 
     /**
-     * dispatcher - dispatcher for parallel coroutines
+     * dispatcher - dispatcher for parallel coroutines.
      *
-     * Default value is [DEFAULT_PARALLEL_DISPATCHER]
+     * Default value is [DEFAULT_PARALLEL_DISPATCHER].
      */
     public val dispatcher: CoroutineDispatcher
 
     public companion object {
 
         /**
-         * Flag for limiting parallelism, which sets the execution of the genetic operator to be strictly sequential
+         * Flag for limiting parallelism, which sets the execution of the genetic operator to be strictly sequential.
          */
         public const val NO_PARALLELISM: Int = 0
     }
 }
 
 /**
- * Property for displaying availability of parallel mode of operation
+ * Property for displaying availability of parallel mode of operation.
  */
 public inline val ParallelismConfig.enabled: Boolean
     get() = workersCount > 1
 
 /**
- * Creates [ParallelismConfig]
+ * Creates [ParallelismConfig].
  * @see [ParallelismConfig]
  */
 public fun ParallelismConfig(
@@ -64,15 +66,7 @@ public fun ParallelismConfig(
 ): ParallelismConfig = ParallelismConfigScope(workersCount, dispatcher)
 
 /**
- * Creates [ParallelismConfig] with [ParallelismConfigScope]
- * @see ParallelismConfig
- * @see ParallelismConfigScope
- */
-public inline fun parallelismConfig(config: ParallelismConfigScope.() -> Unit): ParallelismConfig =
-    ParallelismConfigScope().apply(config)
-
-/**
- * Deep clones the current parallelism configuration
+ * Deep clones the current parallelism configuration.
  */
 public fun ParallelismConfig.clone(): ParallelismConfig = ParallelismConfigScope(
     workersCount = workersCount,
@@ -80,8 +74,7 @@ public fun ParallelismConfig.clone(): ParallelismConfig = ParallelismConfigScope
 )
 
 /**
- * ParallelismConfigScope - Creating [ParallelismConfig] with Kotlin DSL style
- * @see parallelismConfig
+ * ParallelismConfigScope - Creating [ParallelismConfig] with Kotlin DSL style.
  */
 public class ParallelismConfigScope(
     workersCount: Int = DEFAULT_PARALLEL_WORKER_COUNT,

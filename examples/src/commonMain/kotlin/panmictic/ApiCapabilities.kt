@@ -114,7 +114,7 @@ private fun main() { // Run it!
         // Set up statistics
         statisticsConfig {
             coroutineContext = Dispatchers.IO // Set up dispatcher for statistics
-            enableDefaultCollector = false // Turn of default collector for statistics
+            enableDefaultCollector = false // Turn off default collector for statistics
             guaranteedSorted = true // Prepare statistics to sorted population in descending order
             // See other params for statistics flow
         }
