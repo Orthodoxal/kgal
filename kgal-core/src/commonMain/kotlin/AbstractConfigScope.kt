@@ -1,5 +1,6 @@
 package kgal
 
+import kgal.dsl.ConfigDslMarker
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.processor.parallelism.ParallelismConfigScope
 import kgal.statistics.StatisticsConfig
@@ -31,7 +32,7 @@ public abstract class AbstractConfigScope<V, F, L : Lifecycle<V, F>> : Config<V,
      */
     public open fun AbstractConfigScope<V, F, L>.before(
         useDefault: Boolean = true,
-        beforeEvolution: suspend L.() -> Unit,
+        beforeEvolution: suspend (@ConfigDslMarker L).() -> Unit,
     ) {
         this.beforeEvolution = beforeEvolution.takeIf { !useDefault } ?: { baseBefore(); beforeEvolution() }
     }
@@ -74,8 +75,11 @@ public abstract class AbstractConfigScope<V, F, L : Lifecycle<V, F>> : Config<V,
      * ```
      * @param useDefault if true used [baseEvolve] (see for specific realization)
      */
-    public open fun AbstractConfigScope<V, F, L>.evolve(useDefault: Boolean = true, evolution: suspend L.() -> Unit) {
-        this.evolution = evolution.takeIf { !useDefault } ?: { baseEvolve(); evolution() }
+    public open fun AbstractConfigScope<V, F, L>.evolve(
+        useDefault: Boolean = true,
+        evolution: suspend (@ConfigDslMarker L).() -> Unit,
+    ) {
+        this.evolution = evolution.takeIf { !useDefault } ?: { baseEvolve(this); evolution() }
     }
 
     /**
@@ -85,7 +89,7 @@ public abstract class AbstractConfigScope<V, F, L : Lifecycle<V, F>> : Config<V,
      */
     public open fun AbstractConfigScope<V, F, L>.after(
         useDefault: Boolean = true,
-        afterEvolution: suspend L.() -> Unit,
+        afterEvolution: suspend (@ConfigDslMarker L).() -> Unit,
     ) {
         this.afterEvolution = afterEvolution.takeIf { !useDefault } ?: { afterEvolution(); baseAfter() }
     }
