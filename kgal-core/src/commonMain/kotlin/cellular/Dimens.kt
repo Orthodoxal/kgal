@@ -117,8 +117,7 @@ public value class Dimens(
         /**
          * Creates custom a n-dimensional (n-D) array:
          * ```
-         * val dimens = Dimens
-         *     .custom(5, 3, 4, 9, 6)
+         * val dimens = Dimens.custom(5, 3, 4, 9, 6)
          * dimens.size = 3240 // size of population
          * dimens.count = 5 // n-dimensional space
          * ```

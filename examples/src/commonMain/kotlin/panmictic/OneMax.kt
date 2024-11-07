@@ -2,6 +2,7 @@ package panmictic
 
 import kgal.chromosome.base.booleans
 import kgal.operators.stopBy
+import kgal.panmictic.evolve
 import kgal.panmictic.operators.crossover.cxOnePoint
 import kgal.panmictic.operators.evaluation
 import kgal.panmictic.operators.mutation.mutFlipBit

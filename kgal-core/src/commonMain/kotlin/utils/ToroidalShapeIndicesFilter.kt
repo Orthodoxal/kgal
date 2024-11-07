@@ -1,10 +1,18 @@
 package kgal.utils
 
+import kgal.cellular.CellularNeighborhood
+import kgal.cellular.CellularPopulation
 import kgal.cellular.Dimens
 
 /**
- * Toroidal filter for indices
- * @return neighboursIndices
+ * Toroidal filter for neighbors indices.
+ * @param position coordinate of target cell in a projection one-dimensional array
+ * @param dimens dimens of current [CellularPopulation]
+ * @param indicesOneArray initial matrix of neighbor's coordinates (indices) in a projection one-dimensional array
+ * @param indicesNArray initial matrix of neighbor's coordinates (indices) in n-dimensional array
+ * @return neighborsIndices in a projection one-dimensional array
+ * @see <a href="https://en.wikipedia.org/wiki/Toroid">Toroidal shape</a>
+ * @see CellularNeighborhood.neighborsIndicesMatrix
  */
 internal fun toroidalShapeIndicesFilter(
     position: Int,
@@ -13,27 +21,27 @@ internal fun toroidalShapeIndicesFilter(
     indicesNArray: Array<IntArray>,
 ): IntArray {
     val positionCoordinatesNArray = coordinatesInNArrayByPosition(position, dimens)
-    return IntArray(indicesOneArray.size) { neighbourIndex ->
-        val neighbourCoordinatesNArray = IntArray(dimens.count) { dimenIndex ->
-            positionCoordinatesNArray[dimenIndex] + indicesNArray[neighbourIndex][dimenIndex]
+    return IntArray(indicesOneArray.size) { neighborIndex ->
+        val neighborCoordinatesNArray = IntArray(dimens.count) { dimenIndex ->
+            positionCoordinatesNArray[dimenIndex] + indicesNArray[neighborIndex][dimenIndex]
         }
 
         var isNeedReEvaluate = false
-        neighbourCoordinatesNArray.forEachIndexed { index, coordinate ->
+        neighborCoordinatesNArray.forEachIndexed { index, coordinate ->
             val dimenSize = dimens.value[index]
-            if (coordinate < 0) { // координата не отрицательна
+            if (coordinate < 0) { // the coordinate is not negative
                 isNeedReEvaluate = true
-                neighbourCoordinatesNArray[index] = dimenSize + coordinate
-            } else if (coordinate >= dimenSize) { // координата не больше, чем граница размерности
+                neighborCoordinatesNArray[index] = dimenSize + coordinate
+            } else if (coordinate >= dimenSize) { // coordinate is not greater than the dimension boundary
                 isNeedReEvaluate = true
-                neighbourCoordinatesNArray[index] = coordinate % dimenSize
+                neighborCoordinatesNArray[index] = coordinate % dimenSize
             }
         }
 
         if (isNeedReEvaluate) {
-            positionByCoordinatesInNArray(neighbourCoordinatesNArray, dimens)
+            positionByCoordinatesInNArray(neighborCoordinatesNArray, dimens)
         } else {
-            position + indicesOneArray[neighbourIndex]
+            position + indicesOneArray[neighborIndex]
         }
     }
 }

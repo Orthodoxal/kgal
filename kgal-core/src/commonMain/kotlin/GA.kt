@@ -1,6 +1,8 @@
 package kgal
 
+import kgal.cellular.cGA
 import kgal.chromosome.Chromosome
+import kgal.panmictic.pGA
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.statistics.STAT_COLLECTOR
 import kgal.statistics.StatisticsProvider
@@ -27,7 +29,6 @@ import kotlin.random.Random
  * [GA] uses suspended control methods and [CoroutineContext] binding, which allows you not to worry about memory leaks.
  *
  * Base recommendations:
- * - Create with TODO(Дописать методы для создания)
  * - Use [GA.startBlocking] or [GA.start] to run Genetic Algorithm
  * - Use [GA.collect] for collecting [StatisticNote] produced by [statisticsProvider]
  * - Look for [ParallelismConfig] to create parallel [GA]. Note that parallelism may not always improve performance.
@@ -35,6 +36,12 @@ import kotlin.random.Random
  *
  * To create your own implementation, it is recommended to use [AbstractGA],
  * also pay attention to [AbstractLifecycle] and [AbstractConfigScope] with Kotlin DSL style.
+ *
+ * Creates:
+ * - `Panmictic` (Classical) Genetic Algorithm by [pGA]
+ * - `Cellular` Genetic Algorithm by [cGA]
+ *
+ * TODO(Дописать методы для создания)
  *
  * @see [State]
  * @see [AbstractGA]

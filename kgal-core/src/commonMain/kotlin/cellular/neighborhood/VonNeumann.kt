@@ -6,17 +6,33 @@ import kgal.utils.delannoyNumber
 import kgal.utils.positionByCoordinatesInNArray
 import kotlin.math.abs
 
-public data class VonNeumann(override val radius: Int) : CellularNeighborhood {
+/**
+ * Defines `Von Neumann neighborhood` with [radius] > 0.
+ *
+ * Example for Von Neumann neighborhood with [radius] = 1:
+ * ```
+ * X   X   X   X   X
+ * X   X   N   X   X
+ * X   N   C   N   X
+ * X   X   N   X   X
+ * X   X   X   X   X
+ * ```
+ * Where `C` - target chromosome, `N` - neighbors for current target chromosomes, `X` - other chromosomes in population.
+ * @see <a href="https://en.wikipedia.org/wiki/Von_Neumann_neighborhood">Von Neumann neighborhood</a>
+ */
+public data class VonNeumann(
+    val radius: Int
+) : CellularNeighborhood {
 
     init {
         require(radius > 0) { "Radius must be positive." }
     }
 
-    override fun neighboursCount(dimenCount: Int): Int = delannoyNumber(dimenCount, radius) - 1
+    override fun neighborsCount(dimenCount: Int): Int = delannoyNumber(dimenCount, radius) - 1
 
-    override fun neighboursIndicesMatrix(dimens: Dimens): Pair<IntArray, Array<IntArray>> {
+    override fun neighborsIndicesMatrix(dimens: Dimens): Pair<IntArray, Array<IntArray>> {
         val dimenCount = dimens.count
-        val count = neighboursCount(dimenCount)
+        val count = neighborsCount(dimenCount)
         val resultOneArray = IntArray(count)
         val resultNArray = Array(count) { IntArray(dimenCount) }
         var resultIndex = 0
@@ -30,10 +46,10 @@ public data class VonNeumann(override val radius: Int) : CellularNeighborhood {
         var dimenIndex = 0
         if (dimenCount == 1) {
             var r = -radius
-            repeat(count) { neighbourIndex ->
+            repeat(count) { neighborIndex ->
                 if (r == 0) r++
-                resultOneArray[neighbourIndex] = r
-                resultNArray[neighbourIndex] = intArrayOf(r)
+                resultOneArray[neighborIndex] = r
+                resultNArray[neighborIndex] = intArrayOf(r)
                 r++
             }
             return resultOneArray to resultNArray

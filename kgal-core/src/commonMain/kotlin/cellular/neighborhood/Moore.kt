@@ -4,28 +4,44 @@ import kgal.cellular.CellularNeighborhood
 import kgal.cellular.Dimens
 import kgal.utils.positionByCoordinatesInNArray
 
-public data class Moore(override val radius: Int) : CellularNeighborhood {
+/**
+ * Defines `Moore neighborhood` with [radius] > 0.
+ *
+ * Example for Moore neighborhood with [radius] = 1:
+ * ```
+ * X   X   X   X   X
+ * X   N   N   N   X
+ * X   N   C   N   X
+ * X   N   N   N   X
+ * X   X   X   X   X
+ * ```
+ * Where `C` - target chromosome, `N` - neighbors for current target chromosomes, `X` - other chromosomes in population.
+ * @see <a href="https://en.wikipedia.org/wiki/Moore_neighborhood">Moore neighborhood</a>
+ */
+public data class Moore(
+    val radius: Int
+) : CellularNeighborhood {
 
     init {
         require(radius > 0) { "Radius must be positive." }
     }
 
-    override fun neighboursCount(dimenCount: Int): Int {
+    override fun neighborsCount(dimenCount: Int): Int {
         var result = radius
         repeat(dimenCount - 1) { result *= radius }
         return result
     }
 
-    override fun neighboursIndicesMatrix(dimens: Dimens): Pair<IntArray, Array<IntArray>> {
+    override fun neighborsIndicesMatrix(dimens: Dimens): Pair<IntArray, Array<IntArray>> {
         val dimenCount = dimens.count
         val radDimen = radius * 2 + 1
-        var neighboursCount = radDimen
-        repeat(dimenCount - 1) { neighboursCount *= radDimen }
-        neighboursCount--
+        var neighborsCount = radDimen
+        repeat(dimenCount - 1) { neighborsCount *= radDimen }
+        neighborsCount--
 
         val coordinates = IntArray(dimenCount) { -radius }
-        val resultOneArray = IntArray(neighboursCount)
-        val resultNArray = Array(neighboursCount) { IntArray(dimenCount) }
+        val resultOneArray = IntArray(neighborsCount)
+        val resultNArray = Array(neighborsCount) { IntArray(dimenCount) }
         var resultIndex = 0
 
         var dimenIndex = 0
@@ -39,7 +55,7 @@ public data class Moore(override val radius: Int) : CellularNeighborhood {
             resultIndex++
             coordinates[dimenIndex] = coordinates[dimenIndex] + 1
 
-            if (resultIndex == neighboursCount) return resultOneArray to resultNArray
+            if (resultIndex == neighborsCount) return resultOneArray to resultNArray
 
             while (coordinates[dimenIndex] > radius) {
                 coordinates[dimenIndex] = -radius

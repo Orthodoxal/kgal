@@ -7,7 +7,7 @@ import kgal.chromosome.Chromosome
 import kgal.panmictic.operators.evaluation
 
 /**
- * [PanmicticGA] - best known as the classical genetic algorithm.
+ * [PanmicticGA] - best known as the classical genetic algorithm (pGA).
  *
  * [V] - value of [Chromosome]
  *
@@ -19,6 +19,7 @@ import kgal.panmictic.operators.evaluation
  * The evolution strategy is extended to a given population, changing its contents during the operation of the GA.
  *
  * Creates with Kotlin DSL by [pGA].
+ * @see <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">Panmictic Genetic Algorithm</a>
  * @see PanmicticPopulation
  * @see PanmicticLifecycle
  * @see PanmicticConfig
@@ -108,6 +109,7 @@ public suspend fun <V, F> PanmicticGA<V, F>.restart(
  * @param fitnessFunction fitness function for evaluation step of [PanmicticGA]
  * @param config scope function to initialize [PanmicticGA]
  *
+ * @see <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">Panmictic Genetic Algorithm</a>
  * @see PanmicticGA
  * @see PanmicticPopulation
  * @see PanmicticLifecycle
