@@ -6,15 +6,13 @@ import kgal.chromosome.base.ChromosomeBooleanArray
 import kgal.operators.isSteadyGenerations
 import kgal.operators.shakeBy
 import kgal.operators.stopBy
+import kgal.panmictic.*
 import kgal.panmictic.operators.adjustSize
 import kgal.panmictic.operators.crossover.CrossoverType
 import kgal.panmictic.operators.crossover.cxOnePoint
 import kgal.panmictic.operators.evaluation
 import kgal.panmictic.operators.mutation.mutFlipBit
 import kgal.panmictic.operators.selection.selTournament
-import kgal.panmictic.pGA
-import kgal.panmictic.population
-import kgal.panmictic.restart
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.statistics.allSessions
 import kgal.statistics.note.Statistic
@@ -114,7 +112,7 @@ private fun main() { // Run it!
         // Set up statistics
         statisticsConfig {
             coroutineContext = Dispatchers.IO // Set up dispatcher for statistics
-            enableDefaultCollector = false // Turn of default collector for statistics
+            enableDefaultCollector = false // Turn off default collector for statistics
             guaranteedSorted = true // Prepare statistics to sorted population in descending order
             // See other params for statistics flow
         }

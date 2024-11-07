@@ -1,5 +1,6 @@
 package kgal
 
+import kgal.dsl.ConfigDslMarker
 import kgal.panmictic.PanmicticConfig
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.statistics.StatisticsConfig
@@ -13,6 +14,7 @@ import kotlin.random.Random
  * @see AbstractConfigScope
  * @see PanmicticConfig
  */
+@ConfigDslMarker
 public interface Config<V, F, L : Lifecycle<V, F>> {
 
     /**

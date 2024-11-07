@@ -15,6 +15,7 @@ public typealias PopulationFactory<V, F> = Random.() -> Chromosome<V, F>
  * [V] - value of [Chromosome]
  *
  * [F] - fitness value of [Chromosome]
+ * @see AbstractArrayPopulation
  */
 public interface Population<V, F> : Iterable<Chromosome<V, F>> {
 

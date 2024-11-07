@@ -1,5 +1,6 @@
 package kgal.statistics
 
+import kgal.dsl.ConfigDslMarker
 import kgal.statistics.note.StatisticNote
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,9 +20,9 @@ internal val DEFAULT_COLLECTOR: FlowCollector<StatisticNote<Any?>> = FlowCollect
 internal const val DEFAULT_GUARANTEED_SORTED: Boolean = false
 
 /**
- * Configuration of basic parameters for statistics operation
+ * Configuration of basic parameters for statistics operation.
  *
- * Creates with [StatisticsConfig] or [statisticsConfig]
+ * Creates with [StatisticsConfig].
  * @see StatisticsConfigScope
  */
 public interface StatisticsConfig {
@@ -29,7 +30,7 @@ public interface StatisticsConfig {
     /**
      * replay - the number of values replayed to new subscribers (cannot be negative, defaults to zero).
      *
-     * Default value is [DEFAULT_REPLAY]
+     * Default value is [DEFAULT_REPLAY].
      */
     public val replay: Int
 
@@ -37,7 +38,7 @@ public interface StatisticsConfig {
      * extraBufferCapacity - the number of values buffered in addition to replay.
      * Emit does not suspend while there is a buffer space remaining (optional, cannot be negative, defaults to zero).
      *
-     * Default value is [DEFAULT_EXTRA_BUFFER_CAPACITY]
+     * Default value is [DEFAULT_EXTRA_BUFFER_CAPACITY].
      */
     public val extraBufferCapacity: Int
 
@@ -52,24 +53,23 @@ public interface StatisticsConfig {
     public val onBufferOverflow: BufferOverflow
 
     /**
-     * coroutineContext - context of coroutine for statistics
+     * coroutineContext - context of coroutine for statistics.
      *
-     * Default value is [DEFAULT_COROUTINE_CONTEXT]
+     * Default value is [DEFAULT_COROUTINE_CONTEXT].
      */
     public val coroutineContext: CoroutineContext
 
     /**
-     * enableDefaultCollector - flag for turn on [defaultCollector], true for default
+     * enableDefaultCollector - flag for turn on [defaultCollector], true for default.
      *
-     * Default value is [DEFAULT_ENABLE_DEFAULT_COLLECTOR]
+     * Default value is [DEFAULT_ENABLE_DEFAULT_COLLECTOR].
      */
     public val enableDefaultCollector: Boolean
 
     /**
-     * defaultCollector - println base statistics to console if [enableDefaultCollector] is true
-     * @see DEFAULT_COLLECTOR
+     * defaultCollector - println base statistics to console if [enableDefaultCollector] is true.
      *
-     * Default value is [DEFAULT_COLLECTOR]
+     * Default value is [DEFAULT_COLLECTOR],
      */
     public val defaultCollector: FlowCollector<StatisticNote<Any?>>
 
@@ -120,7 +120,7 @@ public interface StatisticsConfig {
 }
 
 /**
- * Creates [StatisticsConfig]
+ * Creates [StatisticsConfig].
  * @see [StatisticsConfig]
  */
 public fun StatisticsConfig(
@@ -143,15 +143,7 @@ public fun StatisticsConfig(
     )
 
 /**
- * Creates [StatisticsConfig] with [StatisticsConfigScope]
- * @see StatisticsConfig
- * @see StatisticsConfigScope
- */
-public inline fun statisticsConfig(config: StatisticsConfigScope.() -> Unit): StatisticsConfig =
-    StatisticsConfigScope().apply(config)
-
-/**
- * Creates a new [MutableSharedFlow] for [StatisticNote] with [StatisticsConfig] params
+ * Creates a new [MutableSharedFlow] for [StatisticNote] with [StatisticsConfig] params.
  */
 public val StatisticsConfig.flow: MutableSharedFlow<StatisticNote<Any?>>
     get() = MutableSharedFlow(replay, extraBufferCapacity, onBufferOverflow)
@@ -163,9 +155,9 @@ public val StatisticsConfig.newCoroutineScope: CoroutineScope
     get() = CoroutineScope(SupervisorJob() + coroutineContext)
 
 /**
- * StatisticsConfigScope - Creating [StatisticsConfig] with Kotlin DSL style
- * @see statisticsConfig
+ * StatisticsConfigScope - Creating [StatisticsConfig] with Kotlin DSL style.
  */
+@ConfigDslMarker
 public class StatisticsConfigScope(
     override var replay: Int = DEFAULT_REPLAY,
     override var extraBufferCapacity: Int = DEFAULT_EXTRA_BUFFER_CAPACITY,

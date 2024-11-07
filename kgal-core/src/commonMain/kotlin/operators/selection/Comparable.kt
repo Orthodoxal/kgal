@@ -6,6 +6,8 @@ import kgal.utils.findOrderStatistic
 /**
  * Find and moves the best chromosomes to the beginning of source. (Not sort source)
  * @param count number of the best values to be moved to the beginning
+ * @param from index from for search in array (inclusive)
+ * @param to index to for search in array (exclusive)
  * @return the same source with moved to the beginning chromosomes
  */
 public fun <V, F> Array<Chromosome<V, F>>.selectionBest(
@@ -17,6 +19,8 @@ public fun <V, F> Array<Chromosome<V, F>>.selectionBest(
 /**
  * Find and moves the worst chromosomes to the beginning of source. (Not sort source)
  * @param count number of the worst values to be moved to the beginning
+ * @param from index from for search in array (inclusive)
+ * @param to index to for search in array (exclusive)
  * @return the same source with moved to the beginning chromosomes
  */
 public fun <V, F> Array<Chromosome<V, F>>.selectionWorst(
@@ -27,6 +31,10 @@ public fun <V, F> Array<Chromosome<V, F>>.selectionWorst(
 
 /**
  * Find and moves chromosomes in ascending or descending order with [findOrderStatistic]. (Not sorted)
+ * @param count number of the best or worst values to be moved to the beginning
+ * @param from index from for search in array (inclusive)
+ * @param to index to for search in array (exclusive)
+ * @param ascending - if true search in ascending order (worst) else in descending order (best)
  * @see findOrderStatistic
  * @return the same source with moved to the beginning chromosomes
  */
