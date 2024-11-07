@@ -9,7 +9,7 @@ import kgal.utils.randomByChance
 import kotlin.random.Random
 
 /**
- * Performs a mutation step for population in [PanmicticGA].
+ * Performs a mutation step for population in [PanmicticGA] that modify in-place the input chromosomes.
  *
  * Welcome to use for your own implementations! It is a base function for executing [mutation] step in [PanmicticGA].
  * @param chance chance of mutation for each chromosome

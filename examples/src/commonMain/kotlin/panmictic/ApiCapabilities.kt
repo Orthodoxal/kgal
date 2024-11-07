@@ -6,15 +6,13 @@ import kgal.chromosome.base.ChromosomeBooleanArray
 import kgal.operators.isSteadyGenerations
 import kgal.operators.shakeBy
 import kgal.operators.stopBy
+import kgal.panmictic.*
 import kgal.panmictic.operators.adjustSize
 import kgal.panmictic.operators.crossover.CrossoverType
 import kgal.panmictic.operators.crossover.cxOnePoint
 import kgal.panmictic.operators.evaluation
 import kgal.panmictic.operators.mutation.mutFlipBit
 import kgal.panmictic.operators.selection.selTournament
-import kgal.panmictic.pGA
-import kgal.panmictic.population
-import kgal.panmictic.restart
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.statistics.allSessions
 import kgal.statistics.note.Statistic

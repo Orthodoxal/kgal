@@ -6,7 +6,7 @@ import kgal.panmictic.PanmicticLifecycle
 import kotlin.random.Random
 
 /**
- * Performs a crossover step for population in [PanmicticGA].
+ * Performs a crossover step for population in [PanmicticGA] that modify in-place the input chromosomes.
  *
  * Welcome to use for your own implementations! It is a base function for executing [crossover] step in [PanmicticGA].
  * @param chance chance of crossover between a pair of chromosomes
