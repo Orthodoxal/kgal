@@ -63,9 +63,9 @@ public interface CellularPopulation<V, F> : Population<V, F> {
 /**
  * Creates [CellularPopulation].
  * @param dimens Dimens for cellular population. Define space and its boundaries for the population and, accordingly, population size.
- * This space determines the position of the chromosomes relative to each other.
+ * This space determines the position of the chromosomes relative to each other
  * @param name name of population, default value = [DEFAULT_POPULATION_NAME], used to identify different populations
- * @param factory [PopulationFactory] for this population. Creates new [Chromosome].
+ * @param factory [PopulationFactory] for this population. Creates new [Chromosome]
  */
 public fun <V, F> population(
     dimens: Dimens,
@@ -83,10 +83,10 @@ public fun <V, F> population(
  *
  * `NOTE` `population.size` must be equal to `dimens.size`
  * @param dimens Dimens for cellular population. Define space and its boundaries for the population and, accordingly, population size.
- * This space determines the position of the chromosomes relative to each other.
+ * This space determines the position of the chromosomes relative to each other
  * @param population initial or existing population.
  * @param name name of population, default value = [DEFAULT_POPULATION_NAME], used to identify different populations
- * @param factory [PopulationFactory] for this population. Creates new [Chromosome].
+ * @param factory [PopulationFactory] for this population. Creates new [Chromosome]
  */
 public fun <V, F> population(
     dimens: Dimens,
@@ -131,7 +131,7 @@ internal class CellularPopulationInstance<V, F>(
 
     override fun clone(newName: String): CellularPopulation<V, F> =
         CellularPopulationInstance(
-            name = name,
+            name = newName,
             dimens = dimens,
             factory = factory,
             population = Array(size) { index -> population[index].clone() },

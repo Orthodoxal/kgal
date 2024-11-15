@@ -71,7 +71,9 @@ public interface CellularGA<V, F> : GA<V, F> {
  * cGA(
  *     // Set a population configuration
  *     // population size = 6 * 6 * 6 = 216 (cube)
- *     population = population(dimens = 6) { booleans(size = 100) },
+ *     population = population(dimens = Dimens.cube(length = 6)) {
+ *         booleans(size = 100)
+ *     },
  *     // Set a fitness function
  *     fitnessFunction = { value -> value.count { it } },
  * {
@@ -103,7 +105,7 @@ public interface CellularGA<V, F> : GA<V, F> {
  * }.startBlocking()
  * ```
  * @param population population of [CellularGA]
- * @param fitnessFunction fitness function for evaluation step of [CellularGA]
+ * @param fitnessFunction fitness function for evaluation step
  * @param config scope function to initialize [CellularGA]
  *
  * @see <a href="https://en.wikipedia.org/wiki/Cellular_evolutionary_algorithm">Cellular Genetic Algorithm</a>
@@ -125,7 +127,7 @@ public inline fun <V, F> cGA(
 
 /**
  * Base realization of [CellularGA].
- * @param configuration configuration for initialization [CellularGA]
+ * @param configuration for initialization [CellularGA]
  * @see AbstractGA
  */
 internal class CellularGAInstance<V, F>(
