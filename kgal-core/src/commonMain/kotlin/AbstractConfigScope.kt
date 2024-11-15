@@ -62,7 +62,7 @@ public inline fun AbstractConfigScope<*, *, *>.statisticsConfig(
  *     // configure parallelism of GA
  *     parallelismConfig {
  *         workersCount = 6
- *         dispatcher = Dispatchers.Unconfined
+ *         dispatcher = Dispatchers.Default
  *     }
  *
  *     // configure specific params of GA

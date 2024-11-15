@@ -67,7 +67,7 @@ public interface Population<V, F> : Iterable<Chromosome<V, F>> {
         /**
          * Default name for population.
          */
-        public const val DEFAULT_POPULATION_NAME: String = "POPULATION 1"
+        public const val DEFAULT_POPULATION_NAME: String = "POPULATION"
     }
 }
 
@@ -93,6 +93,12 @@ public inline val Population<*, *>.lastIndex: Int get() = size - 1
  */
 public inline fun <V, F> Population<V, F>.cloneOf(index: Int): Chromosome<V, F> =
     this[index].clone()
+
+/**
+ * Returns `true` if the population is empty (contains no chromosomes), `false` otherwise.
+ */
+public inline fun Population<*, *>.isEmpty(): Boolean =
+    !initialized || size <= 0
 
 /**
  * Creates copy of [Population] as an array by range

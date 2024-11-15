@@ -126,7 +126,7 @@ public interface PanmicticPopulation<V, F> : Population<V, F> {
  *
  * [buffer] = MAX - [size]
  * @param name name of population, default value = [DEFAULT_POPULATION_NAME], used to identify different populations
- * @param factory [PopulationFactory] for this population. Creates new [Chromosome].
+ * @param factory [PopulationFactory] for this population. Creates new [Chromosome]
  */
 public fun <V, F> population(
     size: Int,
@@ -147,7 +147,7 @@ public fun <V, F> population(
  * Size of population will be equal to [Array.size] - [buffer]. (Default buffer is 0)
  * @param buffer the amount of reserved space in a population.
  * @param name name of population, default value = [DEFAULT_POPULATION_NAME], used to identify different populations
- * @param factory [PopulationFactory] for this population. Creates new [Chromosome].
+ * @param factory [PopulationFactory] for this population. Creates new [Chromosome]
  */
 public fun <V, F> population(
     population: Array<Chromosome<V, F>>,

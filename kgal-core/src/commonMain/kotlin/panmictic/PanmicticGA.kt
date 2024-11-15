@@ -106,7 +106,7 @@ public suspend fun <V, F> PanmicticGA<V, F>.restart(
  * }.startBlocking()
  * ```
  * @param population population of [PanmicticGA]
- * @param fitnessFunction fitness function for evaluation step of [PanmicticGA]
+ * @param fitnessFunction fitness function for evaluation step
  * @param config scope function to initialize [PanmicticGA]
  *
  * @see <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">Panmictic Genetic Algorithm</a>
@@ -126,7 +126,7 @@ public inline fun <V, F> pGA(
 
 /**
  * Base realization of [PanmicticGA].
- * @param configuration configuration for initialization [PanmicticGA]
+ * @param configuration for initialization [PanmicticGA]
  * @see AbstractGA
  */
 internal class PanmicticGAInstance<V, F>(
