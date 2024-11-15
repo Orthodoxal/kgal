@@ -1,6 +1,8 @@
 package kgal.utils
 
 import kgal.Lifecycle
+import kgal.Population
+import kgal.chromosome.Chromosome
 import kotlin.math.abs
 import kotlin.math.ln
 import kotlin.math.sqrt
@@ -90,9 +92,10 @@ public fun IntRange.indicesByRandom(count: Int, random: Random): IntArray {
 
 /**
  * Creates [IntArray] with random indices
- * @param count number of indices
+ * @param count number of indices, `count < size`
+ * @param size maximum indices count (exclusive)
  */
-public fun Array<*>.indicesByRandom(count: Int, random: Random): IntArray {
+public fun indicesByRandom(count: Int, size: Int, random: Random): IntArray {
     if (count > size) throw IllegalStateException("Count cannot be more than size")
 
     return if (size > 5000 && count > size / 4) {
@@ -117,17 +120,20 @@ public fun Array<*>.indicesByRandom(count: Int, random: Random): IntArray {
  * @param count number of random elements
  */
 public inline fun <reified T> Array<out T>.random(count: Int, random: Random): Array<T> {
-    val indices = indicesByRandom(count, random)
+    val indices = indicesByRandom(count, size, random)
     return Array(count) { get(indices[it]) }
 }
 
 /**
- * Creates [Array] with random elements from source array
+ * Creates [Array] with randomly selected chromosomes from source array
  * @param count number of random elements
  * @return [Pair] of [Array] and [IntArray] (indices from source)
  */
-public inline fun <reified T> Array<out T>.randomWithIndices(count: Int, random: Random): Pair<Array<T>, IntArray> {
-    val indices = indicesByRandom(count, random)
+public inline fun <V, F> Population<V, F>.randomWithIndices(
+    count: Int,
+    random: Random
+): Pair<Array<Chromosome<V, F>>, IntArray> {
+    val indices = indicesByRandom(count, size, random)
     return Array(count) { get(indices[it]) } to indices
 }
 

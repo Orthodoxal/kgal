@@ -1,5 +1,3 @@
-package panmictic
-
 import kgal.*
 import kgal.chromosome.Chromosome
 import kgal.chromosome.base.ChromosomeBooleanArray
