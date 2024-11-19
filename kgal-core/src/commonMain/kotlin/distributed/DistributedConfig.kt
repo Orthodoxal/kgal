@@ -4,6 +4,10 @@ import kgal.*
 import kgal.distributed.operators.launchChildren
 import kgal.dsl.ConfigDslMarker
 import kgal.operators.stopBy
+import kgal.parallelismConfig
+import kgal.processor.parallelism.ParallelismConfig
+import kgal.processor.parallelism.ParallelismConfigScope
+import kgal.processor.process
 
 /**
  * Describes the configuration parameters necessary for the operation of the [DistributedGA].
@@ -221,3 +225,49 @@ public fun <V, F> DistributedConfigScope<V, F>.after(
 ) {
     this.afterEvolution = afterEvolution
 }
+
+/**
+ * Creates [ParallelismConfig] with [ParallelismConfigScope] and apply it to the current [DistributedConfig].
+ *
+ * Achieves almost linear speedup with `distributed` launching! It is recommended to use parallelism in [DistributedGA].
+ *
+ * `Distributed Parallelism` is based on the idea of `distributed` launching [DistributedGA.children].
+ * After which the results are synchronized and interaction between subpopulations is carried out.
+ * It is assumed that each child GA running independently in their own coroutine.
+ * That's why `workerCount` is recommended to be equal to `children.size`.
+ *
+ * Base (and default for [evolve]) [launchChildren] stage function support `Distributed Parallelism` by default
+ * using [process] function - it's safe to use!
+ *
+ * Example:
+ * ```
+ * dGA {
+ *     // configure specific params of DistributedGA
+ *
+ *     // configure Distributed parallelism
+ *     parallelismConfig {
+ *         workersCount = 4 // set it equal to children.size
+ *     }
+ *
+ *     // create and add children GAs
+ *     +pGAs(
+ *         count = 4, // island count equal to workersCount
+ *         population = { population(size = 50) }, // island population
+ *     ) {
+ *         // create evolution strategy for island here
+ *     }
+ *
+ *     // set distributed evolution strategy:
+ *     // launches children with ga.start() (default == true) before each iteration
+ *     // each child will be running in their own coroutine
+ *     evolve(useDefault = true) {
+ *         stopBy(maxIteration = 5)
+ *         migration(percent = 0.1) // no parallelism here
+ *     }
+ * }
+ * ```
+ * @see process
+ */
+public inline fun DistributedConfigScope<*, *>.parallelismConfig(
+    config: ParallelismConfigScope.() -> Unit,
+): Unit = parallelismConfig(config)

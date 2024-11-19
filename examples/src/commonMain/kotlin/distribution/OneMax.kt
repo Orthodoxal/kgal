@@ -1,11 +1,8 @@
 package distribution
 
 import kgal.chromosome.base.booleans
-import kgal.distributed.dGA
-import kgal.distributed.evolve
+import kgal.distributed.*
 import kgal.distributed.operators.migration
-import kgal.distributed.pGAs
-import kgal.distributed.population
 import kgal.name
 import kgal.operators.stopBy
 import kgal.panmictic.evolve
@@ -13,7 +10,6 @@ import kgal.panmictic.operators.crossover.cxOnePoint
 import kgal.panmictic.operators.evaluation
 import kgal.panmictic.operators.mutation.mutFlipBit
 import kgal.panmictic.operators.selection.selTournament
-import kgal.parallelismConfig
 import kgal.startBlocking
 import kgal.statistics.stats.best
 import kgal.statistics.stats.bestFitness

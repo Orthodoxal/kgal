@@ -3,8 +3,15 @@ package kgal.panmictic
 import kgal.*
 import kgal.dsl.ConfigDslMarker
 import kgal.operators.stopBy
+import kgal.panmictic.operators.crossover.crossover
 import kgal.panmictic.operators.evaluation
 import kgal.panmictic.operators.fillPopulationIfNeed
+import kgal.panmictic.operators.mutation.mutation
+import kgal.panmictic.operators.selection.selection
+import kgal.parallelismConfig
+import kgal.processor.parallelism.ParallelismConfig
+import kgal.processor.parallelism.ParallelismConfigScope
+import kgal.processor.process
 
 /**
  * Describes the configuration parameters necessary for the operation of the [PanmicticGA].
@@ -155,3 +162,50 @@ public fun <V, F> PanmicticConfigScope<V, F>.after(
 ) {
     this.afterEvolution = afterEvolution
 }
+
+/**
+ * Creates [ParallelismConfig] with [ParallelismConfigScope] and apply it to the current [PanmicticConfig].
+ *
+ * `Panmictic Parallelism` is based on the idea of dividing [PanmicticGA] stages (`selection`, `crossover`, `mutation`, `evaluation` etc.)
+ * into independent processes that can be executed in parallel mode. That's why it is called also `Genetic Operator Parallelism` -
+ * parallelism is used at the level of the genetic operator, transitions between stages occur sequentially.
+ *
+ * There cannot be such a situation that some chromosomes go through the crossover stage, and other mutation stage -
+ * the entire population can be under the influence of only one operator at one time.
+ *
+ * Base [selection], [crossover], [mutation], [evaluation] stage functions support `Panmictic Parallelism` by default
+ * using [process] functions - it's safe to use!
+ *
+ * `NOTE` In most cases, the parallelism overhead for the [selection] stage exceeds its efficiency,
+ * so `select operators` have parallel mode `disabled` by default.
+ * Set `parallelismLimit` to non-zero value to make parallelism available.
+ *
+ * Example:
+ * ```
+ * pGA {
+ *     // configure specific params of PanmicticGA
+ *
+ *     // configure Panmictic parallelism
+ *     parallelismConfig {
+ *         workersCount = 5 // max count of parallel coroutines
+ *         dispatcher = Dispatchers.Default
+ *     }
+ *
+ *     evolve {
+ *         // selection stage NO_PARALLELISM by default
+ *         selTournament(size = 3)
+ *         // crossover stage turn off parallelism by 0 NO_PARALLELISM
+ *         cxOnePoint(chance = 0.8, parallelismLimit = 0)
+ *         // mutation stage parallelism available (workersCount limit)
+ *         mutFlipBit(chance = 0.1, flipBitChance = 0.01)
+ *         // evaluation stage parallelism also available
+ *         evaluation()
+ *         stopBy(maxIteration = 50) { bestFitness == 100 }
+ *     }
+ * }
+ * ```
+ * @see process
+ */
+public inline fun PanmicticConfigScope<*, *>.parallelismConfig(
+    config: ParallelismConfigScope.() -> Unit,
+): Unit = parallelismConfig(config)

@@ -9,6 +9,10 @@ import kgal.cellular.operators.*
 import kgal.dsl.ConfigDslMarker
 import kgal.operators.stopBy
 import kgal.panmictic.PanmicticGA
+import kgal.parallelismConfig
+import kgal.processor.parallelism.ParallelismConfig
+import kgal.processor.parallelism.ParallelismConfigScope
+import kgal.processor.process
 
 /**
  * Describes the configuration parameters necessary for the operation of the [CellularGA].
@@ -175,3 +179,49 @@ public fun <V, F> CellularConfigScope<V, F>.after(
 ) {
     this.afterEvolution = afterEvolution
 }
+
+/**
+ * Creates [ParallelismConfig] with [ParallelismConfigScope] and apply it to the current [CellularConfig].
+ *
+ * `Cellular Parallelism` is based on the idea of dividing `cell evolutionary strategies`
+ * into independent processes that can be executed in parallel mode.
+ * This type of parallelism is more efficient than `Panmictic Parallelism`.
+ *
+ * Base [evolveCells] stage function support `Cellular Parallelism` by default
+ * using [process] functions with [ParallelismConfig.workersCount] limit - it's safe to use!
+ *
+ * `NOTE` results for [CellularType.Asynchronous] in parallel mode may be `unpredictable` (even a randomSeed set will not guarantee a repeatable result)
+ * since child chromosomes may replace parents at different rates depending on the operation of independent coroutines.
+ * However, this also introduces an element of randomness to evolution, which can have a positive effect on the entire process.
+ * [CellularType.Synchronous] is `safe` for parallelism because parallel evolutionary processes occur on an unchangeable parent population.
+ *
+ * Example:
+ * ```
+ * cGA {
+ *     // configure specific params of CellularGA
+ *
+ *     // configure Cellular parallelism
+ *     parallelismConfig {
+ *         workersCount = 5 // max count of parallel coroutines
+ *         dispatcher = Dispatchers.Default
+ *     }
+ *
+ *     evolve {
+ *         // evolving cells stage parallelism available
+ *         // ParallelismConfig.workersCount limit by default
+ *         evolveCells {
+ *             selTournament(size = 3)
+ *             cxOnePoint(chance = 0.8)
+ *             mutFlipBit(chance = 0.1, flipBitChance = 0.01)
+ *             evaluation()
+ *         }
+ *
+ *         stopBy(maxIteration = 50) { bestFitness == 100 }
+ *     }
+ * }
+ * ```
+ * @see process
+ */
+public inline fun CellularConfigScope<*, *>.parallelismConfig(
+    config: ParallelismConfigScope.() -> Unit,
+): Unit = parallelismConfig(config)

@@ -110,7 +110,9 @@ public interface DistributedGA<V, F> : GA<V, F> {
 /**
  * Creates [DistributedGA] with Kotlin DSL.
  *
- * This [GA] supports `Shared statistics` (see [DistributedGA.statisticsProvider])
+ * [DistributedGA] is friendly with parallelism, achieve almost linear speed up!
+ *
+ * [DistributedGA] supports `Shared statistics` (see [DistributedGA.statisticsProvider]).
  *
  * This builder support `Distributed Inheritance` for child created in [config]:
  * - population factory [PopulationFactory]

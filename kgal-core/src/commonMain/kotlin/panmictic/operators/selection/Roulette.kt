@@ -4,6 +4,7 @@ import kgal.Population
 import kgal.chromosome.Chromosome
 import kgal.operators.selection.selectionRoulette
 import kgal.panmictic.PanmicticLifecycle
+import kgal.processor.parallelism.ParallelismConfig
 import kotlin.jvm.JvmName
 
 /**
@@ -20,7 +21,7 @@ import kotlin.jvm.JvmName
  */
 @JvmName("selRouletteFitInt")
 public suspend fun <V> PanmicticLifecycle<V, Int>.selRoulette(
-    parallelismLimit: Int = parallelismConfig.workersCount,
+    parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0L) { acc: Long, chromosome: Chromosome<V, Int> ->
         acc + (chromosome.fitness ?: error("Fitness is null"))
@@ -42,7 +43,7 @@ public suspend fun <V> PanmicticLifecycle<V, Int>.selRoulette(
  */
 @JvmName("selRouletteFitLong")
 public suspend fun <V> PanmicticLifecycle<V, Long>.selRoulette(
-    parallelismLimit: Int = parallelismConfig.workersCount,
+    parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0L) { acc: Long, chromosome: Chromosome<V, Long> ->
         acc + (chromosome.fitness ?: error("Fitness is null"))
@@ -64,7 +65,7 @@ public suspend fun <V> PanmicticLifecycle<V, Long>.selRoulette(
  */
 @JvmName("selRouletteFitShort")
 public suspend fun <V> PanmicticLifecycle<V, Short>.selRoulette(
-    parallelismLimit: Int = parallelismConfig.workersCount,
+    parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0L) { acc: Long, chromosome: Chromosome<V, Short> ->
         acc + (chromosome.fitness ?: error("Fitness is null"))
@@ -86,7 +87,7 @@ public suspend fun <V> PanmicticLifecycle<V, Short>.selRoulette(
  */
 @JvmName("selRouletteFitByte")
 public suspend fun <V> PanmicticLifecycle<V, Byte>.selRoulette(
-    parallelismLimit: Int = parallelismConfig.workersCount,
+    parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0L) { acc: Long, chromosome: Chromosome<V, Byte> ->
         acc + (chromosome.fitness ?: error("Fitness is null"))
@@ -108,7 +109,7 @@ public suspend fun <V> PanmicticLifecycle<V, Byte>.selRoulette(
  */
 @JvmName("selRouletteFitDouble")
 public suspend fun <V> PanmicticLifecycle<V, Double>.selRoulette(
-    parallelismLimit: Int = parallelismConfig.workersCount,
+    parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0.0) { acc: Double, chromosome: Chromosome<V, Double> ->
         acc + (chromosome.fitness ?: error("Fitness is null"))
@@ -130,7 +131,7 @@ public suspend fun <V> PanmicticLifecycle<V, Double>.selRoulette(
  */
 @JvmName("selRouletteFitFloat")
 public suspend fun <V> PanmicticLifecycle<V, Float>.selRoulette(
-    parallelismLimit: Int = parallelismConfig.workersCount,
+    parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0f) { acc: Float, chromosome: Chromosome<V, Float> ->
         acc + (chromosome.fitness ?: error("Fitness is null"))
