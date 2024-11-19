@@ -3,7 +3,7 @@ package kgal.panmictic.operators.selection
 import kgal.Population
 import kgal.chromosome.Chromosome
 import kgal.operators.selection.selectionRoulette
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.processor.parallelism.ParallelismConfig
 import kotlin.jvm.JvmName
 
@@ -20,7 +20,7 @@ import kotlin.jvm.JvmName
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("selRouletteFitInt")
-public suspend fun <V> PanmicticLifecycle<V, Int>.selRoulette(
+public suspend fun <V> PanmicticEvolveScope<V, Int>.selRoulette(
     parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0L) { acc: Long, chromosome: Chromosome<V, Int> ->
@@ -42,7 +42,7 @@ public suspend fun <V> PanmicticLifecycle<V, Int>.selRoulette(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("selRouletteFitLong")
-public suspend fun <V> PanmicticLifecycle<V, Long>.selRoulette(
+public suspend fun <V> PanmicticEvolveScope<V, Long>.selRoulette(
     parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0L) { acc: Long, chromosome: Chromosome<V, Long> ->
@@ -64,7 +64,7 @@ public suspend fun <V> PanmicticLifecycle<V, Long>.selRoulette(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("selRouletteFitShort")
-public suspend fun <V> PanmicticLifecycle<V, Short>.selRoulette(
+public suspend fun <V> PanmicticEvolveScope<V, Short>.selRoulette(
     parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0L) { acc: Long, chromosome: Chromosome<V, Short> ->
@@ -86,7 +86,7 @@ public suspend fun <V> PanmicticLifecycle<V, Short>.selRoulette(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("selRouletteFitByte")
-public suspend fun <V> PanmicticLifecycle<V, Byte>.selRoulette(
+public suspend fun <V> PanmicticEvolveScope<V, Byte>.selRoulette(
     parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0L) { acc: Long, chromosome: Chromosome<V, Byte> ->
@@ -108,7 +108,7 @@ public suspend fun <V> PanmicticLifecycle<V, Byte>.selRoulette(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("selRouletteFitDouble")
-public suspend fun <V> PanmicticLifecycle<V, Double>.selRoulette(
+public suspend fun <V> PanmicticEvolveScope<V, Double>.selRoulette(
     parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0.0) { acc: Double, chromosome: Chromosome<V, Double> ->
@@ -130,7 +130,7 @@ public suspend fun <V> PanmicticLifecycle<V, Double>.selRoulette(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("selRouletteFitFloat")
-public suspend fun <V> PanmicticLifecycle<V, Float>.selRoulette(
+public suspend fun <V> PanmicticEvolveScope<V, Float>.selRoulette(
     parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ) {
     val totalFitness = population.get().fold(0f) { acc: Float, chromosome: Chromosome<V, Float> ->

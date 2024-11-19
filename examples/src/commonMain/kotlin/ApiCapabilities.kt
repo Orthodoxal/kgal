@@ -174,8 +174,8 @@ private fun main() { // Run it!
             */
 
             /**
-             * Create your own genetic operator here. Use [Lifecycle.store] for saving any values through iterations.
-             * @see Lifecycle.store
+             * Create your own genetic operator here. Use [EvolveScope.store] for saving any values through iterations.
+             * @see EvolveScope.store
              */
             /*
             val previousValue = store["MY_VALUE"]

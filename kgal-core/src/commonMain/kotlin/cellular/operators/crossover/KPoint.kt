@@ -1,6 +1,6 @@
 package kgal.cellular.operators.crossover
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.operators.crossover.crossoverKPoint
 import kotlin.jvm.JvmName
 
@@ -20,7 +20,7 @@ import kotlin.jvm.JvmName
  * @param count k-points for crossover
  */
 @JvmName("cxKPointArray")
-public fun <T, F> CellLifecycle<Array<T>, F>.cxKPoint(
+public fun <T, F> CellEvolveScope<Array<T>, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -43,7 +43,7 @@ public fun <T, F> CellLifecycle<Array<T>, F>.cxKPoint(
  * @param count k-points for crossover
  */
 @JvmName("cxKPointBooleanArray")
-public fun <F> CellLifecycle<BooleanArray, F>.cxKPoint(
+public fun <F> CellEvolveScope<BooleanArray, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -66,7 +66,7 @@ public fun <F> CellLifecycle<BooleanArray, F>.cxKPoint(
  * @param count k-points for crossover
  */
 @JvmName("cxKPointByteArray")
-public fun <F> CellLifecycle<ByteArray, F>.cxKPoint(
+public fun <F> CellEvolveScope<ByteArray, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -89,7 +89,7 @@ public fun <F> CellLifecycle<ByteArray, F>.cxKPoint(
  * @param count k-points for crossover
  */
 @JvmName("cxKPointCharArray")
-public fun <F> CellLifecycle<CharArray, F>.cxKPoint(
+public fun <F> CellEvolveScope<CharArray, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -112,7 +112,7 @@ public fun <F> CellLifecycle<CharArray, F>.cxKPoint(
  * @param count k-points for crossover
  */
 @JvmName("cxKPointDoubleArray")
-public fun <F> CellLifecycle<DoubleArray, F>.cxKPoint(
+public fun <F> CellEvolveScope<DoubleArray, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -135,7 +135,7 @@ public fun <F> CellLifecycle<DoubleArray, F>.cxKPoint(
  * @param count k-points for crossover
  */
 @JvmName("cxKPointFloatArray")
-public fun <F> CellLifecycle<FloatArray, F>.cxKPoint(
+public fun <F> CellEvolveScope<FloatArray, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -158,7 +158,7 @@ public fun <F> CellLifecycle<FloatArray, F>.cxKPoint(
  * @param count k-points for crossover
  */
 @JvmName("cxKPointIntArray")
-public fun <F> CellLifecycle<IntArray, F>.cxKPoint(
+public fun <F> CellEvolveScope<IntArray, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -181,7 +181,7 @@ public fun <F> CellLifecycle<IntArray, F>.cxKPoint(
  * @param count k-points for crossover
  */
 @JvmName("cxKPointLongArray")
-public fun <F> CellLifecycle<LongArray, F>.cxKPoint(
+public fun <F> CellEvolveScope<LongArray, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -204,7 +204,7 @@ public fun <F> CellLifecycle<LongArray, F>.cxKPoint(
  * @param count k-points for crossover
  */
 @JvmName("cxKPointMutableList")
-public fun <T, F> CellLifecycle<MutableList<T>, F>.cxKPoint(
+public fun <T, F> CellEvolveScope<MutableList<T>, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -227,7 +227,7 @@ public fun <T, F> CellLifecycle<MutableList<T>, F>.cxKPoint(
  * @param count k-points for crossover
  */
 @JvmName("cxKPointShortArray")
-public fun <F> CellLifecycle<ShortArray, F>.cxKPoint(
+public fun <F> CellEvolveScope<ShortArray, F>.cxKPoint(
     count: Int,
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->

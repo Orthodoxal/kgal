@@ -27,25 +27,25 @@ import kotlin.random.Random
  * ```
  *
  * Fully supports elitism - a child occupies a parent's cell if its fitness function value is greater.
- * @param evolution evolutionary strategy for individual cell using [CellLifecycle]
+ * @param evolution evolutionary strategy for individual cell using [CellEvolveScope]
  * @see replaceWithElitism
  * @see synchronousExecute
  * @see asynchronousExecute
  * @see CellularType
  */
-public suspend inline fun <V, F> CellularLifecycle<V, F>.evolveCells(
-    crossinline evolution: (@ConfigDslMarker CellLifecycle<V, F>).() -> Unit,
+public suspend inline fun <V, F> CellularEvolveScope<V, F>.evolveCells(
+    crossinline evolution: (@ConfigDslMarker CellEvolveScope<V, F>).() -> Unit,
 ) {
     when (val cellularType = cellularType) {
         is CellularType.Synchronous -> {
             synchronousExecute { chromosome, neighbors, random ->
-                with(CellLifecycle(chromosome, neighbors, random)) { evolution(); cell }
+                with(CellEvolveScope(chromosome, neighbors, random)) { evolution(); cell }
             }
         }
 
         is CellularType.Asynchronous -> {
             asynchronousExecute(cellularType.updatePolicy) { chromosome, neighbors, random ->
-                with(CellLifecycle(chromosome, neighbors, random)) { evolution(); cell }
+                with(CellEvolveScope(chromosome, neighbors, random)) { evolution(); cell }
             }
         }
     }
@@ -54,7 +54,7 @@ public suspend inline fun <V, F> CellularLifecycle<V, F>.evolveCells(
 /**
  * Executes [CellularType.Synchronous] mode (creating temp target population) for [CellularGA].
  */
-public suspend inline fun <V, F> CellularLifecycle<V, F>.synchronousExecute(
+public suspend inline fun <V, F> CellularEvolveScope<V, F>.synchronousExecute(
     crossinline cellEvolution: (chromosome: Chromosome<V, F>, neighbors: Array<Chromosome<V, F>>, random: Random) -> Chromosome<V, F>,
 ) {
     val tempPopulation = population.copyOf()
@@ -68,7 +68,7 @@ public suspend inline fun <V, F> CellularLifecycle<V, F>.synchronousExecute(
  * Executes [CellularType.Asynchronous] mode for [CellularGA].
  * @see UpdatePolicy
  */
-public suspend inline fun <V, F> CellularLifecycle<V, F>.asynchronousExecute(
+public suspend inline fun <V, F> CellularEvolveScope<V, F>.asynchronousExecute(
     updatePolicy: UpdatePolicy,
     crossinline cellEvolution: (chromosome: Chromosome<V, F>, neighbors: Array<Chromosome<V, F>>, random: Random) -> Chromosome<V, F>,
 ): Unit = when (updatePolicy) {
@@ -106,7 +106,7 @@ public suspend inline fun <V, F> CellularLifecycle<V, F>.asynchronousExecute(
  * Executes [action] with [process] for [CellularGA].
  * @see process
  */
-public suspend inline fun <V, F> CellularLifecycle<V, F>.process(
+public suspend inline fun <V, F> CellularEvolveScope<V, F>.process(
     crossinline action: suspend (iteration: Int, random: Random) -> Unit,
 ) {
     process(
@@ -118,12 +118,12 @@ public suspend inline fun <V, F> CellularLifecycle<V, F>.process(
 }
 
 /**
- * Executes [cellEvolution] for cell in [CellularLifecycle.population] with [index] and set result to [target].
+ * Executes [cellEvolution] for cell in [CellularEvolveScope.population] with [index] and set result to [target].
  * @param random random for safe [cellEvolution] execution
  * @param target target population where the result of [cellEvolution] is placed
  * @see replaceWithElitism
  */
-public inline fun <V, F> CellularLifecycle<V, F>.executeCellEvolution(
+public inline fun <V, F> CellularEvolveScope<V, F>.executeCellEvolution(
     random: Random,
     index: Int,
     target: Array<Chromosome<V, F>>,
@@ -140,12 +140,12 @@ public inline fun <V, F> CellularLifecycle<V, F>.executeCellEvolution(
 
 /**
  * Executes replacing [old] chromosome with [new] when:
- * - [CellularLifecycle.elitism] = `false`
- * - [CellularLifecycle.elitism] = `true` AND `new.fitness > old.fitness`
+ * - [CellularEvolveScope.elitism] = `false`
+ * - [CellularEvolveScope.elitism] = `true` AND `new.fitness > old.fitness`
  * @param population target population
  * @param index target index of chromosome in population
  */
-public fun <V, F> CellularLifecycle<V, F>.replaceWithElitism(
+public fun <V, F> CellularEvolveScope<V, F>.replaceWithElitism(
     population: Array<Chromosome<V, F>>,
     index: Int,
     old: Chromosome<V, F>,

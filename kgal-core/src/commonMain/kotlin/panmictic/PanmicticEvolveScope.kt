@@ -1,21 +1,21 @@
 package kgal.panmictic
 
-import kgal.AbstractLifecycle
-import kgal.Lifecycle
+import kgal.AbstractEvolveScope
+import kgal.EvolveScope
 import kgal.chromosome.Chromosome
 import kgal.panmictic.operators.evaluation
 
 /**
- * [PanmicticLifecycle] - specific [Lifecycle] for [PanmicticGA].
+ * [PanmicticEvolveScope] - specific [EvolveScope] for [PanmicticGA].
  *
  * [V] - value of [Chromosome]
  *
  * [F] - fitness value of [Chromosome]
  *
- * Creates with PanmicticLifecycle().
- * @see Lifecycle
+ * Creates with PanmicticEvolveScope().
+ * @see EvolveScope
  */
-public interface PanmicticLifecycle<V, F> : Lifecycle<V, F> {
+public interface PanmicticEvolveScope<V, F> : EvolveScope<V, F> {
 
     /**
      * Number of elite chromosomes - the best chromosomes of the population, which have privileged rights:
@@ -24,7 +24,7 @@ public interface PanmicticLifecycle<V, F> : Lifecycle<V, F> {
      * - at the crossing stage they cannot be changed or replaced,
      * but they actively participate in the creation of a new generation by changing other chromosomes
      * - do not change during the mutation stage
-     * @see [PanmicticLifecycle.evaluation]
+     * @see [PanmicticEvolveScope.evaluation]
      */
     public var elitism: Int
 
@@ -35,22 +35,22 @@ public interface PanmicticLifecycle<V, F> : Lifecycle<V, F> {
 }
 
 /**
- * Creates an instance of [PanmicticLifecycle] by [panmicticGA] and [panmicticConfig].
+ * Creates an instance of [PanmicticEvolveScope] by [panmicticGA] and [panmicticConfig].
  */
-public fun <V, F> PanmicticLifecycle(
+public fun <V, F> PanmicticEvolveScope(
     panmicticGA: PanmicticGA<V, F>,
     panmicticConfig: PanmicticConfig<V, F>,
-): PanmicticLifecycle<V, F> =
-    PanmicticLifecycleInstance(panmicticGA, panmicticConfig)
+): PanmicticEvolveScope<V, F> =
+    PanmicticEvolveScopeInstance(panmicticGA, panmicticConfig)
 
 /**
- * Base realization of [PanmicticLifecycle].
- * @see AbstractLifecycle
+ * Base realization of [PanmicticEvolveScope].
+ * @see AbstractEvolveScope
  */
-internal class PanmicticLifecycleInstance<V, F>(
+internal class PanmicticEvolveScopeInstance<V, F>(
     private val panmicticGA: PanmicticGA<V, F>,
     panmicticConfig: PanmicticConfig<V, F>,
-) : PanmicticLifecycle<V, F>, AbstractLifecycle<V, F>(panmicticGA, panmicticConfig) {
+) : PanmicticEvolveScope<V, F>, AbstractEvolveScope<V, F>(panmicticGA, panmicticConfig) {
 
     override val population: PanmicticPopulation<V, F>
         get() = panmicticGA.population

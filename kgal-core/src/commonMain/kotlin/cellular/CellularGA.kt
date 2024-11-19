@@ -21,8 +21,8 @@ import kgal.chromosome.Chromosome
  * @see <a href="https://en.wikipedia.org/wiki/Cellular_evolutionary_algorithm">Cellular Genetic Algorithm</a>
  * @see <a href="https://link.springer.com/book/10.1007/978-0-387-77610-1">Cellular Genetic Algorithm by Enrique Alba</a>
  * @see CellularPopulation
- * @see CellularLifecycle
- * @see CellLifecycle
+ * @see CellularEvolveScope
+ * @see CellEvolveScope
  * @see CellularConfig
  */
 public interface CellularGA<V, F> : GA<V, F> {
@@ -112,8 +112,8 @@ public interface CellularGA<V, F> : GA<V, F> {
  * @see <a href="https://link.springer.com/book/10.1007/978-0-387-77610-1">Cellular Genetic Algorithm by Enrique Alba</a>
  * @see CellularGA
  * @see CellularPopulation
- * @see CellularLifecycle
- * @see CellLifecycle
+ * @see CellularEvolveScope
+ * @see CellEvolveScope
  * @see CellularConfig
  */
 public inline fun <V, F> cGA(
@@ -132,11 +132,11 @@ public inline fun <V, F> cGA(
  */
 internal class CellularGAInstance<V, F>(
     configuration: CellularConfig<V, F>,
-) : CellularGA<V, F>, AbstractGA<V, F, CellularLifecycle<V, F>>(configuration) {
+) : CellularGA<V, F>, AbstractGA<V, F, CellularEvolveScope<V, F>>(configuration) {
 
     override val population: CellularPopulation<V, F> = configuration.population
 
-    override val lifecycle: CellularLifecycle<V, F> by lazy { CellularLifecycle(this, configuration) }
+    override val evolveScope: CellularEvolveScope<V, F> by lazy { CellularEvolveScope(this, configuration) }
 
     override var elitism: Boolean = configuration.elitism
 
@@ -144,7 +144,7 @@ internal class CellularGAInstance<V, F>(
 
     override var neighborhood: CellularNeighborhood = configuration.neighborhood
         set(value) {
-            if (field != value) lifecycle.isCacheNeighborhoodActual = false
+            if (field != value) evolveScope.isCacheNeighborhoodActual = false
             field = value
         }
 }

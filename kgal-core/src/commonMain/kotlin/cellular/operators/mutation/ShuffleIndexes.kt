@@ -1,6 +1,6 @@
 package kgal.cellular.operators.mutation
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.operators.mutation.mutationShuffleIndexes
 import kotlin.jvm.JvmName
 
@@ -17,7 +17,7 @@ import kotlin.jvm.JvmName
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesArray")
-public fun <T, F> CellLifecycle<Array<T>, F>.mutShuffleIndexes(
+public fun <T, F> CellEvolveScope<Array<T>, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -37,7 +37,7 @@ public fun <T, F> CellLifecycle<Array<T>, F>.mutShuffleIndexes(
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesBooleanArray")
-public fun <F> CellLifecycle<BooleanArray, F>.mutShuffleIndexes(
+public fun <F> CellEvolveScope<BooleanArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -57,7 +57,7 @@ public fun <F> CellLifecycle<BooleanArray, F>.mutShuffleIndexes(
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesByteArray")
-public fun <F> CellLifecycle<ByteArray, F>.mutShuffleIndexes(
+public fun <F> CellEvolveScope<ByteArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -77,7 +77,7 @@ public fun <F> CellLifecycle<ByteArray, F>.mutShuffleIndexes(
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesCharArray")
-public fun <F> CellLifecycle<CharArray, F>.mutShuffleIndexes(
+public fun <F> CellEvolveScope<CharArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -97,7 +97,7 @@ public fun <F> CellLifecycle<CharArray, F>.mutShuffleIndexes(
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesDoubleArray")
-public fun <F> CellLifecycle<DoubleArray, F>.mutShuffleIndexes(
+public fun <F> CellEvolveScope<DoubleArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -117,7 +117,7 @@ public fun <F> CellLifecycle<DoubleArray, F>.mutShuffleIndexes(
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesFloatArray")
-public fun <F> CellLifecycle<FloatArray, F>.mutShuffleIndexes(
+public fun <F> CellEvolveScope<FloatArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -137,7 +137,7 @@ public fun <F> CellLifecycle<FloatArray, F>.mutShuffleIndexes(
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesIntArray")
-public fun <F> CellLifecycle<IntArray, F>.mutShuffleIndexes(
+public fun <F> CellEvolveScope<IntArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -157,7 +157,7 @@ public fun <F> CellLifecycle<IntArray, F>.mutShuffleIndexes(
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesLongArray")
-public fun <F> CellLifecycle<LongArray, F>.mutShuffleIndexes(
+public fun <F> CellEvolveScope<LongArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -177,7 +177,7 @@ public fun <F> CellLifecycle<LongArray, F>.mutShuffleIndexes(
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesMutableList")
-public fun <T, F> CellLifecycle<MutableList<T>, F>.mutShuffleIndexes(
+public fun <T, F> CellEvolveScope<MutableList<T>, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -197,7 +197,7 @@ public fun <T, F> CellLifecycle<MutableList<T>, F>.mutShuffleIndexes(
  * @param shuffleIndexesChance the probability of each attribute to be moved.
  */
 @JvmName("mutShuffleIndexesShortArray")
-public fun <F> CellLifecycle<ShortArray, F>.mutShuffleIndexes(
+public fun <F> CellEvolveScope<ShortArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
 ): Unit = mutation(chance) { chromosome ->

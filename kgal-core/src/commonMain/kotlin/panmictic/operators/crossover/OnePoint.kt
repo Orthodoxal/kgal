@@ -1,8 +1,8 @@
 package kgal.panmictic.operators.crossover
 
 import kgal.operators.crossover.crossoverOnePoint
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticGA
-import kgal.panmictic.PanmicticLifecycle
 import kotlin.jvm.JvmName
 
 /**
@@ -21,7 +21,7 @@ import kotlin.jvm.JvmName
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointArray")
-public suspend fun <T, F> PanmicticLifecycle<Array<T>, F>.cxOnePoint(
+public suspend fun <T, F> PanmicticEvolveScope<Array<T>, F>.cxOnePoint(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,
@@ -45,7 +45,7 @@ public suspend fun <T, F> PanmicticLifecycle<Array<T>, F>.cxOnePoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointBooleanArray")
-public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.cxOnePoint(
+public suspend fun <F> PanmicticEvolveScope<BooleanArray, F>.cxOnePoint(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,
@@ -69,7 +69,7 @@ public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.cxOnePoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointByteArray")
-public suspend fun <F> PanmicticLifecycle<ByteArray, F>.cxOnePoint(
+public suspend fun <F> PanmicticEvolveScope<ByteArray, F>.cxOnePoint(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,
@@ -93,7 +93,7 @@ public suspend fun <F> PanmicticLifecycle<ByteArray, F>.cxOnePoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointCharArray")
-public suspend fun <F> PanmicticLifecycle<CharArray, F>.cxOnePoint(
+public suspend fun <F> PanmicticEvolveScope<CharArray, F>.cxOnePoint(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,
@@ -117,7 +117,7 @@ public suspend fun <F> PanmicticLifecycle<CharArray, F>.cxOnePoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointDoubleArray")
-public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.cxOnePoint(
+public suspend fun <F> PanmicticEvolveScope<DoubleArray, F>.cxOnePoint(
     chance: Double = 0.9,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,
@@ -141,7 +141,7 @@ public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.cxOnePoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointFloatArray")
-public suspend fun <F> PanmicticLifecycle<FloatArray, F>.cxOnePoint(
+public suspend fun <F> PanmicticEvolveScope<FloatArray, F>.cxOnePoint(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,
@@ -165,7 +165,7 @@ public suspend fun <F> PanmicticLifecycle<FloatArray, F>.cxOnePoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointIntArray")
-public suspend fun <F> PanmicticLifecycle<IntArray, F>.cxOnePoint(
+public suspend fun <F> PanmicticEvolveScope<IntArray, F>.cxOnePoint(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,
@@ -189,7 +189,7 @@ public suspend fun <F> PanmicticLifecycle<IntArray, F>.cxOnePoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointLongArray")
-public suspend fun <F> PanmicticLifecycle<LongArray, F>.cxOnePoint(
+public suspend fun <F> PanmicticEvolveScope<LongArray, F>.cxOnePoint(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,
@@ -213,7 +213,7 @@ public suspend fun <F> PanmicticLifecycle<LongArray, F>.cxOnePoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointMutableList")
-public suspend fun <T, F> PanmicticLifecycle<MutableList<T>, F>.cxOnePoint(
+public suspend fun <T, F> PanmicticEvolveScope<MutableList<T>, F>.cxOnePoint(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,
@@ -237,7 +237,7 @@ public suspend fun <T, F> PanmicticLifecycle<MutableList<T>, F>.cxOnePoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOnePointShortArray")
-public suspend fun <F> PanmicticLifecycle<ShortArray, F>.cxOnePoint(
+public suspend fun <F> PanmicticEvolveScope<ShortArray, F>.cxOnePoint(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,

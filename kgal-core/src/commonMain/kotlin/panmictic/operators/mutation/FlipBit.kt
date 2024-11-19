@@ -1,7 +1,7 @@
 package kgal.panmictic.operators.mutation
 
 import kgal.operators.mutation.mutationFlipBit
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 import kotlin.jvm.JvmName
 
 /**
@@ -18,7 +18,7 @@ import kotlin.jvm.JvmName
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutFlipBitBooleanArray")
-public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.mutFlipBit(
+public suspend fun <F> PanmicticEvolveScope<BooleanArray, F>.mutFlipBit(
     chance: Double,
     flipBitChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -40,7 +40,7 @@ public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.mutFlipBit(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutFlipBitIntArray")
-public suspend fun <F> PanmicticLifecycle<IntArray, F>.mutFlipBit(
+public suspend fun <F> PanmicticEvolveScope<IntArray, F>.mutFlipBit(
     chance: Double,
     flipBitChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,

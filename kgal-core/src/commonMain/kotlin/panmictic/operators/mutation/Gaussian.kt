@@ -2,7 +2,7 @@ package kgal.panmictic.operators.mutation
 
 import kgal.chromosome.Chromosome
 import kgal.operators.mutation.mutationGaussian
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 
 /**
  * Applies a gaussian mutation of mean [mean] and standard deviation [stddev] on the input chromosome.
@@ -17,7 +17,7 @@ import kgal.panmictic.PanmicticLifecycle
  * @param chance chance of mutation between a pair of chromosomes
  * @param gaussianChance the probability of each attribute to be mutated
  */
-public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.mutGaussian(
+public suspend fun <F> PanmicticEvolveScope<DoubleArray, F>.mutGaussian(
     mean: Double,
     stddev: Double,
     chance: Double,

@@ -1,6 +1,6 @@
 package kgal.cellular.operators.crossover
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.chromosome.Chromosome
 import kgal.operators.crossover.crossoverOrdered
 import kotlin.jvm.JvmName
@@ -12,7 +12,7 @@ import kotlin.jvm.JvmName
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOrderedIntArray")
-public fun <F> CellLifecycle<IntArray, F>.cxOrdered(
+public fun <F> CellEvolveScope<IntArray, F>.cxOrdered(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOrdered(chromosome1.value, chromosome2.value, random)

@@ -3,8 +3,8 @@ package kgal.panmictic.operators.crossover
 import kgal.chromosome.Chromosome
 import kgal.cloneOf
 import kgal.lastIndex
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticGA
-import kgal.panmictic.PanmicticLifecycle
 import kgal.panmictic.operators.crossover.CrossoverType.Iterative
 import kgal.panmictic.operators.crossover.CrossoverType.Randomly
 import kgal.processor.process
@@ -62,7 +62,7 @@ public sealed interface CrossoverType {
  * @param crossover specific crossing action (How chromosomes will be crossed)
  * @see [CrossoverType.Iterative]
  */
-public suspend inline fun <V, F> PanmicticLifecycle<V, F>.iterativeCrossover(
+public suspend inline fun <V, F> PanmicticEvolveScope<V, F>.iterativeCrossover(
     chance: Double,
     parallelismLimit: Int,
     crossinline crossover: suspend (chromosome1: Chromosome<V, F>, chromosome2: Chromosome<V, F>, random: Random) -> Unit,
@@ -107,7 +107,7 @@ public suspend inline fun <V, F> PanmicticLifecycle<V, F>.iterativeCrossover(
  * @param crossover specific crossing action (How chromosomes will be crossed)
  * @see [CrossoverType.Randomly]
  */
-public suspend inline fun <V, F> PanmicticLifecycle<V, F>.randomlyCrossover(
+public suspend inline fun <V, F> PanmicticEvolveScope<V, F>.randomlyCrossover(
     chance: Double,
     parallelismLimit: Int,
     crossinline crossover: suspend (chromosome1: Chromosome<V, F>, chromosome2: Chromosome<V, F>, random: Random) -> Unit,

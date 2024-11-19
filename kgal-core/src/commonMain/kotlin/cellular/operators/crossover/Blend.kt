@@ -1,6 +1,6 @@
 package kgal.cellular.operators.crossover
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.chromosome.Chromosome
 import kgal.operators.crossover.crossoverBlend
 import kotlin.jvm.JvmName
@@ -12,7 +12,7 @@ import kotlin.jvm.JvmName
  * @param alpha Extent of the interval in which the new values can be drawn for each attribute on both side of the parents’ attributes.
  */
 @JvmName("cxBlendDoubleArray")
-public fun <F> CellLifecycle<DoubleArray, F>.cxBlend(
+public fun <F> CellEvolveScope<DoubleArray, F>.cxBlend(
     chance: Double,
     alpha: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -26,7 +26,7 @@ public fun <F> CellLifecycle<DoubleArray, F>.cxBlend(
  * @param alpha Extent of the interval in which the new values can be drawn for each attribute on both side of the parents’ attributes.
  */
 @JvmName("cxBlendFloatArray")
-public fun <F> CellLifecycle<FloatArray, F>.cxBlend(
+public fun <F> CellEvolveScope<FloatArray, F>.cxBlend(
     chance: Double,
     alpha: Float,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->

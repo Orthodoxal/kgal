@@ -52,7 +52,7 @@ Solution:
 
 Get target using genetic operators (selection, crossover, mutation, evaluation)
  */
-private fun main() {
+private fun main() { // Run it!
     val dga = dGA(
         factory = { booleans(size = CHROMOSOME_SIZE) },
         fitnessFunction = { value -> value.count { it } },

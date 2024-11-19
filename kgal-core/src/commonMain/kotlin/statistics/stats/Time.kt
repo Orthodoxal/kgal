@@ -1,7 +1,7 @@
 package kgal.statistics.stats
 
+import kgal.EvolveScope
 import kgal.GA
-import kgal.Lifecycle
 import kgal.statistics.Session
 import kgal.statistics.TimeMarker
 import kgal.statistics.TimeStore
@@ -72,7 +72,7 @@ public val <V, F> GA<V, F>.activeTimeTotal: Duration
  * }
  * ```
  */
-public val <V, F> Lifecycle<V, F>.timeIteration: Duration?
+public val <V, F> EvolveScope<V, F>.timeIteration: Duration?
     get() {
         val previousIterationTimeMarker = timeStore.onIteration.lastOrNull()
         val iterationTimeMarker = timeMarker
@@ -83,7 +83,7 @@ public val <V, F> Lifecycle<V, F>.timeIteration: Duration?
 /**
  * Creates [Statistic] for current [timeIteration].
  */
-public fun Lifecycle<*, *>.timeIteration(): Statistic<Duration?> = Statistic(TIME_ITERATION, timeIteration)
+public fun EvolveScope<*, *>.timeIteration(): Statistic<Duration?> = Statistic(TIME_ITERATION, timeIteration)
 
 private inline fun TimeMarker?.latest(candidate: TimeMarker?): TimeMarker? {
     if (this == null) return candidate

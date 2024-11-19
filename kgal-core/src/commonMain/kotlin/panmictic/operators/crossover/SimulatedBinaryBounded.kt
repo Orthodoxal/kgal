@@ -2,8 +2,8 @@ package kgal.panmictic.operators.crossover
 
 import kgal.chromosome.Chromosome
 import kgal.operators.crossover.crossoverSimulatedBinaryBounded
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticGA
-import kgal.panmictic.PanmicticLifecycle
 import kotlin.jvm.JvmName
 
 /**
@@ -18,7 +18,7 @@ import kotlin.jvm.JvmName
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxSimulatedBinaryBoundedDoubleArray")
-public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.cxSimulatedBinaryBounded(
+public suspend fun <F> PanmicticEvolveScope<DoubleArray, F>.cxSimulatedBinaryBounded(
     chance: Double,
     eta: Double,
     low: Double,

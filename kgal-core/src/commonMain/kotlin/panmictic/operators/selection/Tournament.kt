@@ -4,7 +4,7 @@ import kgal.Population
 import kgal.chromosome.Chromosome
 import kgal.factory
 import kgal.operators.selection.selectionTournament
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.size
 
@@ -16,7 +16,7 @@ import kgal.size
  * @param size the size of tournament (number selected chromosomes)
  * @param parallelismLimit limit of parallel workers
  */
-public suspend fun <V, F> PanmicticLifecycle<V, F>.selTournament(
+public suspend fun <V, F> PanmicticEvolveScope<V, F>.selTournament(
     size: Int,
     parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,
 ): Unit = selection(parallelismLimit) { source, random -> selectionTournament(source, size, random) }
@@ -31,7 +31,7 @@ public suspend fun <V, F> PanmicticLifecycle<V, F>.selTournament(
  * @param size the size of tournament (number selected chromosomes)
  * @param parallelismLimit limit of parallel workers
  */
-public suspend fun <V, F> PanmicticLifecycle<V, F>.selTournament(
+public suspend fun <V, F> PanmicticEvolveScope<V, F>.selTournament(
     percent: Double,
     size: Int,
     parallelismLimit: Int = ParallelismConfig.NO_PARALLELISM,

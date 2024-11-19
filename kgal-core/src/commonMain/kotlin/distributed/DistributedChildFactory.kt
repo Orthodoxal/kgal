@@ -128,7 +128,7 @@ public fun <V, F> DistributedConfig<V, F>.population(
  *     }
  *
  *     // set evolutionary strategy with evolve
- *     evolve { (this = DistributedLifecycle)
+ *     evolve { (this = DistributedEvolveScope)
  *         ...
  *     }
  * }
@@ -185,7 +185,7 @@ public inline fun <V, F> DistributedConfig<V, F>.pGA(
  *     }
  *
  *     // set evolutionary strategy with evolve
- *     evolve { (this = DistributedLifecycle)
+ *     evolve { (this = DistributedEvolveScope)
  *         ...
  *     }
  * }
@@ -236,7 +236,7 @@ public inline fun <V, F> DistributedConfig<V, F>.cGA(
  *     }
  *
  *     // set evolutionary strategy with evolve
- *     evolve { (this = DistributedLifecycle)
+ *     evolve { (this = DistributedEvolveScope)
  *         ...
  *     }
  * }
@@ -294,7 +294,7 @@ public inline fun <V, F> DistributedConfig<V, F>.pGAs(
  *     }
  *
  *     // set evolutionary strategy with evolve
- *     evolve { (this = DistributedLifecycle)
+ *     evolve { (this = DistributedEvolveScope)
  *         ...
  *     }
  * }

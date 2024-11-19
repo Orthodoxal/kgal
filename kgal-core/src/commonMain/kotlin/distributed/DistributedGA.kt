@@ -54,7 +54,7 @@ import kgal.statistics.StatisticsProvider
  *
  * Creates with Kotlin DSL by [dGA].
  * @see DistributedPopulation
- * @see DistributedLifecycle
+ * @see DistributedEvolveScope
  * @see DistributedConfig
  */
 public interface DistributedGA<V, F> : GA<V, F> {
@@ -182,7 +182,7 @@ public interface DistributedGA<V, F> : GA<V, F> {
  *
  * @see DistributedGA
  * @see DistributedPopulation
- * @see DistributedLifecycle
+ * @see DistributedEvolveScope
  * @see DistributedConfig
  */
 public inline fun <V, F> dGA(
@@ -203,13 +203,13 @@ public inline fun <V, F> dGA(
  */
 internal class DistributedGAInstance<V, F>(
     configuration: DistributedConfig<V, F>,
-) : DistributedGA<V, F>, AbstractGA<V, F, DistributedLifecycle<V, F>>(configuration) {
+) : DistributedGA<V, F>, AbstractGA<V, F, DistributedEvolveScope<V, F>>(configuration) {
 
     override val population: DistributedPopulation<V, F> = configuration.population
 
     override val children: List<GA<V, F>> = configuration.children
 
-    override val lifecycle: DistributedLifecycle<V, F> by lazy { DistributedLifecycle(this, configuration) }
+    override val evolveScope: DistributedEvolveScope<V, F> by lazy { DistributedEvolveScope(this, configuration) }
 
     init {
         // collect child's statistics by owner
@@ -219,18 +219,18 @@ internal class DistributedGAInstance<V, F>(
     }
 
     override suspend fun start() {
-        lifecycle.startOption = LifecycleStartOption.Start
+        evolveScope.startOption = EvolveScopeStartOption.Start
         super.start()
     }
 
     override suspend fun resume() {
         if (isActive || state is State.FINISHED) return
-        lifecycle.startOption = LifecycleStartOption.Resume
+        evolveScope.startOption = EvolveScopeStartOption.Resume
         startByOption(iterationFrom = iteration)
     }
 
     override suspend fun restart(forceStop: Boolean, resetPopulation: Boolean) {
-        lifecycle.startOption = LifecycleStartOption.Restart(forceStop, resetPopulation)
+        evolveScope.startOption = EvolveScopeStartOption.Restart(forceStop, resetPopulation)
         super.restart(forceStop, resetPopulation)
     }
 }

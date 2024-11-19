@@ -4,8 +4,8 @@ import kgal.dsl.ConfigDslMarker
 import kgal.panmictic.PanmicticConfig
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.statistics.StatisticsConfig
-import kgal.statistics.TimeStore
 import kgal.statistics.TimeMarker
+import kgal.statistics.TimeStore
 import kotlin.random.Random
 
 /**
@@ -15,7 +15,7 @@ import kotlin.random.Random
  * @see PanmicticConfig
  */
 @ConfigDslMarker
-public interface Config<V, F, L : Lifecycle<V, F>> {
+public interface Config<V, F, ES : EvolveScope<V, F>> {
 
     /**
      * Random associated with [GA]. Defines a pseudorandom number generator for predictive calculations.
@@ -52,15 +52,15 @@ public interface Config<V, F, L : Lifecycle<V, F>> {
     /**
      * Callback before evolution process. Executed only once at launch if [GA.iteration] is 0.
      */
-    public val beforeEvolution: suspend L.() -> Unit
+    public val beforeEvolution: suspend ES.() -> Unit
 
     /**
      * Main evolution process.
      */
-    public val evolution: suspend L.() -> Unit
+    public val evolution: suspend ES.() -> Unit
 
     /**
      * Callback after evolution process. Executed at launch when [GA.state] is going to be [State.FINISHED].
      */
-    public val afterEvolution: suspend L.() -> Unit
+    public val afterEvolution: suspend ES.() -> Unit
 }
