@@ -1,6 +1,6 @@
 package kgal.cellular.operators.crossover
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.operators.crossover.crossoverOnePoint
 import kotlin.jvm.JvmName
 
@@ -18,7 +18,7 @@ import kotlin.jvm.JvmName
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointArray")
-public fun <T, F> CellLifecycle<Array<T>, F>.cxOnePoint(
+public fun <T, F> CellEvolveScope<Array<T>, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)
@@ -38,7 +38,7 @@ public fun <T, F> CellLifecycle<Array<T>, F>.cxOnePoint(
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointBooleanArray")
-public fun <F> CellLifecycle<BooleanArray, F>.cxOnePoint(
+public fun <F> CellEvolveScope<BooleanArray, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)
@@ -58,7 +58,7 @@ public fun <F> CellLifecycle<BooleanArray, F>.cxOnePoint(
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointByteArray")
-public fun <F> CellLifecycle<ByteArray, F>.cxOnePoint(
+public fun <F> CellEvolveScope<ByteArray, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)
@@ -78,7 +78,7 @@ public fun <F> CellLifecycle<ByteArray, F>.cxOnePoint(
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointCharArray")
-public fun <F> CellLifecycle<CharArray, F>.cxOnePoint(
+public fun <F> CellEvolveScope<CharArray, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)
@@ -98,7 +98,7 @@ public fun <F> CellLifecycle<CharArray, F>.cxOnePoint(
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointDoubleArray")
-public fun <F> CellLifecycle<DoubleArray, F>.cxOnePoint(
+public fun <F> CellEvolveScope<DoubleArray, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)
@@ -118,7 +118,7 @@ public fun <F> CellLifecycle<DoubleArray, F>.cxOnePoint(
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointFloatArray")
-public fun <F> CellLifecycle<FloatArray, F>.cxOnePoint(
+public fun <F> CellEvolveScope<FloatArray, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)
@@ -138,7 +138,7 @@ public fun <F> CellLifecycle<FloatArray, F>.cxOnePoint(
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointIntArray")
-public fun <F> CellLifecycle<IntArray, F>.cxOnePoint(
+public fun <F> CellEvolveScope<IntArray, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)
@@ -158,7 +158,7 @@ public fun <F> CellLifecycle<IntArray, F>.cxOnePoint(
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointLongArray")
-public fun <F> CellLifecycle<LongArray, F>.cxOnePoint(
+public fun <F> CellEvolveScope<LongArray, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)
@@ -178,7 +178,7 @@ public fun <F> CellLifecycle<LongArray, F>.cxOnePoint(
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointMutableList")
-public fun <T, F> CellLifecycle<MutableList<T>, F>.cxOnePoint(
+public fun <T, F> CellEvolveScope<MutableList<T>, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)
@@ -198,7 +198,7 @@ public fun <T, F> CellLifecycle<MutableList<T>, F>.cxOnePoint(
  * @param chance chance of crossover between a pair of chromosomes
  */
 @JvmName("cxOnePointShortArray")
-public fun <F> CellLifecycle<ShortArray, F>.cxOnePoint(
+public fun <F> CellEvolveScope<ShortArray, F>.cxOnePoint(
     chance: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
     crossoverOnePoint(chromosome1.value, chromosome2.value, random)

@@ -3,7 +3,7 @@ package kgal.panmictic.operators.selection
 import kgal.Population
 import kgal.operators.selection.selectionBest
 import kgal.operators.selection.selectionWorst
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.size
 import kgal.utils.fillWithSameFromSource
 
@@ -12,7 +12,7 @@ import kgal.utils.fillWithSameFromSource
  * @param count number of selected best values
  * @param fillWithSelected if true (default) fills all population with selected clones
  */
-public fun <V, F> PanmicticLifecycle<V, F>.selBest(
+public fun <V, F> PanmicticEvolveScope<V, F>.selBest(
     count: Int,
     fillWithSelected: Boolean = true,
 ) {
@@ -28,7 +28,7 @@ public fun <V, F> PanmicticLifecycle<V, F>.selBest(
  * @param count number of selected worst values
  * @param fillWithSelected if true (default) fills all population with selected clones
  */
-public fun <V, F> PanmicticLifecycle<V, F>.selWorst(
+public fun <V, F> PanmicticEvolveScope<V, F>.selWorst(
     count: Int,
     fillWithSelected: Boolean = true,
 ) {

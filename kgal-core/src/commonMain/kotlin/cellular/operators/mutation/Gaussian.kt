@@ -1,6 +1,6 @@
 package kgal.cellular.operators.mutation
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.chromosome.Chromosome
 import kgal.operators.mutation.mutationGaussian
 
@@ -17,7 +17,7 @@ import kgal.operators.mutation.mutationGaussian
  * @param chance chance of mutation between a pair of chromosomes
  * @param gaussianChance the probability of each attribute to be mutated
  */
-public fun <F> CellLifecycle<DoubleArray, F>.mutGaussian(
+public fun <F> CellEvolveScope<DoubleArray, F>.mutGaussian(
     mean: Double,
     stddev: Double,
     chance: Double,

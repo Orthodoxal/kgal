@@ -17,7 +17,7 @@ import kotlin.random.Random
  *
  * This population supports:
  * - elitism, see [PanmicticConfig.elitism]
- * - dynamic change [size], see [PanmicticLifecycle.resize].
+ * - dynamic change [size], see [PanmicticEvolveScope.resize].
  * Changing size usually used if the evolutionary strategy involves increasing the population size, see [buffer].
  *
  * Structure of population with [PanmicticGA.elitism] = 2, [size] = 9 and [buffer] = 7:
@@ -38,7 +38,7 @@ public interface PanmicticPopulation<V, F> : Population<V, F> {
 
     /**
      * The amount of reserved space in a population.
-     * Can be immutable for [PanmicticPopulation] see [PanmicticLifecycle.resize].
+     * Can be immutable for [PanmicticPopulation] see [PanmicticEvolveScope.resize].
      * Usually used if the evolutionary strategy involves increasing the population size.
      *
      * Set [buffer] at the population initialization stage via the corresponding parameter.
@@ -46,18 +46,18 @@ public interface PanmicticPopulation<V, F> : Population<V, F> {
      * NOTE:
      * - Can be automatically changed when the [size] is changed
      * - Always must be positive or zero
-     * - Dynamically can be changed with [PanmicticLifecycle.resize]
+     * - Dynamically can be changed with [PanmicticEvolveScope.resize]
      *
      * Default value is zero
      */
     public val buffer: Int
 
     /**
-     * Current size of population. Can be immutable for [PanmicticPopulation] see [PanmicticLifecycle.resize].
+     * Current size of population. Can be immutable for [PanmicticPopulation] see [PanmicticEvolveScope.resize].
      *
      * NOTE:
      * - Always must be positive
-     * - Dynamically can be changed with [PanmicticLifecycle.resize]
+     * - Dynamically can be changed with [PanmicticEvolveScope.resize]
      *
      * @see buffer param
      */
@@ -86,7 +86,7 @@ public interface PanmicticPopulation<V, F> : Population<V, F> {
      *
      * NOTE!
      * - Do not use it directly cause chromosomes in range: oldSize..<newSize can be not evaluated!
-     * Use safely [PanmicticLifecycle.resize] operator.
+     * Use safely [PanmicticEvolveScope.resize] operator.
      * - Changing only [newSize] ([newBuffer] is null) will automatically calculate the value of [buffer]
      *
      * @param newSize Set as new [size] value. If null - no change [size].

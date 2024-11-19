@@ -1,11 +1,11 @@
 package kgal.cellular
 
-import kgal.Lifecycle
+import kgal.EvolveScope
 import kgal.chromosome.Chromosome
 import kotlin.random.Random
 
 /**
- * [CellLifecycle] - lifecycle for `cellular evolutionary strategy` based on the evolution of a [cell] dependent on its [neighbors].
+ * [CellEvolveScope] - evolveScope for `cellular evolutionary strategy` based on the evolution of a [cell] dependent on its [neighbors].
  *
  * [V] - value of [Chromosome]
  *
@@ -27,12 +27,12 @@ import kotlin.random.Random
  * `X` chromosomes have no direct influence on the `C` chromosome during `cellular evolution`.
  * Gene transfer between chromosomes that are not neighbors of each other occurs through common neighbors or common neighbors of neighbors, etc.
  *
- * Not a standalone implementation of [Lifecycle], it exists exclusively in the context of [CellularLifecycle].
+ * Not a standalone implementation of [EvolveScope], it exists exclusively in the context of [CellularEvolveScope].
  *
- * Creates with CellLifecycle().
- * @see CellularLifecycle
+ * Creates with CellEvolveScope().
+ * @see CellularEvolveScope
  */
-public interface CellLifecycle<V, F> {
+public interface CellEvolveScope<V, F> {
 
     /**
      * Random for single `cellular evolution`. Defines a pseudorandom number generator for predictive calculations.
@@ -58,21 +58,21 @@ public interface CellLifecycle<V, F> {
 }
 
 /**
- * Creates an instance of [CellLifecycle].
- * @see CellLifecycle
+ * Creates an instance of [CellEvolveScope].
+ * @see CellEvolveScope
  */
-public fun <V, F> CellularLifecycle<V, F>.CellLifecycle(
+public fun <V, F> CellularEvolveScope<V, F>.CellEvolveScope(
     cellChromosome: Chromosome<V, F>,
     neighbors: Array<Chromosome<V, F>>,
     random: Random,
-): CellLifecycle<V, F> = CellLifecycleInstance(random, cellChromosome, neighbors, fitnessFunction)
+): CellEvolveScope<V, F> = CellEvolveScopeInstance(random, cellChromosome, neighbors, fitnessFunction)
 
 /**
- * Base realization of [CellLifecycle].
+ * Base realization of [CellEvolveScope].
  */
-internal class CellLifecycleInstance<V, F>(
+internal class CellEvolveScopeInstance<V, F>(
     override val random: Random,
     override var cell: Chromosome<V, F>,
     override val neighbors: Array<Chromosome<V, F>>,
     override var fitnessFunction: (V) -> F,
-) : CellLifecycle<V, F>
+) : CellEvolveScope<V, F>

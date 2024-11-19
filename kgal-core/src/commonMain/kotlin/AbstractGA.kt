@@ -13,16 +13,16 @@ import kotlin.uuid.Uuid
 /**
  * [AbstractGA] - Abstract class implementing the basic functionality of the [GA] interface.
  *
- * [L] - [AbstractGA] powered by [Lifecycle], which differs depending on the implementation.
+ * [ES] - [AbstractGA] powered by [EvolveScope], which differs depending on the implementation.
  *
  * This class implements the work of control methods ([start], [resume], [restart], [stop]), [statisticsProvider] and control [state].
  * @param configuration base configuration for initialization [GA]
  * @see [GA]
  * @see [Config]
- * @see [Lifecycle]
+ * @see [EvolveScope]
  */
-public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
-    configuration: Config<V, F, L>,
+public abstract class AbstractGA<V, F, ES : EvolveScope<V, F>>(
+    configuration: Config<V, F, ES>,
 ) : GA<V, F> {
     override var state: State = State.INITIALIZED
         protected set
@@ -42,27 +42,27 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
     override val timeStore: TimeStore = configuration.timeStore
 
     /**
-     * Abstract lifecycle property.
+     * Abstract evolveScope property.
      */
-    protected abstract val lifecycle: L
+    protected abstract val evolveScope: ES
 
     /**
-     * Lifecycle block applied before evolution.
+     * EvolveScope block applied before evolution.
      */
-    protected val beforeEvolution: suspend L.() -> Unit = configuration.beforeEvolution
+    protected val beforeEvolution: suspend ES.() -> Unit = configuration.beforeEvolution
 
     /**
-     * Lifecycle block applied as evolution.
+     * EvolveScope block applied as evolution.
      */
-    protected val evolution: suspend L.() -> Unit = configuration.evolution
+    protected val evolution: suspend ES.() -> Unit = configuration.evolution
 
     /**
-     * Lifecycle block applied after evolution.
+     * EvolveScope block applied after evolution.
      */
-    protected val afterEvolution: suspend L.() -> Unit = configuration.afterEvolution
+    protected val afterEvolution: suspend ES.() -> Unit = configuration.afterEvolution
 
     /**
-     * Pause flag for [StopPolicy.Default]. If true lifecycle will be stopped after current iteration.
+     * Pause flag for [StopPolicy.Default]. If true evolution will be stopped after current iteration.
      */
     protected var pause: Boolean = false
 
@@ -97,7 +97,7 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
                 stop(stopPolicy = StopPolicy.Default)
             }
 
-            lifecycle.store.clear()
+            evolveScope.store.clear()
 
             if (resetPopulation) {
                 population.reset(random)
@@ -170,10 +170,10 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
     }
 
     /**
-     * Launch [GA] with [lifecycle].
+     * Launches [GA] with [evolveScope].
      */
     protected suspend fun launch() {
-        with(lifecycle) {
+        with(evolveScope) {
             beforeEvolve()
             evolve()
             afterEvolve()
@@ -181,10 +181,10 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
     }
 
     /**
-     * Prepare [lifecycle] to start. Executes [beforeEvolution] if necessary.
+     * Prepare [evolveScope] to start. Executes [beforeEvolution] if necessary.
      */
-    protected open suspend fun L.beforeEvolve() {
-        // prepare GA and Lifecycle
+    protected open suspend fun ES.beforeEvolve() {
+        // prepare GA and EvolveScope
         pause = false
         finishByStopConditions = false
         finishedByMaxIteration = false
@@ -201,7 +201,7 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
     /**
      * Start infinite evolutionary loop with stop checks on each iteration.
      */
-    protected open suspend fun L.evolve() {
+    protected open suspend fun ES.evolve() {
         while (true) {
             this@AbstractGA.iteration++
             evolution()
@@ -214,10 +214,10 @@ public abstract class AbstractGA<V, F, L : Lifecycle<V, F>>(
     }
 
     /**
-     * Prepare [lifecycle] to stop or finish. Executes [afterEvolution] if necessary.
+     * Prepare [evolveScope] to stop or finish. Executes [afterEvolution] if necessary.
      */
-    protected open suspend fun L.afterEvolve() {
-        // wait for all children coroutines of lifecycle completed
+    protected open suspend fun ES.afterEvolve() {
+        // wait for all children coroutines of coroutineScope completed
         coroutineContext.job.children.forEach { it.join() }
         // stop all statistics collectors and wait for all data has been handled (force = false)
         statisticsProvider.stopCollectors(force = false)

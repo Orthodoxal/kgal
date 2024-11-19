@@ -1,6 +1,6 @@
 package kgal.utils
 
-import kgal.Lifecycle
+import kgal.EvolveScope
 import kgal.Population
 import kgal.chromosome.Chromosome
 import kotlin.math.abs
@@ -58,7 +58,7 @@ public inline fun randomByChance(chance: Double, random: Random, action: () -> U
  * chance >= 1.0 -> return true
  * @see randomByChance
  */
-public inline fun Lifecycle<*, *>.randomByChance(chance: Double, action: () -> Unit): Unit =
+public inline fun EvolveScope<*, *>.randomByChance(chance: Double, action: () -> Unit): Unit =
     randomByChance(chance, random, action)
 
 /**

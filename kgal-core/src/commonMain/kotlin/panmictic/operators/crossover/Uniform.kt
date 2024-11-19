@@ -1,8 +1,8 @@
 package kgal.panmictic.operators.crossover
 
 import kgal.operators.crossover.crossoverUniform
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticGA
-import kgal.panmictic.PanmicticLifecycle
 import kotlin.jvm.JvmName
 
 /**
@@ -14,7 +14,7 @@ import kotlin.jvm.JvmName
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformArray")
-public suspend fun <T, F> PanmicticLifecycle<Array<T>, F>.cxUniform(
+public suspend fun <T, F> PanmicticEvolveScope<Array<T>, F>.cxUniform(
     chance: Double,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -32,7 +32,7 @@ public suspend fun <T, F> PanmicticLifecycle<Array<T>, F>.cxUniform(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformBooleanArray")
-public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.cxUniform(
+public suspend fun <F> PanmicticEvolveScope<BooleanArray, F>.cxUniform(
     chance: Double,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -50,7 +50,7 @@ public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.cxUniform(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformByteArray")
-public suspend fun <F> PanmicticLifecycle<ByteArray, F>.cxUniform(
+public suspend fun <F> PanmicticEvolveScope<ByteArray, F>.cxUniform(
     chance: Double,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -68,7 +68,7 @@ public suspend fun <F> PanmicticLifecycle<ByteArray, F>.cxUniform(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformCharArray")
-public suspend fun <F> PanmicticLifecycle<CharArray, F>.cxUniform(
+public suspend fun <F> PanmicticEvolveScope<CharArray, F>.cxUniform(
     chance: Double,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -86,7 +86,7 @@ public suspend fun <F> PanmicticLifecycle<CharArray, F>.cxUniform(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformDoubleArray")
-public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.cxUniform(
+public suspend fun <F> PanmicticEvolveScope<DoubleArray, F>.cxUniform(
     chance: Double = 0.9,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -104,7 +104,7 @@ public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.cxUniform(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformFloatArray")
-public suspend fun <F> PanmicticLifecycle<FloatArray, F>.cxUniform(
+public suspend fun <F> PanmicticEvolveScope<FloatArray, F>.cxUniform(
     chance: Double,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -122,7 +122,7 @@ public suspend fun <F> PanmicticLifecycle<FloatArray, F>.cxUniform(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformIntArray")
-public suspend fun <F> PanmicticLifecycle<IntArray, F>.cxUniform(
+public suspend fun <F> PanmicticEvolveScope<IntArray, F>.cxUniform(
     chance: Double,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -140,7 +140,7 @@ public suspend fun <F> PanmicticLifecycle<IntArray, F>.cxUniform(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformLongArray")
-public suspend fun <F> PanmicticLifecycle<LongArray, F>.cxUniform(
+public suspend fun <F> PanmicticEvolveScope<LongArray, F>.cxUniform(
     chance: Double,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -158,7 +158,7 @@ public suspend fun <F> PanmicticLifecycle<LongArray, F>.cxUniform(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformMutableList")
-public suspend fun <T, F> PanmicticLifecycle<MutableList<T>, F>.cxUniform(
+public suspend fun <T, F> PanmicticEvolveScope<MutableList<T>, F>.cxUniform(
     chance: Double,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -176,7 +176,7 @@ public suspend fun <T, F> PanmicticLifecycle<MutableList<T>, F>.cxUniform(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxUniformShortArray")
-public suspend fun <F> PanmicticLifecycle<ShortArray, F>.cxUniform(
+public suspend fun <F> PanmicticEvolveScope<ShortArray, F>.cxUniform(
     chance: Double,
     chanceUniform: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,

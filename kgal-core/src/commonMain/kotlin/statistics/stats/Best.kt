@@ -2,7 +2,7 @@ package kgal.statistics.stats
 
 import kgal.*
 import kgal.chromosome.Chromosome
-import kgal.distributed.DistributedLifecycle
+import kgal.distributed.DistributedEvolveScope
 import kgal.statistics.StatisticsConfig
 import kgal.statistics.note.Statistic
 
@@ -23,12 +23,12 @@ public inline val <V, F> GA<V, F>.bestFitness: F? get() = population.best?.fitne
 /**
  * The best [Chromosome] in [Population] by fitness.
  * Uses a [StatisticsConfig.guaranteedSorted] for optimization,
- * except in the case of a call from [DistributedLifecycle].
+ * except in the case of a call from [DistributedEvolveScope].
  */
-public inline val <V, F> Lifecycle<V, F>.best: Chromosome<V, F>?
+public inline val <V, F> EvolveScope<V, F>.best: Chromosome<V, F>?
     get() {
         return when {
-            this is DistributedLifecycle<V, F> -> population.best
+            this is DistributedEvolveScope<V, F> -> population.best
             statisticsConfig.guaranteedSorted -> population.takeIf { !it.isEmpty() }?.get(0)
             else -> population.best
         }
@@ -37,17 +37,17 @@ public inline val <V, F> Lifecycle<V, F>.best: Chromosome<V, F>?
 /**
  * The best fitness of [Chromosome] in [Population].
  * Uses a [StatisticsConfig.guaranteedSorted] for optimization,
- * except in the case of a call from [DistributedLifecycle].
+ * except in the case of a call from [DistributedEvolveScope].
  */
-public inline val <V, F> Lifecycle<V, F>.bestFitness: F?
+public inline val <V, F> EvolveScope<V, F>.bestFitness: F?
     get() = best?.fitness
 
 /**
  * Creates [Statistic] for best [Chromosome] in [Population] by fitness.
  */
-public fun <V, F> Lifecycle<V, F>.best(): Statistic<Chromosome<V, F>?> = Statistic(NAME, best)
+public fun <V, F> EvolveScope<V, F>.best(): Statistic<Chromosome<V, F>?> = Statistic(NAME, best)
 
 /**
  * Creates [Statistic] for best fitness of [Chromosome] in [Population].
  */
-public fun <F> Lifecycle<*, F>.bestFitness(): Statistic<F?> = Statistic(NAME_FITNESS, bestFitness)
+public fun <F> EvolveScope<*, F>.bestFitness(): Statistic<F?> = Statistic(NAME_FITNESS, bestFitness)

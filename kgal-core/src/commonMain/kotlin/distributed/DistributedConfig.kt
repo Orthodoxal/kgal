@@ -4,12 +4,16 @@ import kgal.*
 import kgal.distributed.operators.launchChildren
 import kgal.dsl.ConfigDslMarker
 import kgal.operators.stopBy
+import kgal.parallelismConfig
+import kgal.processor.parallelism.ParallelismConfig
+import kgal.processor.parallelism.ParallelismConfigScope
+import kgal.processor.process
 
 /**
  * Describes the configuration parameters necessary for the operation of the [DistributedGA].
  * @see DistributedConfigScope
  */
-public interface DistributedConfig<V, F> : Config<V, F, DistributedLifecycle<V, F>> {
+public interface DistributedConfig<V, F> : Config<V, F, DistributedEvolveScope<V, F>> {
 
     /**
      * Child GAs of [DistributedGA]. Mutable with [add] and [removeAt].
@@ -91,7 +95,7 @@ public class DistributedConfigScope<V, F>(
     override var fitnessFunction: (V) -> F,
     populationName: String,
     children: List<GA<V, F>>,
-) : DistributedConfig<V, F>, AbstractConfigScope<V, F, DistributedLifecycle<V, F>>() {
+) : DistributedConfig<V, F>, AbstractConfigScope<V, F, DistributedEvolveScope<V, F>>() {
 
     override val children: MutableList<GA<V, F>> = children.toMutableList()
 
@@ -126,11 +130,11 @@ public class DistributedConfigScope<V, F>(
      * Launch all child [GA]s with [launchChildren] operator.
      * @see launchChildren
      */
-    public val baseEvolve: suspend DistributedLifecycle<V, F>.() -> Unit = {
+    public val baseEvolve: suspend DistributedEvolveScope<V, F>.() -> Unit = {
         launchChildren(parallelismConfig.workersCount)
     }
 
-    override var evolution: suspend DistributedLifecycle<V, F>.() -> Unit = baseEvolve
+    override var evolution: suspend DistributedEvolveScope<V, F>.() -> Unit = baseEvolve
 }
 
 /**
@@ -144,21 +148,21 @@ public class DistributedConfigScope<V, F>(
  * ) {
  *     // set ga's configuration here (adding children)
  *
- *     before { (this = DistributedLifecycle)
+ *     before { (this = DistributedEvolveScope)
  *         println("GA STARTED, initial iteration is $iteration")
  *     }
  * }
  * ```
  */
 public fun <V, F> DistributedConfigScope<V, F>.before(
-    beforeEvolution: suspend (@ConfigDslMarker DistributedLifecycle<V, F>).() -> Unit,
+    beforeEvolution: suspend (@ConfigDslMarker DistributedEvolveScope<V, F>).() -> Unit,
 ) {
     this.beforeEvolution = beforeEvolution
 }
 
 /**
  * Applies `evolutionary strategy` for [DistributedGA] (The most famous type of [DistributedGA] is the `Island Generic Algorithm`)
- * as [evolution] function in [DistributedLifecycle] scope that includes the process of launching
+ * as [evolution] function in [DistributedEvolveScope] that includes the process of launching
  * child [GA]s ([DistributedGA.children]) and processes of interaction between subpopulations.
  * - `evolutionary strategy` of [DistributedGA] is applied to child [GA]s
  * - `island evolutionary strategy` looks like:
@@ -179,7 +183,7 @@ public fun <V, F> DistributedConfigScope<V, F>.before(
  *     // set ga's configuration here (adding children)
  *
  *     // set evolutionary strategy with evolve
- *     evolve { (this = DistributedLifecycle)
+ *     evolve { (this = DistributedEvolveScope)
  *         // don't forget to set a limit on the number of iterations
  *         // otherwise the evolution will happen endlessly
  *         stopBy(maxIteration = 5)
@@ -194,7 +198,7 @@ public fun <V, F> DistributedConfigScope<V, F>.before(
  */
 public fun <V, F> DistributedConfigScope<V, F>.evolve(
     useDefault: Boolean = true,
-    evolution: suspend (@ConfigDslMarker DistributedLifecycle<V, F>).() -> Unit,
+    evolution: suspend (@ConfigDslMarker DistributedEvolveScope<V, F>).() -> Unit,
 ) {
     this.evolution = evolution.takeIf { !useDefault } ?: { baseEvolve(); evolution() }
 }
@@ -210,14 +214,60 @@ public fun <V, F> DistributedConfigScope<V, F>.evolve(
  * ) {
  *     // set ga's configuration here (adding children)
  *
- *     after { (this = DistributedLifecycle)
+ *     after { (this = DistributedEvolveScope)
  *         println("DistributedGA is going to be FINISHED")
  *     }
  * }
  * ```
  */
 public fun <V, F> DistributedConfigScope<V, F>.after(
-    afterEvolution: suspend (@ConfigDslMarker DistributedLifecycle<V, F>).() -> Unit,
+    afterEvolution: suspend (@ConfigDslMarker DistributedEvolveScope<V, F>).() -> Unit,
 ) {
     this.afterEvolution = afterEvolution
 }
+
+/**
+ * Creates [ParallelismConfig] with [ParallelismConfigScope] and apply it to the current [DistributedConfig].
+ *
+ * Achieves almost linear speedup with `distributed` launching! It is recommended to use parallelism in [DistributedGA].
+ *
+ * `Distributed Parallelism` is based on the idea of `distributed` launching [DistributedGA.children].
+ * After which the results are synchronized and interaction between subpopulations is carried out.
+ * It is assumed that each child GA running independently in their own coroutine.
+ * That's why `workerCount` is recommended to be equal to `children.size`.
+ *
+ * Base (and default for [evolve]) [launchChildren] stage function support `Distributed Parallelism` by default
+ * using [process] function - it's safe to use!
+ *
+ * Example:
+ * ```
+ * dGA {
+ *     // configure specific params of DistributedGA
+ *
+ *     // configure Distributed parallelism
+ *     parallelismConfig {
+ *         workersCount = 4 // set it equal to children.size
+ *     }
+ *
+ *     // create and add children GAs
+ *     +pGAs(
+ *         count = 4, // island count equal to workersCount
+ *         population = { population(size = 50) }, // island population
+ *     ) {
+ *         // create evolution strategy for island here
+ *     }
+ *
+ *     // set distributed evolution strategy:
+ *     // launches children with ga.start() (default == true) before each iteration
+ *     // each child will be running in their own coroutine
+ *     evolve(useDefault = true) {
+ *         stopBy(maxIteration = 5)
+ *         migration(percent = 0.1) // no parallelism here
+ *     }
+ * }
+ * ```
+ * @see process
+ */
+public inline fun DistributedConfigScope<*, *>.parallelismConfig(
+    config: ParallelismConfigScope.() -> Unit,
+): Unit = parallelismConfig(config)

@@ -1,6 +1,6 @@
 package kgal.operators
 
-import kgal.Lifecycle
+import kgal.EvolveScope
 import kgal.Population
 import kgal.chromosome.Chromosome
 import kgal.processor.process
@@ -18,7 +18,7 @@ public inline fun <V, F> Chromosome<V, F>.evaluate(fitnessFunction: (V) -> F) {
  * @param end last index of chromosome (exclusive)
  * @param parallelismLimit limit of parallel workers
  */
-public suspend inline fun <V, F> Lifecycle<V, F>.evaluateAll(
+public suspend inline fun <V, F> EvolveScope<V, F>.evaluateAll(
     start: Int,
     end: Int,
     parallelismLimit: Int,

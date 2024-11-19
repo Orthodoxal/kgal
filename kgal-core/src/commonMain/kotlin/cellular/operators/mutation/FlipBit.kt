@@ -1,6 +1,6 @@
 package kgal.cellular.operators.mutation
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.operators.mutation.mutationFlipBit
 import kotlin.jvm.JvmName
 
@@ -17,7 +17,7 @@ import kotlin.jvm.JvmName
  * @param flipBitChance the probability of each attribute to be flipped.
  */
 @JvmName("mutFlipBitBooleanArray")
-public fun <F> CellLifecycle<BooleanArray, F>.mutFlipBit(
+public fun <F> CellEvolveScope<BooleanArray, F>.mutFlipBit(
     chance: Double,
     flipBitChance: Double,
 ): Unit = mutation(chance) { chromosome ->
@@ -37,7 +37,7 @@ public fun <F> CellLifecycle<BooleanArray, F>.mutFlipBit(
  * @param flipBitChance the probability of each attribute to be flipped.
  */
 @JvmName("mutFlipBitIntArray")
-public fun <F> CellLifecycle<IntArray, F>.mutFlipBit(
+public fun <F> CellEvolveScope<IntArray, F>.mutFlipBit(
     chance: Double,
     flipBitChance: Double,
 ): Unit = mutation(chance) { chromosome ->

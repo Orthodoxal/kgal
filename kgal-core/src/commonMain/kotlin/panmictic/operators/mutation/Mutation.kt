@@ -1,8 +1,8 @@
 package kgal.panmictic.operators.mutation
 
 import kgal.chromosome.Chromosome
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticGA
-import kgal.panmictic.PanmicticLifecycle
 import kgal.processor.process
 import kgal.size
 import kgal.utils.randomByChance
@@ -16,7 +16,7 @@ import kotlin.random.Random
  * @param parallelismLimit limit of parallel workers
  * @param mutation specific mutation action (How chromosomes will be mutated)
  */
-public suspend inline fun <V, F> PanmicticLifecycle<V, F>.mutation(
+public suspend inline fun <V, F> PanmicticEvolveScope<V, F>.mutation(
     chance: Double,
     parallelismLimit: Int,
     crossinline mutation: (chromosome: Chromosome<V, F>, random: Random) -> Unit,

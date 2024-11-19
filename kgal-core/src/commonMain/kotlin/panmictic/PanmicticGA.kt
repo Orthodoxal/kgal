@@ -21,7 +21,7 @@ import kgal.panmictic.operators.evaluation
  * Creates with Kotlin DSL by [pGA].
  * @see <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">Panmictic Genetic Algorithm</a>
  * @see PanmicticPopulation
- * @see PanmicticLifecycle
+ * @see PanmicticEvolveScope
  * @see PanmicticConfig
  */
 public interface PanmicticGA<V, F> : GA<V, F> {
@@ -38,7 +38,7 @@ public interface PanmicticGA<V, F> : GA<V, F> {
      * - at the crossing stage they cannot be changed or replaced,
      * but they actively participate in the creation of a new generation by changing other chromosomes
      * - do not change during the mutation stage
-     * @see [PanmicticLifecycle.evaluation]
+     * @see [PanmicticEvolveScope.evaluation]
      */
     public var elitism: Int
 
@@ -112,7 +112,7 @@ public suspend fun <V, F> PanmicticGA<V, F>.restart(
  * @see <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">Panmictic Genetic Algorithm</a>
  * @see PanmicticGA
  * @see PanmicticPopulation
- * @see PanmicticLifecycle
+ * @see PanmicticEvolveScope
  * @see PanmicticConfig
  */
 public inline fun <V, F> pGA(
@@ -131,11 +131,11 @@ public inline fun <V, F> pGA(
  */
 internal class PanmicticGAInstance<V, F>(
     configuration: PanmicticConfig<V, F>,
-) : PanmicticGA<V, F>, AbstractGA<V, F, PanmicticLifecycle<V, F>>(configuration) {
+) : PanmicticGA<V, F>, AbstractGA<V, F, PanmicticEvolveScope<V, F>>(configuration) {
 
     override val population: PanmicticPopulation<V, F> = configuration.population
 
-    override val lifecycle: PanmicticLifecycle<V, F> by lazy { PanmicticLifecycle(this, configuration) }
+    override val evolveScope: PanmicticEvolveScope<V, F> by lazy { PanmicticEvolveScope(this, configuration) }
 
     override var elitism: Int = configuration.elitism
 }

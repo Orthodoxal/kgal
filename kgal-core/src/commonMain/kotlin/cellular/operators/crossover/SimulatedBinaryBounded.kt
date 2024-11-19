@@ -1,6 +1,6 @@
 package kgal.cellular.operators.crossover
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.chromosome.Chromosome
 import kgal.operators.crossover.crossoverSimulatedBinaryBounded
 import kotlin.jvm.JvmName
@@ -15,7 +15,7 @@ import kotlin.jvm.JvmName
  * @param up a value that is the upper bound of the search space.
  */
 @JvmName("cxSimulatedBinaryBoundedDoubleArray")
-public fun <F> CellLifecycle<DoubleArray, F>.cxSimulatedBinaryBounded(
+public fun <F> CellEvolveScope<DoubleArray, F>.cxSimulatedBinaryBounded(
     chance: Double,
     eta: Double,
     low: Double,

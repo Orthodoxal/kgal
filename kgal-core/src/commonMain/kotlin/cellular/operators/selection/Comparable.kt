@@ -1,16 +1,16 @@
 package kgal.cellular.operators.selection
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.operators.selection.selectionBest
 import kgal.operators.selection.selectionWorst
 import kgal.utils.fillWithSameFromSource
 
 /**
- * Executes best selection step for [CellLifecycle.neighbors].
+ * Executes best selection step for [CellEvolveScope.neighbors].
  * @param count number of selected best values
  * @param fillWithSelected if true fills all population with selected clones
  */
-public fun <V, F> CellLifecycle<V, F>.selBest(
+public fun <V, F> CellEvolveScope<V, F>.selBest(
     count: Int,
     fillWithSelected: Boolean = false,
 ) {
@@ -21,11 +21,11 @@ public fun <V, F> CellLifecycle<V, F>.selBest(
 }
 
 /**
- * Executes best selection step for [CellLifecycle.neighbors].
+ * Executes best selection step for [CellEvolveScope.neighbors].
  * @param count number of selected best values
  * @param fillWithSelected if true fills all population with selected clones
  */
-public fun <V, F> CellLifecycle<V, F>.selWorst(
+public fun <V, F> CellEvolveScope<V, F>.selWorst(
     count: Int,
     fillWithSelected: Boolean = false,
 ) {

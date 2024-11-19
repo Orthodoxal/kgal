@@ -4,7 +4,7 @@ import kgal.chromosome.Chromosome
 import kgal.operators.evaluate
 import kgal.operators.evaluateAll
 import kgal.panmictic.PanmicticConfig
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticPopulation
 import kgal.size
 import kgal.utils.findOrderStatistic
@@ -30,14 +30,14 @@ import kgal.utils.findOrderStatistic
  *
  * !!!   NOTE   !!!
  *
- * If you are planning to increase [PanmicticLifecycle.elitism] after GA started or
- * your [PanmicticLifecycle.fitnessFunction] does not guarantee the same result
+ * If you are planning to increase [PanmicticEvolveScope.elitism] after GA started or
+ * your [PanmicticEvolveScope.fitnessFunction] does not guarantee the same result
  * for the same [Chromosome.value] throughout the entire GA run (it has side effects)
  * Change [evaluateElite] to true for correct behavior
  * @param sortAfter if true population will be sorting in descending order after evaluation
  * @param fitnessFunction fitnessFunction for evaluation stage
  */
-public suspend fun <V, F> PanmicticLifecycle<V, F>.evaluation(
+public suspend fun <V, F> PanmicticEvolveScope<V, F>.evaluation(
     parallelismLimit: Int = parallelismConfig.workersCount,
     evaluateElite: Boolean = false,
     sortAfter: Boolean = false,

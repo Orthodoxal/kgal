@@ -1,16 +1,16 @@
 package kgal.operators
 
-import kgal.Lifecycle
+import kgal.EvolveScope
 import kgal.chromosome.Chromosome
 import kgal.statistics.stats.bestFitness
 
 /**
- * Name for [Lifecycle.store] to store target value on previous iteration for comparison
+ * Name for [EvolveScope.store] to store target value on previous iteration for comparison
  */
 public const val STEADY_GENERATIONS: String = "STEADY_GENERATIONS"
 
 /**
- * Name for [Lifecycle.store] to store steady iteration
+ * Name for [EvolveScope.store] to store steady iteration
  */
 public const val STEADY_GENERATIONS_CURRENT_ITERATION: String = "STEADY_GENERATIONS_CURRENT_ITERATION"
 
@@ -19,7 +19,7 @@ public const val STEADY_GENERATIONS_CURRENT_ITERATION: String = "STEADY_GENERATI
  * @param targetIterationCount the maximum number of iterations during which the best fitness may not change
  * @return true if best fitness of Chromosome not changed after last [targetIterationCount] iterations.
  */
-public inline fun <V, reified F, L : Lifecycle<V, F>> L.isSteadyGenerations(
+public inline fun <V, reified F, ES : EvolveScope<V, F>> ES.isSteadyGenerations(
     targetIterationCount: Int,
     storeNamePrevious: String = STEADY_GENERATIONS,
     storeNameIteration: String = STEADY_GENERATIONS_CURRENT_ITERATION,
@@ -38,11 +38,11 @@ public inline fun <V, reified F, L : Lifecycle<V, F>> L.isSteadyGenerations(
  * @param onSteadyGenerations action to invoke when it returns true
  * @return true if best fitness of Chromosome not changed after last [targetIterationCount] iterations.
  */
-public inline fun <V, reified F, L : Lifecycle<V, F>> L.onSteadyGenerations(
+public inline fun <V, reified F, ES : EvolveScope<V, F>> ES.onSteadyGenerations(
     targetIterationCount: Int,
     storeNamePrevious: String = STEADY_GENERATIONS,
     storeNameIteration: String = STEADY_GENERATIONS_CURRENT_ITERATION,
-    onSteadyGenerations: L.(target: F) -> Unit,
+    onSteadyGenerations: ES.(target: F) -> Unit,
 ): Boolean = onSteadyGenerations(
     target = bestFitness!!,
     targetIterationCount = targetIterationCount,
@@ -59,12 +59,12 @@ public inline fun <V, reified F, L : Lifecycle<V, F>> L.onSteadyGenerations(
  * @param onSteadyGenerations action to invoke when it returns true
  * @return true if best fitness of Chromosome not changed after last [targetIterationCount] iterations.
  */
-public inline fun <reified T : Comparable<T>, V, F, L : Lifecycle<V, F>> L.onSteadyGenerations(
+public inline fun <reified T : Comparable<T>, V, F, ES : EvolveScope<V, F>> ES.onSteadyGenerations(
     target: T,
     targetIterationCount: Int,
     storeNamePrevious: String = STEADY_GENERATIONS,
     storeNameIteration: String = STEADY_GENERATIONS_CURRENT_ITERATION,
-    onSteadyGenerations: L.(target: T) -> Unit,
+    onSteadyGenerations: ES.(target: T) -> Unit,
 ): Boolean = onSteadyGenerations(
     target = target,
     targetIterationCount = targetIterationCount,
@@ -82,13 +82,13 @@ public inline fun <reified T : Comparable<T>, V, F, L : Lifecycle<V, F>> L.onSte
  * @param onSteadyGenerations action to invoke when it returns true
  * @return true if best fitness of Chromosome not changed after last [targetIterationCount] iterations.
  */
-public inline fun <reified T, V, F, L : Lifecycle<V, F>> L.onSteadyGenerations(
+public inline fun <reified T, V, F, ES : EvolveScope<V, F>> ES.onSteadyGenerations(
     target: T,
     targetIterationCount: Int,
     storeNamePrevious: String = STEADY_GENERATIONS,
     storeNameIteration: String = STEADY_GENERATIONS_CURRENT_ITERATION,
     equalsPredicate: (current: T, previous: T) -> Boolean,
-    onSteadyGenerations: L.(target: T) -> Unit,
+    onSteadyGenerations: ES.(target: T) -> Unit,
 ): Boolean {
     val previous = store[storeNamePrevious] as? T
     val iteration = store[storeNameIteration] as? Int

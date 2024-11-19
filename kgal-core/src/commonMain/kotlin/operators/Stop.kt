@@ -1,12 +1,12 @@
 package kgal.operators
 
+import kgal.EvolveScope
 import kgal.GA
-import kgal.Lifecycle
 
 /**
  * Stop and finish [GA] if iteration more or equal to [maxIteration].
  */
-public inline fun <V, F> Lifecycle<V, F>.stopBy(
+public inline fun <V, F> EvolveScope<V, F>.stopBy(
     maxIteration: Int = Int.MAX_VALUE,
 ) {
     if (iteration >= maxIteration) {
@@ -17,8 +17,8 @@ public inline fun <V, F> Lifecycle<V, F>.stopBy(
 /**
  * Stop and finish [GA] if [stopCondition] return true.
  */
-public inline fun <V, F> Lifecycle<V, F>.stopBy(
-    stopCondition: Lifecycle<V, F>.() -> Boolean,
+public inline fun <V, F> EvolveScope<V, F>.stopBy(
+    stopCondition: EvolveScope<V, F>.() -> Boolean,
 ) {
     if (stopCondition()) {
         finishByStopConditions = true
@@ -30,9 +30,9 @@ public inline fun <V, F> Lifecycle<V, F>.stopBy(
  * - iteration more or equal to [maxIteration]
  * - [stopCondition] return true
  */
-public inline fun <V, F> Lifecycle<V, F>.stopBy(
+public inline fun <V, F> EvolveScope<V, F>.stopBy(
     maxIteration: Int = Int.MAX_VALUE,
-    stopCondition: Lifecycle<V, F>.() -> Boolean,
+    stopCondition: EvolveScope<V, F>.() -> Boolean,
 ) {
     stopBy(maxIteration)
     stopBy(stopCondition)

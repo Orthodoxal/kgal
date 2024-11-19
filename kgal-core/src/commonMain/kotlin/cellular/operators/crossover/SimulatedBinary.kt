@@ -1,6 +1,6 @@
 package kgal.cellular.operators.crossover
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.chromosome.Chromosome
 import kgal.operators.crossover.crossoverSimulatedBinary
 import kotlin.jvm.JvmName
@@ -13,7 +13,7 @@ import kotlin.jvm.JvmName
  * while a small eta will produce solutions much more different.
  */
 @JvmName("cxSimulatedBinaryDoubleArray")
-public fun <F> CellLifecycle<DoubleArray, F>.cxSimulatedBinary(
+public fun <F> CellEvolveScope<DoubleArray, F>.cxSimulatedBinary(
     chance: Double,
     eta: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->

@@ -52,7 +52,7 @@ Solution:
 
 Get target using genetic operators (selection, crossover, mutation, evaluation)
  */
-private fun main() {
+private fun main() { // Run it!
     val cga = cGA(
         // create population of booleans chromosomes (Population size = 6 * 6 * 6 = 216 (cube))
         population = population(dimens = DIMENS) { booleans(size = CHROMOSOME_SIZE) },

@@ -2,8 +2,8 @@ package kgal.panmictic.operators.crossover
 
 import kgal.chromosome.Chromosome
 import kgal.operators.crossover.crossoverOrdered
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticGA
-import kgal.panmictic.PanmicticLifecycle
 import kotlin.jvm.JvmName
 
 /**
@@ -15,7 +15,7 @@ import kotlin.jvm.JvmName
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxOrderedIntArray")
-public suspend fun <F> PanmicticLifecycle<IntArray, F>.cxOrdered(
+public suspend fun <F> PanmicticEvolveScope<IntArray, F>.cxOrdered(
     chance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
     crossoverType: CrossoverType = CrossoverType.Iterative,

@@ -5,14 +5,14 @@ import kgal.State
 import kgal.StopPolicy
 
 /**
- * Specific [DistributedLifecycle] option for starting children of [DistributedGA].
+ * Specific [DistributedEvolveScope] option for starting children of [DistributedGA].
  */
-public sealed interface LifecycleStartOption {
+public sealed interface EvolveScopeStartOption {
 
     /**
      * Start children of [DistributedGA].
      */
-    public data object Start : LifecycleStartOption
+    public data object Start : EvolveScopeStartOption
 
     /**
      * Immediately restart children of [DistributedGA].
@@ -24,10 +24,10 @@ public sealed interface LifecycleStartOption {
     public data class Restart(
         val forceStop: Boolean = false,
         val resetPopulation: Boolean = true,
-    ) : LifecycleStartOption
+    ) : EvolveScopeStartOption
 
     /**
      * Resume children of [DistributedGA].
      */
-    public data object Resume : LifecycleStartOption
+    public data object Resume : EvolveScopeStartOption
 }

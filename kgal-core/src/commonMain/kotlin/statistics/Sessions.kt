@@ -22,6 +22,8 @@ import kotlin.time.Duration
  * ```
  * @param id unique identical number for session
  * @param logNotes notes for describing session activity
+ * @see SessionsInfo
+ * @see allSessions
  */
 public data class Session(
     val id: Int,
