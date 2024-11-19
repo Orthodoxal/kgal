@@ -1,7 +1,7 @@
 package kgal.statistics.stats
 
+import kgal.EvolveScope
 import kgal.GA
-import kgal.Lifecycle
 import kgal.Population
 import kgal.copyOfRange
 import kgal.statistics.note.Statistic
@@ -35,40 +35,40 @@ public val GA<*, Long>.median: Double
  * Median fitness value of chromosomes in [Population]
  */
 @get:JvmName("getMedianInt")
-public val Lifecycle<*, Int>.median: Double
+public val EvolveScope<*, Int>.median: Double
     get() = population.getMedian(guaranteedSorted = statisticsConfig.guaranteedSorted) { toDouble() }
 
 /**
  * Median fitness value of chromosomes in [Population]
  */
 @get:JvmName("getMedianDouble")
-public val Lifecycle<*, Double>.median: Double
+public val EvolveScope<*, Double>.median: Double
     get() = population.getMedian(guaranteedSorted = statisticsConfig.guaranteedSorted) { this }
 
 /**
  * Median fitness value of chromosomes in [Population]
  */
 @get:JvmName("getMedianLong")
-public val Lifecycle<*, Long>.median: Double
+public val EvolveScope<*, Long>.median: Double
     get() = population.getMedian(guaranteedSorted = statisticsConfig.guaranteedSorted) { toDouble() }
 
 /**
  * Creates [Statistic] for median fitness value of chromosomes in [Population]
  */
 @JvmName("medianInt")
-public fun Lifecycle<*, Int>.median(): Statistic<Double> = Statistic(NAME, median)
+public fun EvolveScope<*, Int>.median(): Statistic<Double> = Statistic(NAME, median)
 
 /**
  * Creates [Statistic] for median fitness value of chromosomes in [Population]
  */
 @JvmName("medianDouble")
-public fun Lifecycle<*, Double>.median(): Statistic<Double> = Statistic(NAME, median)
+public fun EvolveScope<*, Double>.median(): Statistic<Double> = Statistic(NAME, median)
 
 /**
  * Creates [Statistic] for median fitness value of chromosomes in [Population]
  */
 @JvmName("medianLong")
-public fun Lifecycle<*, Long>.median(): Statistic<Double> = Statistic(NAME, median)
+public fun EvolveScope<*, Long>.median(): Statistic<Double> = Statistic(NAME, median)
 
 /**
  * Get median value from population

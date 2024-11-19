@@ -2,6 +2,7 @@ package kgal
 
 import kgal.cellular.cGA
 import kgal.chromosome.Chromosome
+import kgal.distributed.dGA
 import kgal.panmictic.pGA
 import kgal.processor.parallelism.ParallelismConfig
 import kgal.statistics.STAT_COLLECTOR
@@ -22,7 +23,7 @@ import kotlin.random.Random
  *
  * [F] - fitness value of [Chromosome]
  *
- * [kgal] understands genetic algorithm with [Lifecycle] abstraction, see it to understand how it works deeply.
+ * [kgal] understands genetic algorithm with [EvolveScope] abstraction, see it to understand how it works deeply.
  *
  * [GA] implementations are powered by [kotlin.coroutines],
  * which makes it easy to organize safe parallel operation of the genetic algorithm.
@@ -35,17 +36,16 @@ import kotlin.random.Random
  * Using parallelism is recommended only for high-performance computing
  *
  * To create your own implementation, it is recommended to use [AbstractGA],
- * also pay attention to [AbstractLifecycle] and [AbstractConfigScope] with Kotlin DSL style.
+ * also pay attention to [AbstractEvolveScope] and [AbstractConfigScope] with Kotlin DSL style.
  *
  * Creates:
  * - `Panmictic` (Classical) Genetic Algorithm by [pGA]
  * - `Cellular` Genetic Algorithm by [cGA]
- *
- * TODO(Дописать методы для создания)
+ * - `Distributed` Genetic Algorithm by [dGA]
  *
  * @see [State]
  * @see [AbstractGA]
- * @see [Lifecycle]
+ * @see [EvolveScope]
  * @see [Population]
  * @see [Chromosome]
  * @see [StatisticsProvider]

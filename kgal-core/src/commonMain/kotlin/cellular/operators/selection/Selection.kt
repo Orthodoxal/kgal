@@ -1,6 +1,6 @@
 package kgal.cellular.operators.selection
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.cellular.CellularGA
 import kgal.cellular.CellularNeighborhood
 import kgal.chromosome.Chromosome
@@ -8,12 +8,12 @@ import kgal.chromosome.Chromosome
 /**
  * Performs a selection step for population in [CellularGA].
  * Selects one partner from neighbors determined by the [CellularNeighborhood] with [selection] function.
- * Selected partner will be moved to the first position of [CellLifecycle.neighbors] (index = 0).
+ * Selected partner will be moved to the first position of [CellEvolveScope.neighbors] (index = 0).
  *
  * Welcome to use for your own implementations! It is a base function for executing [selection] step in [CellularGA].
  * @param selection specific selection action (How chromosomes will be selected from current population)
  */
-public inline fun <V, F> CellLifecycle<V, F>.selection(
+public inline fun <V, F> CellEvolveScope<V, F>.selection(
     selection: (source: Array<Chromosome<V, F>>) -> Chromosome<V, F>,
 ) {
     val chromosome = selection(neighbors)

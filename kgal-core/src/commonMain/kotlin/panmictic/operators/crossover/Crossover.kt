@@ -1,8 +1,8 @@
 package kgal.panmictic.operators.crossover
 
 import kgal.chromosome.Chromosome
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticGA
-import kgal.panmictic.PanmicticLifecycle
 import kotlin.random.Random
 
 /**
@@ -15,7 +15,7 @@ import kotlin.random.Random
  * @param crossover specific crossing action (How chromosomes will be crossed)
  * @see crossoverType
  */
-public suspend inline fun <V, F> PanmicticLifecycle<V, F>.crossover(
+public suspend inline fun <V, F> PanmicticEvolveScope<V, F>.crossover(
     chance: Double,
     parallelismLimit: Int,
     crossoverType: CrossoverType,

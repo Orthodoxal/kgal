@@ -1,21 +1,21 @@
 package kgal.cellular
 
-import kgal.AbstractLifecycle
-import kgal.Lifecycle
+import kgal.AbstractEvolveScope
+import kgal.EvolveScope
 import kgal.cellular.operators.replaceWithElitism
 import kgal.chromosome.Chromosome
 
 /**
- * [CellularLifecycle] - specific [Lifecycle] for [CellularGA].
+ * [CellularEvolveScope] - specific [EvolveScope] for [CellularGA].
  *
  * [V] - value of [Chromosome]
  *
  * [F] - fitness value of [Chromosome]
  *
- * Creates with CellularLifecycle().
- * @see Lifecycle
+ * Creates with CellularEvolveScope().
+ * @see EvolveScope
  */
-public interface CellularLifecycle<V, F> : Lifecycle<V, F> {
+public interface CellularEvolveScope<V, F> : EvolveScope<V, F> {
 
     /**
      * Flag for elitism in [CellularGA].
@@ -59,22 +59,22 @@ public interface CellularLifecycle<V, F> : Lifecycle<V, F> {
 }
 
 /**
- * Creates an instance of [CellularLifecycle] by [cellularGA] and [cellularConfig].
+ * Creates an instance of [CellularEvolveScope] by [cellularGA] and [cellularConfig].
  */
-public fun <V, F> CellularLifecycle(
+public fun <V, F> CellularEvolveScope(
     cellularGA: CellularGA<V, F>,
     cellularConfig: CellularConfig<V, F>,
-): CellularLifecycle<V, F> =
-    CellularLifecycleInstance(cellularGA, cellularConfig)
+): CellularEvolveScope<V, F> =
+    CellularEvolveScopeInstance(cellularGA, cellularConfig)
 
 /**
- * Base realization of [CellularLifecycle].
- * @see AbstractLifecycle
+ * Base realization of [CellularEvolveScope].
+ * @see AbstractEvolveScope
  */
-internal class CellularLifecycleInstance<V, F>(
+internal class CellularEvolveScopeInstance<V, F>(
     private val cellularGA: CellularGA<V, F>,
     cellularConfig: CellularConfig<V, F>,
-) : CellularLifecycle<V, F>, AbstractLifecycle<V, F>(cellularGA, cellularConfig) {
+) : CellularEvolveScope<V, F>, AbstractEvolveScope<V, F>(cellularGA, cellularConfig) {
 
     override val population: CellularPopulation<V, F>
         get() = cellularGA.population

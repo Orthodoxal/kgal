@@ -1,6 +1,6 @@
 package kgal.distributed.operators
 
-import kgal.distributed.DistributedLifecycle
+import kgal.distributed.DistributedEvolveScope
 import kgal.distributed.DistributedGA
 import kgal.size
 import kgal.utils.indicesByRandom
@@ -9,7 +9,7 @@ import kgal.utils.randomWithIndices
 /**
  * Returns the minimal count as [percent] of subpopulation.
  */
-private fun <V, F> DistributedLifecycle<V, F>.minCountByPercent(percent: Double) =
+private fun <V, F> DistributedEvolveScope<V, F>.minCountByPercent(percent: Double) =
     children.fold(Int.MAX_VALUE) { acc, cluster ->
         val count = (cluster.population.size * percent).toInt()
         if (count < acc) count else acc
@@ -33,7 +33,7 @@ private fun <V, F> DistributedLifecycle<V, F>.minCountByPercent(percent: Double)
  *
  * `0.1 * min(100, 100, 80) * 3 = 0.1 * 80 * 3 = 24` by `8` chromosomes from each subpopulation.
  */
-public fun <V, F> DistributedLifecycle<V, F>.migration(percent: Double) {
+public fun <V, F> DistributedEvolveScope<V, F>.migration(percent: Double) {
     val count = minCountByPercent(percent)
     var (chromosomes, indices) = children.last().population.randomWithIndices(count, random)
     for (clusterIndex in children.lastIndex - 1 downTo 0) {

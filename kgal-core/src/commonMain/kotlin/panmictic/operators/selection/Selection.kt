@@ -1,8 +1,8 @@
 package kgal.panmictic.operators.selection
 
 import kgal.chromosome.Chromosome
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticGA
-import kgal.panmictic.PanmicticLifecycle
 import kgal.processor.process
 import kgal.size
 import kotlin.random.Random
@@ -14,9 +14,9 @@ import kotlin.random.Random
  * Fully supports elitism - elite chromosomes go through the selection stage by default.
  * @param parallelismLimit limit of parallel workers
  * @param selection specific selection action (How chromosomes will be selected from current population)
- * @see [PanmicticLifecycle.elitism]
+ * @see [PanmicticEvolveScope.elitism]
  */
-public suspend inline fun <V, F> PanmicticLifecycle<V, F>.selection(
+public suspend inline fun <V, F> PanmicticEvolveScope<V, F>.selection(
     parallelismLimit: Int,
     crossinline selection: (source: Array<Chromosome<V, F>>, random: Random) -> Chromosome<V, F>,
 ) {
@@ -40,9 +40,9 @@ public suspend inline fun <V, F> PanmicticLifecycle<V, F>.selection(
  * Fully supports elitism - elite chromosomes go through the selection stage by default.
  * @param parallelismLimit limit of parallel workers
  * @param selection specific selection action with index (How chromosomes will be selected from current population)
- * @see [PanmicticLifecycle.elitism]
+ * @see [PanmicticEvolveScope.elitism]
  */
-public suspend inline fun <V, F> PanmicticLifecycle<V, F>.selectionWithIndex(
+public suspend inline fun <V, F> PanmicticEvolveScope<V, F>.selectionWithIndex(
     parallelismLimit: Int,
     crossinline selection: (index: Int, source: Array<Chromosome<V, F>>, random: Random) -> Chromosome<V, F>,
 ) {

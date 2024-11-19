@@ -1,7 +1,7 @@
 package kgal.statistics.note
 
+import kgal.EvolveScope
 import kgal.GA
-import kgal.Lifecycle
 import kgal.name
 import kotlin.jvm.JvmName
 
@@ -43,7 +43,7 @@ public data class MultiStatisticNote(
  * @see MultiStatisticNote
  */
 @JvmName("statValue")
-public suspend fun Lifecycle<*, *>.stat(
+public suspend fun EvolveScope<*, *>.stat(
     vararg pairs: Pair<String, Any?>,
 ): Unit = emitStat(
     MultiStatisticNote(
@@ -77,7 +77,7 @@ public suspend fun Lifecycle<*, *>.stat(
  * @see MultiStatisticNote
  */
 @JvmName("statRegister")
-public suspend fun Lifecycle<*, *>.stat(
+public suspend fun EvolveScope<*, *>.stat(
     vararg pairs: Pair<String, () -> Any?>,
 ): Unit = emitStat(
     MultiStatisticNote(
@@ -99,7 +99,7 @@ public suspend fun Lifecycle<*, *>.stat(
  * ```
  * @see MultiStatisticNote
  */
-public suspend fun Lifecycle<*, *>.stat(
+public suspend fun EvolveScope<*, *>.stat(
     vararg statistics: Statistic<Any?>,
 ): Unit = emitStat(
     MultiStatisticNote(

@@ -1,6 +1,6 @@
 package kgal.cellular.operators.crossover
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.operators.crossover.crossoverUniform
 import kotlin.jvm.JvmName
 
@@ -11,7 +11,7 @@ import kotlin.jvm.JvmName
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformArray")
-public fun <T, F> CellLifecycle<Array<T>, F>.crossoverUniform(
+public fun <T, F> CellEvolveScope<Array<T>, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -25,7 +25,7 @@ public fun <T, F> CellLifecycle<Array<T>, F>.crossoverUniform(
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformBooleanArray")
-public fun <F> CellLifecycle<BooleanArray, F>.crossoverUniform(
+public fun <F> CellEvolveScope<BooleanArray, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -39,7 +39,7 @@ public fun <F> CellLifecycle<BooleanArray, F>.crossoverUniform(
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformByteArray")
-public fun <F> CellLifecycle<ByteArray, F>.crossoverUniform(
+public fun <F> CellEvolveScope<ByteArray, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -53,7 +53,7 @@ public fun <F> CellLifecycle<ByteArray, F>.crossoverUniform(
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformCharArray")
-public fun <F> CellLifecycle<CharArray, F>.crossoverUniform(
+public fun <F> CellEvolveScope<CharArray, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -67,7 +67,7 @@ public fun <F> CellLifecycle<CharArray, F>.crossoverUniform(
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformDoubleArray")
-public fun <F> CellLifecycle<DoubleArray, F>.crossoverUniform(
+public fun <F> CellEvolveScope<DoubleArray, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -81,7 +81,7 @@ public fun <F> CellLifecycle<DoubleArray, F>.crossoverUniform(
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformFloatArray")
-public fun <F> CellLifecycle<FloatArray, F>.crossoverUniform(
+public fun <F> CellEvolveScope<FloatArray, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -95,7 +95,7 @@ public fun <F> CellLifecycle<FloatArray, F>.crossoverUniform(
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformIntArray")
-public fun <F> CellLifecycle<IntArray, F>.crossoverUniform(
+public fun <F> CellEvolveScope<IntArray, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -109,7 +109,7 @@ public fun <F> CellLifecycle<IntArray, F>.crossoverUniform(
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformLongArray")
-public fun <F> CellLifecycle<LongArray, F>.crossoverUniform(
+public fun <F> CellEvolveScope<LongArray, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -123,7 +123,7 @@ public fun <F> CellLifecycle<LongArray, F>.crossoverUniform(
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformMutableList")
-public fun <T, F> CellLifecycle<MutableList<T>, F>.crossoverUniform(
+public fun <T, F> CellEvolveScope<MutableList<T>, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->
@@ -137,7 +137,7 @@ public fun <T, F> CellLifecycle<MutableList<T>, F>.crossoverUniform(
  * @param chanceUniform probability for index swapping
  */
 @JvmName("crossoverUniformShortArray")
-public fun <F> CellLifecycle<ShortArray, F>.crossoverUniform(
+public fun <F> CellEvolveScope<ShortArray, F>.crossoverUniform(
     chance: Double,
     chanceUniform: Double,
 ): Unit = crossover(chance) { chromosome1, chromosome2 ->

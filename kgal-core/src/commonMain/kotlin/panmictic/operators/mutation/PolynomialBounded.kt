@@ -2,7 +2,7 @@ package kgal.panmictic.operators.mutation
 
 import kgal.chromosome.Chromosome
 import kgal.operators.mutation.mutationPolynomialBounded
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 
 /**
  * Polynomial mutation as implemented in original NSGA-II algorithm in C by Deb.
@@ -14,7 +14,7 @@ import kgal.panmictic.PanmicticLifecycle
  * @param chance chance of mutation between a pair of chromosomes
  * @param polynomialBoundedChance the probability of each attribute to be mutated
  */
-public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.mutPolynomialBounded(
+public suspend fun <F> PanmicticEvolveScope<DoubleArray, F>.mutPolynomialBounded(
     eta: Double,
     low: Double,
     up: Double,

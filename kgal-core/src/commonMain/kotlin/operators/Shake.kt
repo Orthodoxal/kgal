@@ -1,6 +1,6 @@
 package kgal.operators
 
-import kgal.Lifecycle
+import kgal.EvolveScope
 import kgal.Population
 import kgal.reset
 import kgal.size
@@ -11,7 +11,7 @@ import kgal.utils.moreOrEquals
  * @param percent in range 0.0..1.0
  * @return range of shaking
  */
-public inline fun <V, F> Lifecycle<V, F>.shake(
+public inline fun <V, F> EvolveScope<V, F>.shake(
     percent: Double,
 ): Pair<Int, Int> {
     return if (percent moreOrEquals 1.0) {
@@ -30,7 +30,7 @@ public inline fun <V, F> Lifecycle<V, F>.shake(
  * @param from index from shaking start (inclusive)
  * @param to index to shaking end (exclusive)
  */
-public fun <V, F> Lifecycle<V, F>.shake(from: Int, to: Int) {
+public fun <V, F> EvolveScope<V, F>.shake(from: Int, to: Int) {
     population.reset(random, from, to)
 }
 
@@ -42,13 +42,13 @@ public fun <V, F> Lifecycle<V, F>.shake(from: Int, to: Int) {
  * @param parallelismLimit limit of parallel workers (for evaluation)
  * @param fitnessFunction fitnessFunction for evaluation
  */
-public suspend inline fun <V, F, L : Lifecycle<V, F>> L.shakeBy(
+public suspend inline fun <V, F, ES : EvolveScope<V, F>> ES.shakeBy(
     from: Int,
     to: Int,
     evaluateNew: Boolean = true,
     parallelismLimit: Int = parallelismConfig.workersCount,
     noinline fitnessFunction: (V) -> F = this.fitnessFunction,
-    predicate: L.() -> Boolean,
+    predicate: ES.() -> Boolean,
 ) {
     if (predicate(this)) {
         shake(from, to)
@@ -71,12 +71,12 @@ public suspend inline fun <V, F, L : Lifecycle<V, F>> L.shakeBy(
  * @param parallelismLimit limit of parallel workers (for evaluation)
  * @param fitnessFunction fitnessFunction for evaluation
  */
-public suspend inline fun <V, F, L : Lifecycle<V, F>> L.shakeBy(
+public suspend inline fun <V, F, ES : EvolveScope<V, F>> ES.shakeBy(
     percent: Double,
     evaluateNew: Boolean = true,
     parallelismLimit: Int = parallelismConfig.workersCount,
     noinline fitnessFunction: (V) -> F = this.fitnessFunction,
-    predicate: L.() -> Boolean,
+    predicate: ES.() -> Boolean,
 ) {
     if (predicate(this)) {
         val (from, to) = shake(percent)

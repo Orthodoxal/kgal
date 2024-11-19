@@ -1,6 +1,6 @@
 package kgal.cellular.operators.mutation
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.operators.mutation.mutationUniform
 import kotlin.jvm.JvmName
 
@@ -12,7 +12,7 @@ import kotlin.jvm.JvmName
  * @param uniformChance the probability of each attribute to be moved.
  */
 @JvmName("mutUniformDoubleArray")
-public fun <F> CellLifecycle<DoubleArray, F>.mutUniform(
+public fun <F> CellEvolveScope<DoubleArray, F>.mutUniform(
     low: Double,
     up: Double,
     chance: Double,
@@ -29,7 +29,7 @@ public fun <F> CellLifecycle<DoubleArray, F>.mutUniform(
  * @param uniformChance the probability of each attribute to be moved.
  */
 @JvmName("mutUniformIntArray")
-public fun <F> CellLifecycle<IntArray, F>.mutUniform(
+public fun <F> CellEvolveScope<IntArray, F>.mutUniform(
     low: Int,
     up: Int,
     chance: Double,
@@ -46,7 +46,7 @@ public fun <F> CellLifecycle<IntArray, F>.mutUniform(
  * @param uniformChance the probability of each attribute to be moved.
  */
 @JvmName("mutUniformLongArray")
-public fun <F> CellLifecycle<LongArray, F>.mutUniform(
+public fun <F> CellEvolveScope<LongArray, F>.mutUniform(
     low: Long,
     up: Long,
     chance: Double,

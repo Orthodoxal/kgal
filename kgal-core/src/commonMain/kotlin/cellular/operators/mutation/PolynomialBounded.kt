@@ -1,6 +1,6 @@
 package kgal.cellular.operators.mutation
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.chromosome.Chromosome
 import kgal.operators.mutation.mutationPolynomialBounded
 
@@ -14,7 +14,7 @@ import kgal.operators.mutation.mutationPolynomialBounded
  * @param chance chance of mutation between a pair of chromosomes
  * @param polynomialBoundedChance the probability of each attribute to be mutated
  */
-public fun <F> CellLifecycle<DoubleArray, F>.mutPolynomialBounded(
+public fun <F> CellEvolveScope<DoubleArray, F>.mutPolynomialBounded(
     eta: Double,
     low: Double,
     up: Double,

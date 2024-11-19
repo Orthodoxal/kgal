@@ -1,7 +1,7 @@
 package kgal.panmictic.operators.mutation
 
 import kgal.operators.mutation.mutationUniform
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 import kotlin.jvm.JvmName
 
 /**
@@ -13,7 +13,7 @@ import kotlin.jvm.JvmName
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutUniformDoubleArray")
-public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.mutUniform(
+public suspend fun <F> PanmicticEvolveScope<DoubleArray, F>.mutUniform(
     low: Double,
     up: Double,
     chance: Double,
@@ -32,7 +32,7 @@ public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.mutUniform(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutUniformIntArray")
-public suspend fun <F> PanmicticLifecycle<IntArray, F>.mutUniform(
+public suspend fun <F> PanmicticEvolveScope<IntArray, F>.mutUniform(
     low: Int,
     up: Int,
     chance: Double,
@@ -51,7 +51,7 @@ public suspend fun <F> PanmicticLifecycle<IntArray, F>.mutUniform(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutUniformLongArray")
-public suspend fun <F> PanmicticLifecycle<LongArray, F>.mutUniform(
+public suspend fun <F> PanmicticEvolveScope<LongArray, F>.mutUniform(
     low: Long,
     up: Long,
     chance: Double,

@@ -2,7 +2,7 @@ package kgal.panmictic.operators
 
 import kgal.Population
 import kgal.operators.evaluateAll
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticPopulation
 
 /**
@@ -64,7 +64,7 @@ import kgal.panmictic.PanmicticPopulation
  * @param fitnessFunction fitnessFunction for evaluation
  * @see
  */
-public suspend fun <V, F> PanmicticLifecycle<V, F>.resize(
+public suspend fun <V, F> PanmicticEvolveScope<V, F>.resize(
     newSize: Int? = null,
     newBuffer: Int? = null,
     evaluateBuffered: Boolean = true,
@@ -138,7 +138,7 @@ public suspend fun <V, F> PanmicticLifecycle<V, F>.resize(
  * @param fitnessFunction fitnessFunction for evaluation
  * @see resize
  */
-public suspend fun <V, F> PanmicticLifecycle<V, F>.adjustSize(
+public suspend fun <V, F> PanmicticEvolveScope<V, F>.adjustSize(
     step: Int,
     evaluateBuffered: Boolean = true,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -175,7 +175,7 @@ public suspend fun <V, F> PanmicticLifecycle<V, F>.adjustSize(
  * - When manual increasing the value - its generate new chromosomes with [Population.factory]
  * @see resize
  */
-public fun <V, F> PanmicticLifecycle<V, F>.adjustBuffer(
+public fun <V, F> PanmicticEvolveScope<V, F>.adjustBuffer(
     step: Int,
 ) {
     if (step == 0) return // no changes

@@ -10,25 +10,25 @@ import kgal.statistics.note.StatisticNote
 import kotlin.random.Random
 
 /**
- * [Lifecycle] - base interface created only once to accompany genetic evolution of [GA].
+ * [EvolveScope] - base interface for evolution scope accompanying genetic evolution of [GA].
  * Implementations can add custom parameters specific to GAs.
  *
  * [V] - value of [Chromosome]
  *
  * [F] - fitness value of [Chromosome]
  *
- * [Lifecycle] has two main purposes:
- * - Safe transport layer between the [GA] and the evolutionary process, implemented as a scope:
- * [GA] ↔ [Lifecycle] ↔ evolution function
+ * [EvolveScope] has two main purposes:
+ * - Safe transport layer between the [GA] and the evolutionary process, implemented in a scope:
+ * [GA] ↔ [EvolveScope] ↔ evolution function
  * - Container for the evolutionary process, which is used to synchronize and organize the work of the genetic algorithm:
- * All genetic operators are performed in the scope area of Lifecycle,
+ * All genetic operators are performed in the scope area of EvolveScope,
  * which determines their specific implementation with [parallelismConfig], [store] and custom parameters.
  *
- * Each GA has its own evolutionary scope [Lifecycle].
- * To create your own implementation, it is recommended to use [AbstractLifecycle].
- * @see AbstractLifecycle
+ * Each GA has its own evolution scope [EvolveScope].
+ * To create your own implementation, it is recommended to use [AbstractEvolveScope].
+ * @see AbstractEvolveScope
  */
-public interface Lifecycle<V, F> {
+public interface EvolveScope<V, F> {
 
     /**
      * Random associated with [GA]. Defines a pseudorandom number generator for predictive calculations.
@@ -93,17 +93,17 @@ public interface Lifecycle<V, F> {
 /**
  * Population Name of [GA].
  */
-public inline val Lifecycle<*, *>.name: String
+public inline val EvolveScope<*, *>.name: String
     get() = population.name
 
 /**
  * Population Size of [GA].
  */
-public inline val Lifecycle<*, *>.size: Int
+public inline val EvolveScope<*, *>.size: Int
     get() = population.size
 
 /**
  * Population Factory of [GA].
  */
-public inline val <V, F> Lifecycle<V, F>.factory: PopulationFactory<V, F>
+public inline val <V, F> EvolveScope<V, F>.factory: PopulationFactory<V, F>
     get() = population.factory

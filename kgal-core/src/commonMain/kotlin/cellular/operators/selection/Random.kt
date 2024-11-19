@@ -1,12 +1,12 @@
 package kgal.cellular.operators.selection
 
-import kgal.cellular.CellLifecycle
+import kgal.cellular.CellEvolveScope
 import kgal.operators.selection.selectionRandom
 
 /**
- * Executes random selection step for [CellLifecycle.neighbors].
+ * Executes random selection step for [CellEvolveScope.neighbors].
  *
  * Selection absolutely random!
  */
-public fun <V, F> CellLifecycle<V, F>.selRandom(): Unit =
+public fun <V, F> CellEvolveScope<V, F>.selRandom(): Unit =
     selection { source -> selectionRandom(source, random) }

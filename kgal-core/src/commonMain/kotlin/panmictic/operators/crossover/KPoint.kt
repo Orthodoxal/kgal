@@ -1,8 +1,8 @@
 package kgal.panmictic.operators.crossover
 
 import kgal.operators.crossover.crossoverKPoint
+import kgal.panmictic.PanmicticEvolveScope
 import kgal.panmictic.PanmicticGA
-import kgal.panmictic.PanmicticLifecycle
 import kotlin.jvm.JvmName
 
 /**
@@ -23,7 +23,7 @@ import kotlin.jvm.JvmName
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointArray")
-public suspend fun <T, F> PanmicticLifecycle<Array<T>, F>.cxKPoint(
+public suspend fun <T, F> PanmicticEvolveScope<Array<T>, F>.cxKPoint(
     chance: Double,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -50,7 +50,7 @@ public suspend fun <T, F> PanmicticLifecycle<Array<T>, F>.cxKPoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointBooleanArray")
-public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.cxKPoint(
+public suspend fun <F> PanmicticEvolveScope<BooleanArray, F>.cxKPoint(
     chance: Double,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -77,7 +77,7 @@ public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.cxKPoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointByteArray")
-public suspend fun <F> PanmicticLifecycle<ByteArray, F>.cxKPoint(
+public suspend fun <F> PanmicticEvolveScope<ByteArray, F>.cxKPoint(
     chance: Double,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -104,7 +104,7 @@ public suspend fun <F> PanmicticLifecycle<ByteArray, F>.cxKPoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointCharArray")
-public suspend fun <F> PanmicticLifecycle<CharArray, F>.cxKPoint(
+public suspend fun <F> PanmicticEvolveScope<CharArray, F>.cxKPoint(
     chance: Double,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -131,7 +131,7 @@ public suspend fun <F> PanmicticLifecycle<CharArray, F>.cxKPoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointDoubleArray")
-public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.cxKPoint(
+public suspend fun <F> PanmicticEvolveScope<DoubleArray, F>.cxKPoint(
     chance: Double = 0.9,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -158,7 +158,7 @@ public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.cxKPoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointFloatArray")
-public suspend fun <F> PanmicticLifecycle<FloatArray, F>.cxKPoint(
+public suspend fun <F> PanmicticEvolveScope<FloatArray, F>.cxKPoint(
     chance: Double,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -185,7 +185,7 @@ public suspend fun <F> PanmicticLifecycle<FloatArray, F>.cxKPoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointIntArray")
-public suspend fun <F> PanmicticLifecycle<IntArray, F>.cxKPoint(
+public suspend fun <F> PanmicticEvolveScope<IntArray, F>.cxKPoint(
     chance: Double,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -212,7 +212,7 @@ public suspend fun <F> PanmicticLifecycle<IntArray, F>.cxKPoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointLongArray")
-public suspend fun <F> PanmicticLifecycle<LongArray, F>.cxKPoint(
+public suspend fun <F> PanmicticEvolveScope<LongArray, F>.cxKPoint(
     chance: Double,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -239,7 +239,7 @@ public suspend fun <F> PanmicticLifecycle<LongArray, F>.cxKPoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointMutableList")
-public suspend fun <T, F> PanmicticLifecycle<MutableList<T>, F>.cxKPoint(
+public suspend fun <T, F> PanmicticEvolveScope<MutableList<T>, F>.cxKPoint(
     chance: Double,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -266,7 +266,7 @@ public suspend fun <T, F> PanmicticLifecycle<MutableList<T>, F>.cxKPoint(
  * @param crossoverType describes the strategy of the crossing stage in [PanmicticGA]
  */
 @JvmName("cxKPointShortArray")
-public suspend fun <F> PanmicticLifecycle<ShortArray, F>.cxKPoint(
+public suspend fun <F> PanmicticEvolveScope<ShortArray, F>.cxKPoint(
     chance: Double,
     count: Int,
     parallelismLimit: Int = parallelismConfig.workersCount,

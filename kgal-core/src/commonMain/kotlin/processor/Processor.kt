@@ -1,6 +1,6 @@
 package kgal.processor
 
-import kgal.Lifecycle
+import kgal.EvolveScope
 import kgal.processor.parallelism.enabled
 import kgal.utils.loop
 import kotlinx.coroutines.coroutineScope
@@ -13,7 +13,7 @@ import kotlin.random.Random
  * @param sequential sequential execution instruction
  * @param parallel parallel execution instruction
  */
-public inline fun Lifecycle<*, *>.process(
+public inline fun EvolveScope<*, *>.process(
     parallelismLimit: Int,
     sequential: () -> Unit,
     parallel: () -> Unit,
@@ -30,7 +30,7 @@ public inline fun Lifecycle<*, *>.process(
  * @param parallelismLimit limit of parallel workers
  * @param action action will be executed in sequential or parallel mode
  */
-public suspend inline fun Lifecycle<*, *>.process(
+public suspend inline fun EvolveScope<*, *>.process(
     parallelismLimit: Int,
     startIteration: Int,
     endIteration: Int,
@@ -52,7 +52,7 @@ public suspend inline fun Lifecycle<*, *>.process(
  * @param parallelismLimit limit of parallel workers
  * @param action action will be executed in sequential or parallel mode
  */
-public suspend inline fun Lifecycle<*, *>.process(
+public suspend inline fun EvolveScope<*, *>.process(
     parallelismLimit: Int,
     startIteration: Int,
     endIteration: Int,
@@ -75,7 +75,7 @@ public suspend inline fun Lifecycle<*, *>.process(
  * @param parallelismLimit limit of parallel workers
  * @param action action will be executed on parallel mode
  */
-public suspend inline fun Lifecycle<*, *>.parallelProcess(
+public suspend inline fun EvolveScope<*, *>.parallelProcess(
     parallelismLimit: Int,
     startIteration: Int,
     endIteration: Int,
@@ -100,7 +100,7 @@ public suspend inline fun Lifecycle<*, *>.parallelProcess(
  * @param parallelismLimit limit of parallel workers
  * @param action action will be executed on parallel mode
  */
-public suspend inline fun Lifecycle<*, *>.parallelProcess(
+public suspend inline fun EvolveScope<*, *>.parallelProcess(
     parallelismLimit: Int,
     startIteration: Int,
     endIteration: Int,

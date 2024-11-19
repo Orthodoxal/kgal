@@ -10,7 +10,7 @@ import kotlin.random.Random
 /**
  * [AbstractConfigScope] - abstract class for base implementation of [Config] with Kotlin DSL style.
  */
-public abstract class AbstractConfigScope<V, F, L : Lifecycle<V, F>> : Config<V, F, L> {
+public abstract class AbstractConfigScope<V, F, ES : EvolveScope<V, F>> : Config<V, F, ES> {
 
     override var random: Random = Random
 
@@ -20,15 +20,15 @@ public abstract class AbstractConfigScope<V, F, L : Lifecycle<V, F>> : Config<V,
 
     override var timeStore: TimeStore = TimeStore()
 
-    override var beforeEvolution: suspend L.() -> Unit = { }
+    override var beforeEvolution: suspend ES.() -> Unit = { }
 
-    override var evolution: suspend L.() -> Unit = { }
+    override var evolution: suspend ES.() -> Unit = { }
 
-    override var afterEvolution: suspend L.() -> Unit = { }
+    override var afterEvolution: suspend ES.() -> Unit = { }
 }
 
 /**
- * Creates [StatisticsConfig] with [StatisticsConfigScope] and apply it to the current [Config]
+ * Creates [StatisticsConfig] with [StatisticsConfigScope] and apply it to the current [Config].
  *
  * Example:
  * ```
@@ -54,7 +54,7 @@ public inline fun AbstractConfigScope<*, *, *>.statisticsConfig(
 }
 
 /**
- * Creates [ParallelismConfig] with [ParallelismConfigScope] and apply it to the current [Config]
+ * Creates [ParallelismConfig] with [ParallelismConfigScope] and apply it to the current [Config].
  *
  * Example:
  * ```

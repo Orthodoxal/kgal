@@ -1,28 +1,28 @@
 package kgal.distributed
 
-import kgal.AbstractLifecycle
+import kgal.AbstractEvolveScope
+import kgal.EvolveScope
 import kgal.GA
-import kgal.Lifecycle
 import kgal.chromosome.Chromosome
 import kgal.distributed.operators.launchChildren
 
 /**
- * [DistributedLifecycle] - specific [Lifecycle] for [DistributedGA].
+ * [DistributedEvolveScope] - specific [EvolveScope] for [DistributedGA].
  *
  * [V] - value of [Chromosome]
  *
  * [F] - fitness value of [Chromosome]
  *
- * Creates with DistributedLifecycle().
- * @see Lifecycle
+ * Creates with DistributedEvolveScope().
+ * @see EvolveScope
  */
-public interface DistributedLifecycle<V, F> : Lifecycle<V, F> {
+public interface DistributedEvolveScope<V, F> : EvolveScope<V, F> {
 
     /**
      * Option for starting [children].
      * @see launchChildren
      */
-    public var startOption: LifecycleStartOption
+    public var startOption: EvolveScopeStartOption
 
     /**
      * Child GAs for owner [DistributedGA].
@@ -36,24 +36,24 @@ public interface DistributedLifecycle<V, F> : Lifecycle<V, F> {
 }
 
 /**
- * Creates an instance of [DistributedLifecycle] by [distributedGA] and [distributedConfig].
+ * Creates an instance of [DistributedEvolveScope] by [distributedGA] and [distributedConfig].
  */
-public fun <V, F> DistributedLifecycle(
+public fun <V, F> DistributedEvolveScope(
     distributedGA: DistributedGA<V, F>,
     distributedConfig: DistributedConfig<V, F>,
-): DistributedLifecycle<V, F> =
-    DistributedLifecycleInstance(distributedGA, distributedConfig)
+): DistributedEvolveScope<V, F> =
+    DistributedEvolveScopeInstance(distributedGA, distributedConfig)
 
 /**
- * Base realization of [DistributedLifecycle].
- * @see AbstractLifecycle
+ * Base realization of [DistributedEvolveScope].
+ * @see AbstractEvolveScope
  */
-internal class DistributedLifecycleInstance<V, F>(
+internal class DistributedEvolveScopeInstance<V, F>(
     private val distributedGA: DistributedGA<V, F>,
     distributedConfig: DistributedConfig<V, F>,
-) : DistributedLifecycle<V, F>, AbstractLifecycle<V, F>(distributedGA, distributedConfig) {
+) : DistributedEvolveScope<V, F>, AbstractEvolveScope<V, F>(distributedGA, distributedConfig) {
 
-    override var startOption: LifecycleStartOption = LifecycleStartOption.Start
+    override var startOption: EvolveScopeStartOption = EvolveScopeStartOption.Start
 
     override val population: DistributedPopulation<V, F>
         get() = distributedGA.population

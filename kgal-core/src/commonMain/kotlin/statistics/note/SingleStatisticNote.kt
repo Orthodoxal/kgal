@@ -1,7 +1,7 @@
 package kgal.statistics.note
 
+import kgal.EvolveScope
 import kgal.GA
-import kgal.Lifecycle
 import kgal.name
 import kotlin.jvm.JvmName
 
@@ -31,7 +31,7 @@ public data class SingleStatisticNote<V>(
  * @param value - Value of statistics
  * @see SingleStatisticNote
  */
-public suspend fun Lifecycle<*, *>.stat(
+public suspend fun EvolveScope<*, *>.stat(
     name: String,
     value: Any?,
 ): Unit = emitStat(
@@ -55,7 +55,7 @@ public suspend fun Lifecycle<*, *>.stat(
  * @see SingleStatisticNote
  */
 @JvmName("statValue")
-public suspend fun Lifecycle<*, *>.stat(
+public suspend fun EvolveScope<*, *>.stat(
     pair: Pair<String, Any?>,
 ): Unit = emitStat(
     SingleStatisticNote(
@@ -86,7 +86,7 @@ public suspend fun Lifecycle<*, *>.stat(
  * @param name - Name of statistics
  * @see SingleStatisticNote
  */
-public suspend inline fun Lifecycle<*, *>.stat(
+public suspend inline fun EvolveScope<*, *>.stat(
     name: String,
     registrar: () -> Any?,
 ): Unit = emitStat(
@@ -116,7 +116,7 @@ public suspend inline fun Lifecycle<*, *>.stat(
  * @see SingleStatisticNote
  */
 @JvmName("statRegister")
-public suspend fun Lifecycle<*, *>.stat(
+public suspend fun EvolveScope<*, *>.stat(
     pair: Pair<String, () -> Any?>,
 ): Unit = emitStat(
     SingleStatisticNote(
@@ -138,7 +138,7 @@ public suspend fun Lifecycle<*, *>.stat(
  * ```
  * @see SingleStatisticNote
  */
-public suspend fun Lifecycle<*, *>.stat(
+public suspend fun EvolveScope<*, *>.stat(
     statistic: Statistic<Any?>,
 ): Unit = emitStat(
     SingleStatisticNote(

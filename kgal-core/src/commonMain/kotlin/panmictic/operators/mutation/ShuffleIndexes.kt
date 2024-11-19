@@ -1,7 +1,7 @@
 package kgal.panmictic.operators.mutation
 
 import kgal.operators.mutation.mutationShuffleIndexes
-import kgal.panmictic.PanmicticLifecycle
+import kgal.panmictic.PanmicticEvolveScope
 import kotlin.jvm.JvmName
 
 /**
@@ -18,7 +18,7 @@ import kotlin.jvm.JvmName
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesArray")
-public suspend fun <T, F> PanmicticLifecycle<Array<T>, F>.mutShuffleIndexes(
+public suspend fun <T, F> PanmicticEvolveScope<Array<T>, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -40,7 +40,7 @@ public suspend fun <T, F> PanmicticLifecycle<Array<T>, F>.mutShuffleIndexes(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesBooleanArray")
-public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.mutShuffleIndexes(
+public suspend fun <F> PanmicticEvolveScope<BooleanArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -62,7 +62,7 @@ public suspend fun <F> PanmicticLifecycle<BooleanArray, F>.mutShuffleIndexes(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesByteArray")
-public suspend fun <F> PanmicticLifecycle<ByteArray, F>.mutShuffleIndexes(
+public suspend fun <F> PanmicticEvolveScope<ByteArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -84,7 +84,7 @@ public suspend fun <F> PanmicticLifecycle<ByteArray, F>.mutShuffleIndexes(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesCharArray")
-public suspend fun <F> PanmicticLifecycle<CharArray, F>.mutShuffleIndexes(
+public suspend fun <F> PanmicticEvolveScope<CharArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -106,7 +106,7 @@ public suspend fun <F> PanmicticLifecycle<CharArray, F>.mutShuffleIndexes(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesDoubleArray")
-public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.mutShuffleIndexes(
+public suspend fun <F> PanmicticEvolveScope<DoubleArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -128,7 +128,7 @@ public suspend fun <F> PanmicticLifecycle<DoubleArray, F>.mutShuffleIndexes(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesFloatArray")
-public suspend fun <F> PanmicticLifecycle<FloatArray, F>.mutShuffleIndexes(
+public suspend fun <F> PanmicticEvolveScope<FloatArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -150,7 +150,7 @@ public suspend fun <F> PanmicticLifecycle<FloatArray, F>.mutShuffleIndexes(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesIntArray")
-public suspend fun <F> PanmicticLifecycle<IntArray, F>.mutShuffleIndexes(
+public suspend fun <F> PanmicticEvolveScope<IntArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -172,7 +172,7 @@ public suspend fun <F> PanmicticLifecycle<IntArray, F>.mutShuffleIndexes(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesLongArray")
-public suspend fun <F> PanmicticLifecycle<LongArray, F>.mutShuffleIndexes(
+public suspend fun <F> PanmicticEvolveScope<LongArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -194,7 +194,7 @@ public suspend fun <F> PanmicticLifecycle<LongArray, F>.mutShuffleIndexes(
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesMutableList")
-public suspend fun <T, F> PanmicticLifecycle<MutableList<T>, F>.mutShuffleIndexes(
+public suspend fun <T, F> PanmicticEvolveScope<MutableList<T>, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
@@ -216,7 +216,7 @@ public suspend fun <T, F> PanmicticLifecycle<MutableList<T>, F>.mutShuffleIndexe
  * @param parallelismLimit limit of parallel workers
  */
 @JvmName("mutShuffleIndexesShortArray")
-public suspend fun <F> PanmicticLifecycle<ShortArray, F>.mutShuffleIndexes(
+public suspend fun <F> PanmicticEvolveScope<ShortArray, F>.mutShuffleIndexes(
     chance: Double,
     shuffleIndexesChance: Double,
     parallelismLimit: Int = parallelismConfig.workersCount,
