@@ -28,7 +28,7 @@ public abstract class AbstractConfigScope<V, F, L : Lifecycle<V, F>> : Config<V,
 }
 
 /**
- * Creates [StatisticsConfig] with [StatisticsConfigScope] and apply it to the current [Config]
+ * Creates [StatisticsConfig] with [StatisticsConfigScope] and apply it to the current [Config].
  *
  * Example:
  * ```
@@ -54,7 +54,7 @@ public inline fun AbstractConfigScope<*, *, *>.statisticsConfig(
 }
 
 /**
- * Creates [ParallelismConfig] with [ParallelismConfigScope] and apply it to the current [Config]
+ * Creates [ParallelismConfig] with [ParallelismConfigScope] and apply it to the current [Config].
  *
  * Example:
  * ```
