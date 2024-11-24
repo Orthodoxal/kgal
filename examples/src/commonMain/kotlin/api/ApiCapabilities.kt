@@ -1,3 +1,5 @@
+package api
+
 import kgal.*
 import kgal.chromosome.Chromosome
 import kgal.chromosome.base.ChromosomeBooleanArray
@@ -204,7 +206,7 @@ private fun main() { // Run it!
                 mean(),
                 median(),
                 worstFitness(),
-                Statistic(name = "BUFFER_SIZE", value = population.buffer) // Send custom statistics
+                Statistic(name = "BUFFER_SIZE", value = population.buffer), // Send custom statistics
             )
 
             // Shake on steady stage (Combination of 2 genetic operators)

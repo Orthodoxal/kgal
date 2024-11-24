@@ -26,6 +26,31 @@ public interface DistributedConfig<V, F> : Config<V, F, DistributedEvolveScope<V
     public val populationMultiFactory: DistributedPopulationMultiFactory
 
     /**
+     * `Shared statistics`: [DistributedGA] is collector for each child statistics -
+     * statistics of [DistributedGA] includes all statistics of children.
+     *
+     * If `true` (default):
+     * ```
+     * val dGA(...) {
+     *     +pGAs(...) { index ->
+     *         evolve {
+     *             ...
+     *             stat("Child $index iteration", iteration)
+     *         }
+     *     }
+     *
+     *     evolve {
+     *         ...
+     *         stat("Distributed iteration", iteration)
+     *     }
+     * }.collect {
+     *     // Children and parent iterations collects here
+     * }.startBlocking()
+     * ```
+     */
+    public val enabledSharedStatistic: Boolean
+
+    /**
      * Adds the [GA] to the end of [children].
      */
     public fun add(ga: GA<V, F>)
@@ -110,6 +135,8 @@ public class DistributedConfigScope<V, F>(
                 MutableList(children.size) { children[it].population }
             } else mutableListOf(),
         )
+
+    override var enabledSharedStatistic: Boolean = true
 
     override fun add(ga: GA<V, F>) {
         children.add(ga)

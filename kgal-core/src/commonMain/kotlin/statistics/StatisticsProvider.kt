@@ -163,7 +163,10 @@ internal class StatisticsProviderInstance(
      */
     private fun collectors(): MutableMap<String, STAT_COLLECTOR_SCOPE> =
         if (statisticsConfig.enableDefaultCollector) {
-            mutableMapOf(DEFAULT_COLLECTOR_ID to { flow -> flow.collect(statisticsConfig.defaultCollector) })
+            mutableMapOf(DEFAULT_COLLECTOR_ID to { flow ->
+                flow.onStart { println("Default collector for $ownerName is enabled:\nOWNER\t\tITERATION\tSTAT_NAME\tSTAT_VALUE") }
+                    .collect(statisticsConfig.defaultCollector)
+            })
         } else {
             mutableMapOf()
         }
