@@ -1,4 +1,4 @@
-package tasks.himmelblau
+package tasks.extremumSearch.himmelblau
 
 import kgal.chromosome.Chromosome
 import kgal.chromosome.base.doubles
@@ -34,13 +34,13 @@ private const val UP = 5.0
 private const val ETA = 10.0
 
 /**
- * Solution to find the minimum of the `Himmelblau's function` by [DistributedGA] (Classical GA).
+ * Solution to find the minimum of the `Himmelblau's function` by [DistributedGA].
  *
  * Himmelblau's function has 4 identical local minima at the points:
- * 1) `f(3.0, 2.0) == 0.0`
- * 2) `f(-2.805118, 3.131312) == 0.0`
- * 3) `f(-3.779310, -3.283186) == 0.0`
- * 4) `f(3.584428, -1.848126) == 0.0`
+ * 1) `f(3.0, 2.0) = 0.0`
+ * 2) `f(-2.805118, 3.131312) = 0.0`
+ * 3) `f(-3.779310, -3.283186) = 0.0`
+ * 4) `f(3.584428, -1.848126) = 0.0`
  *
  * [Chromosome.value]: [DoubleArray] with `size = 2 (x, y)` = `[1.0, 2.0]`
  *

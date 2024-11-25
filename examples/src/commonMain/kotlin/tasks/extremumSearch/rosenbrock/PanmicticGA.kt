@@ -1,4 +1,4 @@
-package tasks.himmelblau
+package tasks.extremumSearch.rosenbrock
 
 import kgal.chromosome.Chromosome
 import kgal.chromosome.base.doubles
@@ -21,65 +21,65 @@ import kotlin.random.Random
 private const val POPULATION_SIZE = 200
 private const val CHROMOSOME_SIZE = 2
 private const val RANDOM_SEED = 42
-private const val ELITISM = 5
+private const val ELITISM = 10
 private const val TOURNAMENT_SIZE = 3
-private const val CROSSOVER_CHANCE = 0.9
-private const val MUTATION_CHANCE = 0.2
+private const val CROSSOVER_CHANCE = 0.8
+private const val MUTATION_CHANCE = 0.5
 private const val POLYNOMIAL_BOUNDED_CHANCE = 0.5
-private const val MAX_ITERATION = 50
-private const val LOW = -5.0
-private const val UP = 5.0
-private const val ETA = 10.0
+private const val MAX_ITERATION = 100
+private const val LOW = -100.0
+private const val UP = 100.0
+private const val ETA = 20.0
 
 /**
- * Solution to find the minimum of the `Himmelblau's function` by [PanmicticGA] (Classical GA).
+ * Solution to find the minimum of the `Rosenbrock function` by [PanmicticGA] (Classical GA).
  *
- * Himmelblau's function has 4 identical local minima at the points:
- * 1) `f(3.0, 2.0) == 0.0`
- * 2) `f(-2.805118, 3.131312) == 0.0`
- * 3) `f(-3.779310, -3.283186) == 0.0`
- * 4) `f(3.584428, -1.848126) == 0.0`
+ * `Rosenbrock function` is a non-convex function, introduced by Howard H. Rosenbrock in 1960,
+ * which is used as a performance test problem for optimization algorithms.
+ * Rosenbrock function has 1 global minimum:
+ * 1) `f(1.0, 1.0) = 0`
  *
  * [Chromosome.value]: [DoubleArray] with `size = 2 (x, y)` = `[1.0, 2.0]`
  *
- * [Chromosome.fitness]: [Double] = negative value of `Himmelblau's function` by chromosome value (minimum finding)
+ * [Chromosome.fitness]: [Double] = negative value of `Rosenbrock function` by chromosome value (minimum finding)
  *
  * `TARGET`: `-0.0001 < fitness < 0.0001` (delta for floating point numbers)
  *
  * The Initial Population contains `randomly` created DoubleArrays:
  * ```
  * [
- * [1.0, 2.0],
- * [1.1, 4.289],
- * [1.139, -3.12],
+ * [100.0, 20.0],
+ * [14.1, 48.289],
+ * [12.139, -35.12],
  * ...
- * [-1.52, 3.1205],
+ * [-13.52, 34.1205],
  * ]
  * ```
  *
  * Solution:
  *
  * Get the `TARGET` using `standard evolutionary strategy`: `selection`→`crossover`→`mutation`→`evaluation`:
- * @see <a href="https://en.wikipedia.org/wiki/Himmelblau%27s_function">Himmelblau's function</a>
- * @see <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Himmelblau_function.svg/600px-Himmelblau_function.svg.png"/>
+ * @see <a href="https://en.wikipedia.org/wiki/Rosenbrock_function">Rosenbrock function</a>
+ * @see <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Rosenbrock-contour.svg/1014px-Rosenbrock-contour.svg.png"/>
  */
 private fun main() { // Run it!
 
     /**
-     * Himmelblau's function
+     * Rosenbrock function
      */
-    fun himmelblau(x: Double, y: Double): Double = (x * x + y - 11).pow(2) + (x + y * y - 7).pow(2)
+    fun rosenbrock(x: Double, y: Double): Double =
+        (1 - x).pow(2) + 100 * (y - x.pow(2.0)).pow(2)
 
     /**
      * Stop condition (minimum is find with accuracy in delta)
      */
     fun stopCondition(chromosome: Chromosome<DoubleArray, Double>): Boolean =
-        chromosome.fitness!! in -0.0001..0.00001
+        chromosome.fitness!! in -0.001..0.001
 
     val pga = pGA(
         // create population of booleans chromosomes
         population = population(size = POPULATION_SIZE) { doubles(size = CHROMOSOME_SIZE, from = LOW, until = UP) },
-        fitnessFunction = { value -> -himmelblau(value[0], value[1]) }, // fitness function for evaluation stage
+        fitnessFunction = { value -> -rosenbrock(value[0], value[1]) }, // fitness function for evaluation stage
     ) {
         random = Random(seed = RANDOM_SEED) // set random generator
         elitism = ELITISM // enable elitism
