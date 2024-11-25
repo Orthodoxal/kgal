@@ -1,7 +1,7 @@
 # KGAL - Kotlin Genetic Algorithm Library 
 
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Download](https://img.shields.io/maven-central/v/io.github.orthodoxal/kgal-core/0.0.4)](https://central.sonatype.com/artifact/io.github.orthodoxal/kgal-core/0.0.4)
+[![Download](https://img.shields.io/maven-central/v/io.github.orthodoxal/kgal-core/0.0.5)](https://central.sonatype.com/artifact/io.github.orthodoxal/kgal-core/0.0.5)
 [![Kotlin](https://img.shields.io/badge/kotlin-2.0.20-blue.svg?logo=kotlin)](http://kotlinlang.org)
 
 ## One Max Problem Example
@@ -83,7 +83,7 @@ Add dependencies (you can also add other modules that you need):
 <dependency>
     <groupId>io.github.orthodoxal</groupId>
     <artifactId>kgal-core</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
 </dependency>
 ```
 
@@ -101,7 +101,7 @@ Add dependencies (you can also add other modules that you need):
 
 ```kotlin
 dependencies {
-    implementation("io.github.orthodoxal:kgal-core:0.0.4")
+    implementation("io.github.orthodoxal:kgal-core:0.0.5")
 }
 ```
 
@@ -134,7 +134,7 @@ In common code that should get compiled for different platforms, you can add a d
 ```kotlin
 commonMain {
     dependencies {
-        implementation("io.github.orthodoxal:kgal-core:0.0.4")
+        implementation("io.github.orthodoxal:kgal-core:0.0.5")
     }
 }
 ```
