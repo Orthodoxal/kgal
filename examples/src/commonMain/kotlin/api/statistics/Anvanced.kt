@@ -62,7 +62,7 @@ private fun main() { // Run it!
 
         // STEP 3 (optional): configure statistics
         statisticsConfig {
-            defaultCollector = FlowCollector {
+            defaultCollector = { _ ->
                 TODO("Oops, no realization for default collector, will it crash GA?")
             }
 

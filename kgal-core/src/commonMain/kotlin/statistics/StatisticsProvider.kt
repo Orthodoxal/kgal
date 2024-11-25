@@ -15,7 +15,7 @@ public typealias STAT_COLLECTOR = FlowCollector<StatisticNote<Any?>>
 public typealias STAT_COLLECTOR_SCOPE = suspend CoroutineScope.(stat: Flow<StatisticNote<Any?>>) -> Unit
 
 /**
- * [StatisticsProvider] - interface for Statistics Provider based on [SharedFlow]
+ * [StatisticsProvider] - interface for Statistics Provider based on [SharedFlow].
  */
 public interface StatisticsProvider {
 
@@ -70,7 +70,7 @@ public interface StatisticsProvider {
 }
 
 /**
- * Creates [StatisticsProvider] for [ownerName] by [statisticsConfig]
+ * Creates [StatisticsProvider] for [ownerName] by [statisticsConfig].
  */
 public fun StatisticsProvider(
     ownerName: String,
@@ -78,7 +78,7 @@ public fun StatisticsProvider(
 ): StatisticsProvider = StatisticsProviderInstance(ownerName, statisticsConfig)
 
 /**
- * Base instance of [StatisticsProvider]
+ * Base instance of [StatisticsProvider].
  */
 internal class StatisticsProviderInstance(
     private val ownerName: String,
@@ -92,12 +92,12 @@ internal class StatisticsProviderInstance(
     private val statistics: MutableSharedFlow<StatisticNote<Any?>> = statisticsConfig.flow
 
     /**
-     * Map for all collectors of this [StatisticsProvider]
+     * Map for all collectors of this [StatisticsProvider].
      */
     private val collectors: MutableMap<String, STAT_COLLECTOR_SCOPE> = collectors()
 
     /**
-     * Special [CoroutineScope] for control all collectors behavior
+     * Special [CoroutineScope] for control all collectors' behavior.
      */
     private var statisticsCoroutineScope: CoroutineScope = statisticsConfig.newCoroutineScope
         get() {
@@ -149,7 +149,7 @@ internal class StatisticsProviderInstance(
     }
 
     /**
-     * A special [statistics] flow wrapper used [kotlinx.coroutines.flow.takeWhile] for stop collecting values
+     * A special [statistics] flow wrapper used [kotlinx.coroutines.flow.takeWhile] for stop collecting values.
      */
     private fun statisticsSafeWrapper(collectorId: String): Flow<StatisticNote<Any?>> =
         statistics.takeWhile { note ->
@@ -159,20 +159,17 @@ internal class StatisticsProviderInstance(
         }
 
     /**
-     * Initializes collectors depending on [StatisticsConfig]
+     * Initializes collectors depending on [StatisticsConfig].
      */
     private fun collectors(): MutableMap<String, STAT_COLLECTOR_SCOPE> =
         if (statisticsConfig.enableDefaultCollector) {
-            mutableMapOf(DEFAULT_COLLECTOR_ID to { flow ->
-                flow.onStart { println("Default collector for $ownerName is enabled:\nOWNER\t\tITERATION\tSTAT_NAME\tSTAT_VALUE") }
-                    .collect(statisticsConfig.defaultCollector)
-            })
+            mutableMapOf(DEFAULT_COLLECTOR_ID to statisticsConfig.defaultCollector)
         } else {
             mutableMapOf()
         }
 
     /**
-     * Send STAT_STOP_COLLECT_FLAG as a terminal for collectors
+     * Send STAT_STOP_COLLECT_FLAG as a terminal for collectors.
      * @param collectorId if null stop all collectors else stop collector by [collectorId]
      */
     private suspend fun emitStopCollectFlag(collectorId: String?) {
