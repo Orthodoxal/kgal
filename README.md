@@ -62,9 +62,9 @@
 
 ## Examples
 * [api](examples/src/commonMain/kotlin/api) &mdash; examples of using of interactive api ([GA.start], [GA.resume], [GA.stop], [GA.restart]).
-  * [controller](examples/src/commonMain/kotlin/api/controller) &mdash; examples of methods for active control of [GA]
-  * [customization](examples/src/commonMain/kotlin/api/customization) &mdash; examples of [GA] customization possibilities for various tasks
-  * [population](examples/src/commonMain/kotlin/api/population) &mdash; examples of creating populations for [GA]
+  * [controller](examples/src/commonMain/kotlin/api/controller) &mdash; examples of methods for active control of GA
+  * [customization](examples/src/commonMain/kotlin/api/customization) &mdash; examples of GA customization possibilities for various tasks
+  * [population](examples/src/commonMain/kotlin/api/population) &mdash; examples of creating populations for GA
   * [statistics](examples/src/commonMain/kotlin/api/statistics) &mdash; examples of working with statistics
   * [api capabilities](examples/src/commonMain/kotlin/api/ApiCapabilities.kt) &mdash; great example of solving the One Max Problem using various kgal api capabilities
 * [tasks](examples/src/commonMain/kotlin/tasks) &mdash; a collection of examples of solved problems using kgal
