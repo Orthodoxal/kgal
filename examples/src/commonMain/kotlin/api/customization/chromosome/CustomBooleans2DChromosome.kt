@@ -34,12 +34,12 @@ internal data class CustomBooleans2DChromosome(
         other as CustomBooleans2DChromosome
 
         if (fitness != null && other.fitness != null && fitness != other.fitness) return false
-        return value.contentEquals(other.value)
+        return value.contentDeepEquals(other.value)
     }
 
     // STEP 4: override hashcode
     override fun hashCode(): Int {
-        var result = value.contentHashCode()
+        var result = value.contentDeepHashCode()
         result = 31 * result + (fitness?.hashCode() ?: 0)
         return result
     }
