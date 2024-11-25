@@ -39,7 +39,7 @@ public abstract class AbstractConfigScope<V, F, ES : EvolveScope<V, F>> : Config
  *         extraBufferCapacity = 1000
  *         onBufferOverflow = BufferOverflow.SUSPEND
  *         coroutineContext = Dispatchers.IO
- *         enableDefaultCollector = false
+ *         enableDefaultCollector = true
  *         defaultCollector = FlowCollector(::println)
  *     }
  *

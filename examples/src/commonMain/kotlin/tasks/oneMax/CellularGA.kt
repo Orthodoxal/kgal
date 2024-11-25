@@ -1,4 +1,4 @@
-package cellular
+package tasks.oneMax
 
 import kgal.cellular.*
 import kgal.cellular.neighborhood.Moore
@@ -7,6 +7,7 @@ import kgal.cellular.operators.evaluation
 import kgal.cellular.operators.evolveCells
 import kgal.cellular.operators.mutation.mutFlipBit
 import kgal.cellular.operators.selection.selTournament
+import kgal.chromosome.Chromosome
 import kgal.chromosome.base.booleans
 import kgal.operators.stopBy
 import kgal.startBlocking
@@ -29,48 +30,51 @@ private const val FLIP_BIT_CHANCE = 0.01
 private const val MAX_ITERATION = 50
 
 /**
-OneMax task: get the target array of trues [true, true, true, ... , true] using Genetic Algorithm
-
-Chromosome value: BooleanArray = [true, false, true, ... , false]
-
-Chromosome fitness: Int = count of trues in chromosome value
-
-Target: fitness == value.size
-
-Init Population contains of randomly created BooleanArray:
-```
-[
-[true, false, true, ... , true],
-[true, true, false, ... , true],
-[false, false, true, ... , false],
-...
-[true, false, true, ... , false],
-]
-```
-
-Solution:
-
-Get target using genetic operators (selection, crossover, mutation, evaluation)
+ * Resolving One Max Problem by [CellularGA].
+ *
+ * One Max problem: get the target array of trues `[true, true, true, ... , true]` using Genetic Algorithm
+ *
+ * [Chromosome.value]: [BooleanArray] = `[true, false, true, ... , false]`
+ *
+ * [Chromosome.fitness]: [Int] = count of `trues` in chromosome value
+ *
+ * `TARGET`: `fitness == value.size` (all elements in chromosome value is true)
+ *
+ * The Initial Population contains `randomly` created BooleanArrays:
+ * ```
+ * [
+ * [true, false, true, ... , true],
+ * [true, true, false, ... , true],
+ * [false, false, true, ... , false],
+ * ...
+ * [true, false, true, ... , false],
+ * ]
+ * ```
+ *
+ * Solution:
+ *
+ * Get the `TARGET` using `standard evolutionary strategy`: `selection`→`crossover`→`mutation`→`evaluation`:
  */
 private fun main() { // Run it!
     val cga = cGA(
         // create population of booleans chromosomes (Population size = 6 * 6 * 6 = 216 (cube))
         population = population(dimens = DIMENS) { booleans(size = CHROMOSOME_SIZE) },
-        fitnessFunction = { value -> value.count { it } }, // fitness function for evaluation
+        fitnessFunction = { value -> value.count { it } }, // fitness function for evaluation stage
     ) {
-        random = Random(seed = RANDOM_SEED)
-        elitism = ELITISM
-        cellularType = CELLULAR_TYPE
-        neighborhood = CELLULAR_NEIGHBORHOOD
+        random = Random(seed = RANDOM_SEED) // set random generator
+        elitism = ELITISM // enable elitism
+        cellularType = CELLULAR_TYPE // set type of Cellular GA
+        neighborhood = CELLULAR_NEIGHBORHOOD // set neighborhood for Cellular Population
 
+        // create cellular evolution strategy
         evolve {
             // Start to evolve all cells of cellular population with their neighborhoods
-            // This operator perform N evolutionary strategies for each cell, where N - cells count
+            // This operator perform N evolutionary strategies on each cell, where N - cells count
             evolveCells {
                 selTournament(size = TOURNAMENT_SIZE) // selection ('sel' prefix)
                 cxOnePoint(chance = CROSSOVER_CHANCE) // crossover ('cx' prefix)
                 mutFlipBit(chance = MUTATION_CHANCE, flipBitChance = FLIP_BIT_CHANCE) // mutation ('mut' prefix)
-                evaluation()
+                evaluation() // evaluate child
             }
 
             println("Iteration $iteration: best fitness = $bestFitness") // Or use stat(bestFitness())

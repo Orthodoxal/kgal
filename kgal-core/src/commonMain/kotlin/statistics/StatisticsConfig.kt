@@ -7,8 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.onEach
 import kotlin.coroutines.CoroutineContext
 
 internal const val DEFAULT_REPLAY: Int = 0
@@ -16,8 +16,18 @@ internal const val DEFAULT_EXTRA_BUFFER_CAPACITY: Int = 100
 internal val DEFAULT_ON_BUFFER_OVERFLOW: BufferOverflow = BufferOverflow.SUSPEND
 internal val DEFAULT_COROUTINE_CONTEXT: CoroutineContext = Dispatchers.IO
 internal const val DEFAULT_ENABLE_DEFAULT_COLLECTOR: Boolean = true
-internal val DEFAULT_COLLECTOR: FlowCollector<StatisticNote<Any?>> = FlowCollector(::println)
 internal const val DEFAULT_GUARANTEED_SORTED: Boolean = false
+internal val DEFAULT_COLLECTOR: STAT_COLLECTOR_SCOPE = { flow ->
+    var printDefaultCollectorHint = true
+    flow
+        .onEach {
+            if (printDefaultCollectorHint) {
+                println("Default collector for ${it.ownerName} is enabled:\nOWNER\t\tITERATION\tSTAT_NAME\tSTAT_VALUE")
+                printDefaultCollectorHint = false
+            }
+        }
+        .collect(::println)
+}
 
 /**
  * Configuration of basic parameters for statistics operation.
@@ -71,7 +81,7 @@ public interface StatisticsConfig {
      *
      * Default value is [DEFAULT_COLLECTOR],
      */
-    public val defaultCollector: FlowCollector<StatisticNote<Any?>>
+    public val defaultCollector: STAT_COLLECTOR_SCOPE
 
     /**
      * Optimization flag for statistics. Default is false.
@@ -129,7 +139,7 @@ public fun StatisticsConfig(
     onBufferOverflow: BufferOverflow = DEFAULT_ON_BUFFER_OVERFLOW,
     coroutineContext: CoroutineContext = DEFAULT_COROUTINE_CONTEXT,
     enableDefaultCollector: Boolean = DEFAULT_ENABLE_DEFAULT_COLLECTOR,
-    defaultCollector: FlowCollector<StatisticNote<Any?>> = DEFAULT_COLLECTOR,
+    defaultCollector: STAT_COLLECTOR_SCOPE = DEFAULT_COLLECTOR,
     guaranteedSorted: Boolean = DEFAULT_GUARANTEED_SORTED,
 ): StatisticsConfig =
     StatisticsConfigScope(
@@ -164,6 +174,6 @@ public class StatisticsConfigScope(
     override var onBufferOverflow: BufferOverflow = DEFAULT_ON_BUFFER_OVERFLOW,
     override var coroutineContext: CoroutineContext = DEFAULT_COROUTINE_CONTEXT,
     override var enableDefaultCollector: Boolean = DEFAULT_ENABLE_DEFAULT_COLLECTOR,
-    override var defaultCollector: FlowCollector<StatisticNote<Any?>> = DEFAULT_COLLECTOR,
+    override var defaultCollector: STAT_COLLECTOR_SCOPE = DEFAULT_COLLECTOR,
     override var guaranteedSorted: Boolean = DEFAULT_GUARANTEED_SORTED,
 ) : StatisticsConfig
