@@ -149,23 +149,23 @@ public abstract class AbstractGA<V, F, ES : EvolveScope<V, F>>(
             throw IllegalStateException("Attempting to launch an active GA. GA can only work in one coroutineScope at a time.")
         }
 
-        try {
-            statisticsProvider.prepareStatistics()
-            this.iteration = iterationFrom
+        statisticsProvider.prepareStatistics()
+        this.iteration = iterationFrom
 
-            coroutineScope {
-                coroutineScope = this
-                launch {
-                    launch()
+        coroutineScope {
+            coroutineScope = this
+            try {
+                launch()
+            } finally {
+                withContext(NonCancellable) {
+                    if (state !is State.FINISHED) { // GA IS STOPPED
+                        state = State.STOPPED
+                        timeStore.onStopped.add(timeMarker)
+                    }
                     coroutineScope = null
+                    processingMutex.unlock(sessionToken)
                 }
             }
-        } finally {
-            if (state !is State.FINISHED) { // GA IS STOPPED
-                state = State.STOPPED
-                timeStore.onStopped.add(timeMarker)
-            }
-            processingMutex.unlock(sessionToken)
         }
     }
 

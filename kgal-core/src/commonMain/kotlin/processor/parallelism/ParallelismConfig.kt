@@ -75,6 +75,8 @@ public fun ParallelismConfig.clone(): ParallelismConfig = ParallelismConfigScope
 
 /**
  * ParallelismConfigScope - Creating [ParallelismConfig] with Kotlin DSL style.
+ * @see dispatcher
+ * @see workersCount
  */
 public class ParallelismConfigScope(
     workersCount: Int = DEFAULT_PARALLEL_WORKER_COUNT,

@@ -93,6 +93,7 @@ public interface DistributedGA<V, F> : GA<V, F> {
      *     // Children and parent iterations collects here
      * }.startBlocking()
      * ```
+     * @see DistributedConfig.enabledSharedStatistic
      */
     override val statisticsProvider: StatisticsProvider
 
@@ -212,9 +213,11 @@ internal class DistributedGAInstance<V, F>(
     override val evolveScope: DistributedEvolveScope<V, F> by lazy { DistributedEvolveScope(this, configuration) }
 
     init {
-        // collect child's statistics by owner
-        children.forEach {
-            it.collect(id = name) { stat -> it.statisticsProvider.emit(stat) }
+        if (configuration.enabledSharedStatistic) {
+            // collect child's statistics by owner
+            children.forEach {
+                it.collect(id = name) { stat -> this.statisticsProvider.emit(stat) }
+            }
         }
     }
 

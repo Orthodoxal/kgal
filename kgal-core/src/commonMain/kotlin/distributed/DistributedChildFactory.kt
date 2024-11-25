@@ -10,6 +10,7 @@ import kgal.chromosome.Chromosome
 import kgal.panmictic.PanmicticConfigScope
 import kgal.panmictic.PanmicticGA
 import kgal.panmictic.PanmicticPopulation
+import kgal.statisticsConfig
 import kotlin.random.Random
 
 /**
@@ -147,6 +148,7 @@ public inline fun <V, F> DistributedConfig<V, F>.pGA(
         fitnessFunction = fitnessFunction ?: this.fitnessFunction,
     ) childScope@{
         random = Random(this@pGA.random.nextInt()) // child's random inheritance
+        statisticsConfig { enableDefaultCollector = false } // owner default collector is active by shared statistics
         config()
     }
 }
@@ -204,6 +206,7 @@ public inline fun <V, F> DistributedConfig<V, F>.cGA(
         fitnessFunction = fitnessFunction ?: this.fitnessFunction,
     ) childScope@{
         random = Random(this@cGA.random.nextInt()) // child's random inheritance
+        statisticsConfig { enableDefaultCollector = false } // owner default collector is active by shared statistics
         config()
     }
 }
