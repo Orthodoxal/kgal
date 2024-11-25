@@ -61,9 +61,17 @@
 * [Kotlin DSL] style
 
 ## Examples
-//TODO дописать
-* Api capabilities
-* Tasks
+* [api](examples/src/commonMain/kotlin/api) &mdash; examples of using api kgal capabilities
+  * [controller](examples/src/commonMain/kotlin/api/controller) &mdash; examples of methods for active control of [GA]
+  * [customization](examples/src/commonMain/kotlin/api/customization) &mdash; examples of [GA] customization possibilities for various tasks
+  * [population](examples/src/commonMain/kotlin/api/population) &mdash; examples of creating populations for [GA]
+  * [statistics](examples/src/commonMain/kotlin/api/statistics) &mdash; examples of working with statistics
+  * [api capabilities](examples/src/commonMain/kotlin/api/ApiCapabilities.kt) &mdash; great example of solving the One Max Problem using various kgal api capabilities
+* [tasks](examples/src/commonMain/kotlin/tasks) &mdash; a collection of examples of solved problems using kgal
+  * [one max problem](examples/src/commonMain/kotlin/tasks/oneMax) &mdash; solving of the most famous problem for GA
+  * [extremum search](examples/src/commonMain/kotlin/tasks/extremumSearch) &mdash; a collection of problems of finding extrema of complex functions
+  * [single source shortest paths](examples/src/commonMain/kotlin/tasks/sssp) &mdash; solution to the SSSP problem by GA
+  * [travelling salesman problem](examples/src/commonMain/kotlin/tasks/tsp) &mdash; solution to the TSP by GA + comparison with dynamic programming
 
 ## Using in your projects
 
